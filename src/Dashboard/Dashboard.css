@@ -1,0 +1,45 @@
+.dashboard-container{
+   
+    background-color: rgb(236, 236, 236);
+    height: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+th,
+td {
+    padding: 6px;
+    font-size: 0.85rem;
+}
+
+table,
+td,
+th {
+    border: 1px solid #808080;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    background-color:#e69743;
+}
+
+td .action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+td .action>* {
+    cursor: pointer;
+}
+
+table tbody .serial {
+    width: 80px;
+}
+
+table tbody tr:nth-child(2n) {
+    background: #fcd6a1;
+}
