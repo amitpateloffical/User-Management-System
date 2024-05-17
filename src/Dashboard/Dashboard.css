@@ -43,3 +43,15 @@ table tbody .serial {
 table tbody tr:nth-child(2n) {
     background: #fcd6a1;
 }
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+  }
+  
+  .content-with-fixed-header {
+    padding-top: 100px;
+  }
