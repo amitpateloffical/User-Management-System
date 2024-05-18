@@ -113,11 +113,7 @@ const AssetsMaster = () => {
     
     const handleAssetTypeFilterChange = (event) => {
       setAssetTypeFilter(event.target.value);
-    };
-
-  const handleSearchTextChange = (event) => {
-      setSearchText(event.target.value);
-  };
+    };                          
 
   const filteredData = data.filter(item => {
     return (

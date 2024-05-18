@@ -7,41 +7,62 @@ import PopUp from "../PopUp/PopUp";
 const DepartmentMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [searchText, setSearchText] = useState("");
   const data = [
     {
         srNo : "1.",
-        department:"QC"
+        department:"QC",
+        status :"Active"
     },
     {
         srNo : "2.",
-        department:"Test-1"
+        department:"Test-1",
+        status :"Inactive"
     },
     {
         srNo : "3.",
-        department:"User"
+        department:"User",
+        status :"Active"
     },
     {
         srNo : "4.",
-        department:"IT"
+        department:"IT",
+        status :"Inactive"
     },
     {
         srNo : "5.",
-        department:"QA"
+        department:"QA",
+        status :"Active"
     },
     {
         srNo : "6.",
-        department:"System Admin"
+        department:"System Admin",
+        status :"Inactive"
     },
     {
         srNo : "7.",
-        department:"HR"
+        department:"HR",
+        status :"Active"
     },
   ]
 
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
   };
-
+  const handleStatusFilterChange = (event) => {
+    setStatusFilter(event.target.value);
+  };
+  
+  const filteredData = data.filter(item => {
+    return (
+      (statusFilter === "All" || 
+      (statusFilter === "Active" && item.status === "Active") || 
+      (statusFilter === "Inactive" && item.status === "Inactive"))
+      &&
+      (searchText === "" || item.department.toLowerCase().includes(searchText.toLowerCase()))
+    );
+  });
   return (
     <div>
       
@@ -60,10 +81,10 @@ const DepartmentMaster = () => {
               <label htmlFor="" className="font-bold">
                 Status
               </label>
-              <select className="border border-black rounded-md  py-2 ">
-                <option>---select---</option>
-                <option>Active</option>
-                <option>Inactive</option>
+              <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+              <option value="All">All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
               </select>
             </div>
             <div className="flex flex-col w-full">
@@ -74,6 +95,8 @@ const DepartmentMaster = () => {
                 type="text"
                 className="border border-black rounded-md pr-24 py-2 "
                 placeholder="Search Department By Name"
+                value={searchText}
+              onChange={e => setSearchText(e.target.value)}
               />
             </div>
 
@@ -94,13 +117,13 @@ const DepartmentMaster = () => {
                 </thead>
                 <tbody>
                    
-{data.map(( itm, index)=>{
+{filteredData.map(( itm, index)=>{
     return(
        
          <tr key={index}>
 <td className="text-center">{itm.srNo}</td>
 <td className="text-center">{itm.department}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">Active</div></div> </td>
+<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
 <td > <div className="text-center flex justify-center gap-3 items-center"><div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"><FaRegEdit /></div> <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"><IoBan /></div></div></td>
 </tr>
         
