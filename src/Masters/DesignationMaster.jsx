@@ -5,9 +5,10 @@ import SideBar from "../SideBar";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
 const DesignationMaster = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
+    const [popupOpen, setPopupOpen] = useState(false);
   
     const data = [
       {
@@ -39,6 +40,10 @@ const DesignationMaster = () => {
           department:"HR"
       },
     ]
+    const togglePopup = () => {
+      setPopupOpen(!popupOpen);
+    };
+
   return (
     <div>
    
@@ -73,7 +78,7 @@ const DesignationMaster = () => {
             />
           </div>
 
-          <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center">
+          <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
             <MdAddBox />
           </div>
         </div>
@@ -107,6 +112,16 @@ const DesignationMaster = () => {
           </table>
       </div>
     </div>
+    <PopUp
+        heading="Designation Master"
+        buttonText="Submit"
+        labelHeading="Designation"
+        inputs={[
+          { label: 'Designation', placeholder: 'Enter Designation Name' },
+        ]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
   </div>
   )
 }

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
 
 
 const EquipmentInstrumentMaster = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
+    const [popupOpen, setPopupOpen] = useState(false);
     const data = [
       {
           srNo : "1.",
@@ -37,6 +38,10 @@ const EquipmentInstrumentMaster = () => {
           department:"HR"
       },
     ]
+
+    const togglePopup = () => {
+      setPopupOpen(!popupOpen);
+    };
   return (
     <div>
       
@@ -85,7 +90,7 @@ const EquipmentInstrumentMaster = () => {
             />
           </div>
 
-          <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center">
+          <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
             <MdAddBox />
           </div>
         </div>
@@ -127,6 +132,30 @@ const EquipmentInstrumentMaster = () => {
           </table>
       </div>
     </div>
+    <PopUp
+        heading="Equipment/Instrument Master"
+        buttonText="Submit"
+        inputs={[
+          { label: 'Equipment/Instrument Id', type:"text" },
+          { label: 'Equipment/Instrument Name', type:"text" },
+          { label: 'Make', type:"text" },
+          { label: 'Modal', type:"text" },
+          {
+            label: 'Type',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+        ]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
   </div>
   )
 }

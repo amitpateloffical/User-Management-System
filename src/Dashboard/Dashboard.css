@@ -23,7 +23,8 @@ th {
 }
 
 th {
-    background-color:#e69743;
+    background-color:#9b7cd0;
+    color: #ffff;
 }
 
 td .action {
@@ -41,7 +42,7 @@ table tbody .serial {
 }
 
 table tbody tr:nth-child(2n) {
-    background: #fcd6a1;
+    background: #ebe1fb;
 }
 
 .fixed-header {

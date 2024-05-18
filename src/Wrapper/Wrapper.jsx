@@ -14,7 +14,7 @@ const Wrapper = () => {
     const isLoginPage = location.pathname === '/';
   
     return (
-      <div className="flex">
+      <div className="flex ">
         {!isLoginPage && (
           <>
             <div className="fixed-header">

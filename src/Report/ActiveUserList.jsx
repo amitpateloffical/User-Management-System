@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const ActiveUserList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -36,6 +38,24 @@ const ActiveUserList = () => {
         department:"HR"
     },
   ]
+
+  const downloadPDF = () => {
+    const input = document.getElementById("active-user-list");
+    html2canvas(input, {
+      scrollY: -window.scrollY,
+      scale: 3,
+      backgroundColor: "#ffffff",
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/jpeg", 1.0); 
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "pt",
+        format: [canvas.width, canvas.height],
+      });
+      pdf.addImage(imgData, "JPEG", 0, 0, canvas.width, canvas.height);
+      pdf.save("active_user_list.pdf");
+    });
+  };
 return (
   <div>
     
@@ -53,7 +73,7 @@ return (
      <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center">
      <FiRefreshCw />
         </div>
-        <div className="bg-[#d3eafd]  rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center">
+        <div className="bg-[#d3eafd]  rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center"  onClick={downloadPDF}>
         <FaFilePdf />
         </div>
      </div>
@@ -116,7 +136,7 @@ return (
 
         
       </div>
-    <div>
+    <div id="active-user-list">
         <table>
             <thead>
                 <tr >

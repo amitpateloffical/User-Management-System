@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
 
 const ApplicationMaster = () => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
+    const [popupOpen, setPopupOpen] = useState(false);
   
     const data = [
       {
@@ -38,6 +39,10 @@ const ApplicationMaster = () => {
           department:"HR"
       },
     ]
+    const togglePopup = () => {
+      setPopupOpen(!popupOpen);
+    };
+
   return (
     <div>
    
@@ -82,7 +87,7 @@ const ApplicationMaster = () => {
             />
           </div>
 
-          <div className="bg-[#d3eafd] text-[#2196f3] w-[20%] h-[40px] flex justify-center items-center">
+          <div className="bg-[#d3eafd] text-[#2196f3] w-[20%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
             <MdAddBox />
           </div>
         </div>
@@ -122,6 +127,19 @@ const ApplicationMaster = () => {
           </table>
       </div>
     </div>
+    <PopUp
+        heading="Application Master"
+        buttonText="Submit"
+       
+        inputs={[
+          { label: 'Application', placeholder: '', type:"text" },
+          { label: 'Application Version', placeholder: '', type:"text" },
+          { label: 'Make', placeholder: '', type:"text" },
+        
+        ]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
   </div>
   )
 }

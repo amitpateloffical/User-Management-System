@@ -26,7 +26,7 @@ const ApexChart = () => {
             options={chartOptions}
             series={chartSeries}
             type="area"
-            width="500"
+            width="470"
           />
         </div>
       </div>

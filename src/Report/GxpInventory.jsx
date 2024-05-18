@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { MdAddBox } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
-import { IoBan } from "react-icons/io5";
 import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
@@ -40,9 +37,7 @@ const GxpInventory = () => {
     },
   ]
 return (
-  <div>
-    
-    
+  <div>   
   <div
     className={`content-with-fixed-header  px-4 flex flex-col gap-10 ${
       sidebarOpen ? "ml-64" : ""
@@ -83,9 +78,9 @@ return (
 
         
       </div>
-    <div>
-        <table>
-            <thead>
+    <div className="overflow-auto">
+        <table className="min-w-full border-collapse">
+            <thead className="sticky top-0 bg-white">
                 <tr >
                     <th className="text-center">SR.NO.</th>
                     <th className="text-center">DEPARTMENT NAME</th>

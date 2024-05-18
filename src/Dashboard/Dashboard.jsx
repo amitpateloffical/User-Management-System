@@ -19,15 +19,11 @@ import {
 import ApexChart from "../ApexChart/ApexChart ";
 
 import SideBar from "../SideBar";
+import PopUp from "../PopUp/PopUp";
 
 const Dashboard = () => {
   const [open, setOpen] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   const toggleDrawer = (newOpen) => (event) => {
     if (
@@ -295,8 +291,10 @@ const Dashboard = () => {
         </Drawer>
       </div>
       
+      
     </div>
   );
 };
 
 export default Dashboard;
+ 

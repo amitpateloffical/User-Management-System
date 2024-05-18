@@ -65,7 +65,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <div>
       {sidebarOpen && (
-        <div className="fixed top-24 h-full w-64 flex flex-col gap-10  p-4">
+        <div className="fixed top-24 h-full w-64 flex flex-col gap-10  p-4" style={{zIndex:1000, backgroundColor:"#fff",overflowY:"auto",height:"calc(100vh - 7rem)"}}>
           <div
             className={`flex gap-5 items-center cursor-pointer ${isActive(
               "/dashboard"
@@ -184,7 +184,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                   onClick={stopPropagation}
                 >
                   <p
-                    className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
+                    className={`hover:list-disc hover:text-purple-500 flex items-center gap-3 ${isActive(
                       "/active-users-list"
                     )}`}
                     onClick={() => handleNavigation("/active-users-list")}

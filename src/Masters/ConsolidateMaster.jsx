@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
 
 const ConsolidateMaster = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
+    const [popupOpen, setPopupOpen] = useState(false);
+    const [popupOpenII, setPopupOpenII] = useState(false);
     const data = [
       {
           srNo : "1.",
@@ -36,6 +38,13 @@ const ConsolidateMaster = () => {
           department:"HR"
       },
     ]
+
+    const togglePopup = () => {
+      setPopupOpen(!popupOpen);
+    };
+    const togglePopupII = () => {
+      setPopupOpenII(!popupOpenII);
+    };
   return (
     <div>
       
@@ -50,10 +59,10 @@ const ConsolidateMaster = () => {
         Consolidate Master
         </div>
        <div className="flex justify-around col-span-1 w-full">
-       <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[30%] h-[40px] flex justify-center items-center">
+       <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[30%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
            Server Base &nbsp;<MdAddBox />
           </div>
-          <div className="bg-[#d3eafd]  rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[30%] h-[40px] flex justify-center items-center">
+          <div className="bg-[#d3eafd]  rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[30%] h-[40px] flex justify-center items-center" onClick={togglePopupII}>
            Standalone &nbsp;<MdAddBox />
           </div>
        </div>
@@ -134,6 +143,146 @@ const ConsolidateMaster = () => {
           </table>
       </div>
     </div>
+    <PopUp
+        heading="Server Base"
+        buttonText="Submit"
+        inputs={[
+          { label: 'Consolidate', type:"text" },
+          {
+            label: 'Assets Id',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Application Name & Version',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Department',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Backup Frequency',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Backup Type',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          { label: 'Backup Path', type:"text" },
+        ]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
+       <PopUp
+        heading="Equipment/Instrument Master"
+        buttonText="Submit"
+        inputs={[
+          { label: 'Consolidate', type:"text" },
+          {
+            label: 'Equipment/Instrument ID',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Application Name & Version',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Department',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Backup Frequency',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          {
+            label: 'Backup Type',
+            type: 'dropdown',
+            options: [
+              { label: '-select-', value: 'select' },
+              { label: 'HMI', value: 'hmi' },
+              { label: 'SCADA', value: 'scada' },
+              { label: 'IPC', value: 'ipc' },
+              { label: 'COMPUTER SYSTEM', value: 'cs' },
+              { label: 'Other', value: 'other' },
+            ],
+          },
+          { label: 'Backup Path', type:"text" },
+        ]}
+        open={popupOpenII}
+        onClose={togglePopupII}
+      />
   </div>
   )
 }

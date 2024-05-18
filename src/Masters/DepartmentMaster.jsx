@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
 
 const DepartmentMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [popupOpen, setPopupOpen] = useState(false);
   const data = [
     {
         srNo : "1.",
@@ -36,6 +37,11 @@ const DepartmentMaster = () => {
         department:"HR"
     },
   ]
+
+  const togglePopup = () => {
+    setPopupOpen(!popupOpen);
+  };
+
   return (
     <div>
       
@@ -71,7 +77,7 @@ const DepartmentMaster = () => {
               />
             </div>
 
-            <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center">
+            <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
               <MdAddBox />
             </div>
           </div>
@@ -105,6 +111,16 @@ const DepartmentMaster = () => {
             </table>
         </div>
       </div>
+      <PopUp
+         heading="Department Master"
+         buttonText="Submit"
+         labelHeading="Department"
+         inputs={[
+           { label: 'Department', placeholder: 'Enter Department Name' },
+         ]}
+         open={popupOpen}
+         onClose={togglePopup}
+      />
     </div>
   );
 };

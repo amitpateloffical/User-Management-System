@@ -19,13 +19,16 @@ import SignUpReport from './Report/SignUpReport'
 import UserManagement from './CFR/UserManagement'
 import AuditTrail from './CFR/AuditTrail'
 import Wrapper from './Wrapper/Wrapper'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
  <>
 <BrowserRouter>
-
+<ToastContainer />
 <Routes>
+
   <Route path='/' element={<LogIn/>}   />
   <Route path="/" element={<Wrapper />}>
   <Route path='/dashboard' element={<Dashboard/>} />
