@@ -72,18 +72,12 @@ const LogIn = () => {
                 >
                   Sign In
                 </button>
-              </div>
-             
-                            <div className='flex justify-center items-center gap-3'>
-                                <p className='border-b-2 border-black font-semibold'>Don't have an account?</p>
-                                <a className='text-[#e69743] font-bold cursor-pointer'>Sign Up</a>
-                            </div>
-                           
+              </div>   
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
   )
 }
