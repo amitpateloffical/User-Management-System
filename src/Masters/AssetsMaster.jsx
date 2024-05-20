@@ -176,7 +176,7 @@ const AssetsMaster = () => {
             />
           </div>
 
-          <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
+          <div className="bg-[#d3eafd] mt-5 text-[#2196f3] w-[20%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
             <MdAddBox />
           </div>
         </div>

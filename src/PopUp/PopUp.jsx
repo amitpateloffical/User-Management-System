@@ -6,7 +6,7 @@ const PopUp =({ heading, buttonText, inputs, open, onClose}) => {
   return (
     <div>
     {open && (
-     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center" style={{zIndex:1,overflowY:"auto"}}>
      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl mx-auto">
         <div className='flex justify-end items-center'>
         <RxCross2
