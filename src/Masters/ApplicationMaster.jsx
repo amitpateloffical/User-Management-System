@@ -8,40 +8,114 @@ const ApplicationMaster = () => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [popupOpen, setPopupOpen] = useState(false);
-  
+    const [statusFilter, setStatusFilter] = useState("All");
+  const [searchText, setSearchText] = useState("");
+  const [access, setAccess] = useState("");
+
     const data = [
       {
-          srNo : "1.",
-          department:"QC"
+          srNo: "1.",
+          application: "App A",
+          version: "1.0",
+          make: "Make X",
+          assignRole: "QC",
+          status: "Active"
       },
       {
-          srNo : "2.",
-          department:"Test-1"
+          srNo: "2.",
+          application: "App B",
+          version: "1.1",
+          make: "Make Y",
+          assignRole: "Test-1",
+          status: "Inactive"
       },
       {
-          srNo : "3.",
-          department:"User"
+          srNo: "3.",
+          application: "App A",
+          version: "1.2",
+          make: "Make X",
+          assignRole: "User",
+          status: "Active"
       },
       {
-          srNo : "4.",
-          department:"IT"
+          srNo: "4.",
+          application: "App C",
+          version: "2.0",
+          make: "Make Z",
+          assignRole: "IT",
+          status: "Inactive"
       },
       {
-          srNo : "5.",
-          department:"QA"
+          srNo: "5.",
+          application: "App A",
+          version: "1.3",
+          make: "Make X",
+          assignRole: "QA",
+          status: "Active"
       },
       {
-          srNo : "6.",
-          department:"System Admin"
+          srNo: "6.",
+          application: "App D",
+          version: "2.1",
+          make: "Make W",
+          assignRole: "System Admin",
+          status: "Inactive"
       },
       {
-          srNo : "7.",
-          department:"HR"
+          srNo: "7.",
+          application: "App B",
+          version: "1.4",
+          make: "Make Y",
+          assignRole: "HR",
+          status: "Active"
       },
-    ]
+      {
+          srNo: "8.",
+          application: "App A",
+          version: "1.5",
+          make: "Make X",
+          assignRole: "Finance",
+          status: "Active"
+      },
+      {
+          srNo: "9.",
+          application: "App B",
+          version: "1.6",
+          make: "Make Y",
+          assignRole: "Marketing",
+          status: "Inactive"
+      },
+      {
+          srNo: "10.",
+          application: "App C",
+          version: "2.2",
+          make: "Make Z",
+          assignRole: "Operations",
+          status: "Active"
+      }
+  ];
+  
     const togglePopup = () => {
       setPopupOpen(!popupOpen);
     };
+
+    const handleStatusFilterChange = (event) => {
+      setStatusFilter(event.target.value);
+    };
+
+    const handleAccessFilterChange = (event) => {
+      setAccess(event.target.value);
+    };
+    
+    const filteredData = data.filter(item => {
+      return (
+        (statusFilter === "All" || 
+        (statusFilter === "Active" && item.status === "Active") || 
+        (statusFilter === "Inactive" && item.status === "Inactive"))
+        &&
+        (searchText === "" || item.application.toLowerCase().includes(searchText.toLowerCase()))
+      );
+    });
 
   return (
     <div>
@@ -60,20 +134,20 @@ const ApplicationMaster = () => {
             <label htmlFor="" className="font-bold">
               Status
             </label>
-            <select className="border border-black rounded-md  py-2 ">
-              <option>---select---</option>
-              <option>Active</option>
-              <option>Inactive</option>
+            <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+              <option value="All">All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
             <label htmlFor="" className="font-bold">
             Access Type
             </label>
-            <select className="border border-black rounded-md  py-2 ">
-              <option>---select---</option>
-              <option>Group</option>
-              <option>Role</option>
+            <select className="border border-black rounded-md  py-2 " onChange={handleAccessFilterChange}>
+              <option value="All">All</option>
+              <option value="Group">Group</option>
+              <option value="Role">Role</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
@@ -84,6 +158,8 @@ const ApplicationMaster = () => {
               type="text"
               className="border border-black rounded-md pr-24 py-2 "
               placeholder="Search Application By Name"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
             />
           </div>
 
@@ -107,16 +183,16 @@ const ApplicationMaster = () => {
               </thead>
               <tbody>
                  
-{data.map(( itm, index)=>{
+{filteredData.map(( itm, index)=>{
   return(
      
        <tr key={index}>
 <td className="text-center">{itm.srNo}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">Active</div></div> </td>
+<td className="text-center">{itm.application}</td>
+<td className="text-center">{itm.version}</td>
+<td className="text-center">{itm.make}</td>
+<td className="text-center">{itm.assignRole}</td>
+<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
 <td > <div className="text-center flex justify-center gap-3 items-center"><div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"><FaRegEdit /></div> <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"><IoBan /></div></div></td>
 </tr>
       

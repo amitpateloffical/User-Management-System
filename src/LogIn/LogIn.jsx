@@ -36,49 +36,46 @@ const LogIn = () => {
   };
 
   return (
-<div className='login-container flex flex-col'>
-            <div className='flex flex-col justify-center items-center h-full'>
-                
-                <div className='h-[594px] w-[470px] bg-white flex justify-center items-center border border-black rounded card'>
-                    <div>
-                        <div className='flex flex-col gap-8 p-5'>
-                        <div className='text-xl font-semibold text-center text-[#e69743] '>
-                    WELCOME TO USER MANAGEMENT RECORD SYSTEM
-                </div>
-                            <div className='flex justify-center items-center'>
-                                <img src='/login.png' className='h-[100px] w-[300px]' alt='Logo' />
-                            </div>
-                            <div className="flex flex-col">
-                <label><b>User Name</b></label>
-                <input
-                  className="w-full py-3 px-2 border border-black rounded-md"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label><b>Password</b></label>
-                <input
-                  className="w-full py-3 px-2 border border-black rounded-md"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div>
-                <button
-                  className="bg-[#e69743] py-2 w-full rounded-md text-white"
-                  onClick={handleLogin}
-                >
-                  Sign In
-                </button>
-              </div>   
-                        </div>
-                    </div>
-                </div>
+    <div className='login-container flex flex-col min-h-screen'>
+      <div className='flex flex-col justify-center items-center flex-grow'>
+        <div className='w-full max-w-md p-6 bg-white border border-black rounded-md shadow-md sm:mx-4 lg:mx-0'>
+          <div className='flex flex-col gap-8 p-5'>
+            <div className='text-xl font-semibold text-center text-[#e69743]'>
+              WELCOME TO USER MANAGEMENT RECORD SYSTEM
             </div>
-            <Footer />
+            <div className='flex justify-center items-center'>
+              <img src='/login.png' className='h-24 w-full max-w-xs' alt='Logo' />
+            </div>
+            <div className="flex flex-col">
+              <label><b>User Name</b></label>
+              <input
+                className="w-full py-3 px-2 border border-black rounded-md"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label><b>Password</b></label>
+              <input
+                className="w-full py-3 px-2 border border-black rounded-md"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div>
+              <button
+                className="bg-[#e69743] py-2 w-full rounded-md text-white"
+                onClick={handleLogin}
+              >
+                Sign In
+              </button>
+            </div>   
+          </div>
         </div>
+      </div>
+      <Footer />
+    </div>
   )
 }
 

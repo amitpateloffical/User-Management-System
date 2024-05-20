@@ -148,151 +148,88 @@ const Dashboard = () => {
   return (
     <div>
       
-      <div
-        className={`content-with-fixed-header bg-gray-200 dashboard-container px-4 flex flex-col gap-10 ${
-          sidebarOpen ? "ml-64" : ""
-        } content-with-fixed-header bg-gray-200 dashboard-container px-4 flex flex-col gap-10`}
-      >
-        <div className="grid grid-cols-3 gap-10 ">
-          <div
-            className="bg-gradient-to-r rounded-xl from-purple-500 to-purple-700 p-8"
-            onClick={() => setOpen(true)}
-          >
-            <div className="text-[24px] text-white flex items-center gap-2 ">
-              0 <BsArrowUpRightCircle className="opacity-50" />
-            </div>
-            <div className="text-[15px] text-white">
-              {" "}
-              Request Under Reporting Person Approval
-            </div>
-          </div>
-          <div
-            className="bg-gradient-to-r from-sky-500 rounded-xl to-sky-700 p-8 "
-            onClick={() => setOpen(true)}
-          >
-            <div className="text-[24px] text-white flex items-center gap-2">
-              0 <BsArrowUpRightCircle className="opacity-50" />
-            </div>
-            <div className="text-[15px] text-white">
-              {" "}
-              Request Under QA Approval
-            </div>
-          </div>
-          <div
-            className="bg-gradient-to-r from-cyan-500 to-cyan-700 rounded-xl p-8 "
-            onClick={() => setOpen(true)}
-          >
-            <div className="text-[24px] text-white flex items-center gap-2">
-              0 <BsArrowUpRightCircle className="opacity-50" />
-            </div>
-            <div className="text-[15px] text-white"> Request For Execution</div>
-          </div>
+      <div className={`content-with-fixed-header bg-gray-200 dashboard-container px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="bg-gradient-to-r rounded-xl from-purple-500 to-purple-700 p-8" onClick={() => setOpen(true)}>
+        <div className="text-[24px] text-white flex items-center gap-2">
+          0 <BsArrowUpRightCircle className="opacity-50" />
         </div>
-        <div className="grid-cols-2 grid gap-10">
-          <div
-            className="bg-gradient-to-r rounded-xl bg-white px-8 flex gap-4 items-center "
-            onClick={() => setOpen(true)}
-          >
-            <div className="bg-sky-200 text-sky-600 h-10 w-14 flex justify-center items-center text-[30px] rounded-lg">
-              <CiCreditCard1 />
-            </div>
-            <div className="text-gray-400">
-              <div className="text-[24px]  flex items-center gap-2 ">
-                0 <BsArrowUpRightCircle className="opacity-50" />
-              </div>
-              <div className="text-[15px] ">
-                Unlock User Request (System Admin)
-              </div>
-            </div>
-          </div>
-          <div
-            className="bg-gradient-to-r rounded-xl bg-white p-8 flex gap-4 items-center "
-            onClick={() => setOpen(true)}
-          >
-            <div className="bg-green-200 text-green-600 h-10 w-14 flex justify-center items-center text-[30px] rounded-lg">
-              <CiCreditCard1 />
-            </div>
-            <div className="text-gray-400">
-              <div className="text-[24px]  flex items-center gap-2 ">
-                0 <BsArrowUpRightCircle className="opacity-50" />
-              </div>
-              <div className="text-[15px] ">
-                Forgot Password Request(System Admin)
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-3">
-          <div className="col-span-2 ">
-            <div>
-              <Bar
-                data={chartData}
-                options={{
-                  title: {
-                    display: true,
-                    text: "Sample Bar Chart",
-                    fontSize: 5,
-                  },
-                  legend: {
-                    display: true,
-                    position: "right",
-                  },
-                }}
-              />
-              <button onClick={updateData}>Update Data</button>
-            </div>
-          </div>
-          <div className="flex flex-col gap-5">
-            <div
-              className="bg-gradient-to-r rounded-xl from-fuchsia-300 to-purple-700 p-8"
-              onClick={() => setOpen(true)}
-            >
-              <div className="text-[24px] text-white flex items-center gap-2 ">
-                0 <BsArrowUpRightCircle className="opacity-50" />
-              </div>
-              <div className="text-[15px] text-white">
-                {" "}
-                Request Under Reporting Person Approval
-              </div>
-            </div>
-            <div
-              className="bg-gradient-to-r rounded-xl from-teal-200 to-blue-500 p-8"
-              onClick={() => setOpen(true)}
-            >
-              <div className="text-[24px] text-white flex items-center gap-2 ">
-                0 <BsArrowUpRightCircle className="opacity-50" />
-              </div>
-              <div className="text-[15px] text-white">
-                {" "}
-                Request Under Reporting Person Approval
-              </div>
-            </div>
-            <div
-              className="bg-gradient-to-r rounded-xl from-red-200 to-orange-400 p-8"
-              onClick={() => setOpen(true)}
-            >
-              <div className="text-[24px] text-white flex items-center gap-2 ">
-                0 <BsArrowUpRightCircle className="opacity-50" />
-              </div>
-              <div className="text-[15px] text-white">
-                {" "}
-                Request Under Reporting Person Approval
-              </div>
-            </div>
-            <div className="w-full">
-              <ApexChart />
-            </div>
-          </div>
-        </div>
+        <div className="text-[15px] text-white">Request Under Reporting Person Approval</div>
       </div>
-      <div>
-        <Drawer open={open} onClose={toggleDrawer(false)} anchor="top">
-          <DrawerList />
-        </Drawer>
+      <div className="bg-gradient-to-r from-sky-500 rounded-xl to-sky-700 p-8" onClick={() => setOpen(true)}>
+        <div className="text-[24px] text-white flex items-center gap-2">
+          0 <BsArrowUpRightCircle className="opacity-50" />
+        </div>
+        <div className="text-[15px] text-white">Request Under QA Approval</div>
       </div>
-      
-      
+      <div className="bg-gradient-to-r from-cyan-500 to-cyan-700 rounded-xl p-8" onClick={() => setOpen(true)}>
+        <div className="text-[24px] text-white flex items-center gap-2">
+          0 <BsArrowUpRightCircle className="opacity-50" />
+        </div>
+        <div className="text-[15px] text-white">Request For Execution</div>
+      </div>
     </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="bg-gradient-to-r rounded-xl bg-white px-8 flex gap-4 items-center" onClick={() => setOpen(true)}>
+        <div className="bg-sky-200 text-sky-600 h-10 w-14 flex justify-center items-center text-[30px] rounded-lg">
+          <CiCreditCard1 />
+        </div>
+        <div className="text-gray-400">
+          <div className="text-[24px] flex items-center gap-2">
+            0 <BsArrowUpRightCircle className="opacity-50" />
+          </div>
+          <div className="text-[15px]">Unlock User Request (System Admin)</div>
+        </div>
+      </div>
+      <div className="bg-gradient-to-r rounded-xl bg-white p-8 flex gap-4 items-center" onClick={() => setOpen(true)}>
+        <div className="bg-green-200 text-green-600 h-10 w-14 flex justify-center items-center text-[30px] rounded-lg">
+          <CiCreditCard1 />
+        </div>
+        <div className="text-gray-400">
+          <div className="text-[24px] flex items-center gap-2">
+            0 <BsArrowUpRightCircle className="opacity-50" />
+          </div>
+          <div className="text-[15px]">Forgot Password Request(System Admin)</div>
+        </div>
+      </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div className="col-span-2">
+        <Bar data={chartData} options={{ title: { display: true, text: "Sample Bar Chart", fontSize: 5 }, legend: { display: true, position: "right" } }} />
+        <button onClick={updateData}>Update Data</button>
+      </div>
+      <div className="flex flex-col gap-5">
+        <div className="bg-gradient-to-r rounded-xl from-fuchsia-300 to-purple-700 p-8" onClick={() => setOpen(true)}>
+          <div className="text-[24px] text-white flex items-center gap-2">
+            0 <BsArrowUpRightCircle className="opacity-50" />
+          </div>
+          <div className="text-[15px] text-white">Request Under Reporting Person Approval</div>
+        </div>
+        <div className="bg-gradient-to-r rounded-xl from-teal-200 to-blue-500 p-8" onClick={() => setOpen(true)}>
+          <div className="text-[24px] text-white flex items-center gap-2">
+            0 <BsArrowUpRightCircle className="opacity-50" />
+          </div>
+          <div className="text-[15px] text-white">Request Under Reporting Person Approval</div>
+        </div>
+        <div className="bg-gradient-to-r rounded-xl from-red-200 to-orange-400 p-8" onClick={() => setOpen(true)}>
+          <div className="text-[24px] text-white flex items-center gap-2">
+            0 <BsArrowUpRightCircle className="opacity-50" />
+          </div>
+          <div className="text-[15px] text-white">Request Under Reporting Person Approval</div>
+        </div>
+        <div className="w-full">
+          <ApexChart />
+        </div>
+      </div>
+    </div>
+  </div>
+  <Drawer open={open} onClose={toggleDrawer(false)} anchor="top">
+    <DrawerList />
+  </Drawer>
+</div>
+      
+      
+
   );
 };
 

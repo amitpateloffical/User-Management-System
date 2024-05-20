@@ -8,40 +8,130 @@ import PopUp from "../PopUp/PopUp";
 const EquipmentInstrumentMaster = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [popupOpen, setPopupOpen] = useState(false);
+    const [statusFilter, setStatusFilter] = useState("All");
+    const [searchText, setSearchText] = useState("");
+
     const data = [
       {
-          srNo : "1.",
-          department:"QC"
+          srNo: "1.",
+          equipmentId: "EID-001",
+          equipmentName: "Thermometer",
+          make: "Make X",
+          model: "Model A1",
+          type: "Measurement",
+          status: "Active",
+          action: "Calibrate"
       },
       {
-          srNo : "2.",
-          department:"Test-1"
+          srNo: "2.",
+          equipmentId: "EID-002",
+          equipmentName: "Multimeter",
+          make: "Make Y",
+          model: "Model B1",
+          type: "Testing",
+          status: "Inactive",
+          action: "Repair"
       },
       {
-          srNo : "3.",
-          department:"User"
+          srNo: "3.",
+          equipmentId: "EID-003",
+          equipmentName: "Oscilloscope",
+          make: "Make X",
+          model: "Model A2",
+          type: "Measurement",
+          status: "Active",
+          action: "Check"
       },
       {
-          srNo : "4.",
-          department:"IT"
+          srNo: "4.",
+          equipmentId: "EID-004",
+          equipmentName: "Power Supply",
+          make: "Make Z",
+          model: "Model C1",
+          type: "Power",
+          status: "Inactive",
+          action: "Replace"
       },
       {
-          srNo : "5.",
-          department:"QA"
+          srNo: "5.",
+          equipmentId: "EID-005",
+          equipmentName: "Spectrum Analyzer",
+          make: "Make X",
+          model: "Model A3",
+          type: "Measurement",
+          status: "Active",
+          action: "Calibrate"
       },
       {
-          srNo : "6.",
-          department:"System Admin"
+          srNo: "6.",
+          equipmentId: "EID-006",
+          equipmentName: "Function Generator",
+          make: "Make W",
+          model: "Model D1",
+          type: "Signal",
+          status: "Inactive",
+          action: "Repair"
       },
       {
-          srNo : "7.",
-          department:"HR"
+          srNo: "7.",
+          equipmentId: "EID-007",
+          equipmentName: "Data Logger",
+          make: "Make Y",
+          model: "Model B2",
+          type: "Recording",
+          status: "Active",
+          action: "Check"
       },
-    ]
+      {
+          srNo: "8.",
+          equipmentId: "EID-008",
+          equipmentName: "Anemometer",
+          make: "Make X",
+          model: "Model A4",
+          type: "Measurement",
+          status: "Active",
+          action: "Calibrate"
+      },
+      {
+          srNo: "9.",
+          equipmentId: "EID-009",
+          equipmentName: "LCR Meter",
+          make: "Make Y",
+          model: "Model B3",
+          type: "Testing",
+          status: "Inactive",
+          action: "Repair"
+      },
+      {
+          srNo: "10.",
+          equipmentId: "EID-010",
+          equipmentName: "Temperature Chamber",
+          make: "Make Z",
+          model: "Model C2",
+          type: "Environmental",
+          status: "Active",
+          action: "Check"
+      }
+  ];
 
     const togglePopup = () => {
       setPopupOpen(!popupOpen);
     };
+
+    const handleStatusFilterChange = (event) => {
+      setStatusFilter(event.target.value);
+    };
+    
+    const filteredData = data.filter(item => {
+      return (
+        (statusFilter === "All" || 
+        (statusFilter === "Active" && item.status === "Active") || 
+        (statusFilter === "Inactive" && item.status === "Inactive"))
+        &&
+        (searchText === "" || item.equipmentId.toLowerCase().includes(searchText.toLowerCase()))
+      );
+    });
+
   return (
     <div>
       
@@ -60,10 +150,10 @@ const EquipmentInstrumentMaster = () => {
             <label htmlFor="" className="font-bold">
               Status
             </label>
-            <select className="border border-black rounded-md  py-2 ">
-              <option>---select---</option>
-              <option>Active</option>
-              <option>Inactive</option>
+            <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+              <option value="All">All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
@@ -87,6 +177,8 @@ const EquipmentInstrumentMaster = () => {
               type="text"
               className="border border-black rounded-md pr-24 py-2 "
               placeholder="Search EQP By ID"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
             />
           </div>
 
@@ -111,17 +203,17 @@ const EquipmentInstrumentMaster = () => {
               </thead>
               <tbody>
                  
-{data.map(( itm, index)=>{
+{filteredData.map(( itm, index)=>{
   return(
      
        <tr key={index}>
 <td className="text-center">{itm.srNo}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">Active</div></div> </td>
+<td className="text-center">{itm.equipmentId}</td>
+<td className="text-center">{itm.equipmentName}</td>
+<td className="text-center">{itm.make}</td>
+<td className="text-center">{itm.model}</td>
+<td className="text-center">{itm.type}</td>
+<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
 <td > <div className="text-center flex justify-center gap-3 items-center"><div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"><FaRegEdit /></div> <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"><IoBan /></div></div></td>
 </tr>
       

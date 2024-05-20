@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
-import SideBar from "../SideBar";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
@@ -9,40 +6,78 @@ import PopUp from "../PopUp/PopUp";
 const DesignationMaster = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [popupOpen, setPopupOpen] = useState(false);
-  
+    const [statusFilter, setStatusFilter] = useState("All");
+  const [searchText, setSearchText] = useState("");
+
     const data = [
       {
-          srNo : "1.",
-          department:"QC"
+          srNo: "1.",
+          designation: "QC",
+          status: "Active"
       },
       {
-          srNo : "2.",
-          department:"Test-1"
+          srNo: "2.",
+          designation: "Test-1",
+          status: "Inactive"
       },
       {
-          srNo : "3.",
-          department:"User"
+          srNo: "3.",
+          designation: "User",
+          status: "Active"
       },
       {
-          srNo : "4.",
-          department:"IT"
+          srNo: "4.",
+          designation: "IT",
+          status: "Inactive"
       },
       {
-          srNo : "5.",
-          department:"QA"
+          srNo: "5.",
+          designation: "QA",
+          status: "Active"
       },
       {
-          srNo : "6.",
-          department:"System Admin"
+          srNo: "6.",
+          designation: "System Admin",
+          status: "Inactive"
       },
       {
-          srNo : "7.",
-          department:"HR"
+          srNo: "7.",
+          designation: "HR",
+          status: "Active"
       },
-    ]
+      {
+          srNo: "8.",
+          designation: "Finance",
+          status: "Active"
+      },
+      {
+          srNo: "9.",
+          designation: "Marketing",
+          status: "Inactive"
+      },
+      {
+          srNo: "10.",
+          designation: "Operations",
+          status: "Active"
+      }
+  ]
     const togglePopup = () => {
       setPopupOpen(!popupOpen);
     };
+
+    const handleStatusFilterChange = (event) => {
+      setStatusFilter(event.target.value);
+    };
+
+    const filteredData = data.filter(item => {
+      return (
+        (statusFilter === "All" || 
+        (statusFilter === "Active" && item.status === "Active") || 
+        (statusFilter === "Inactive" && item.status === "Inactive"))
+        &&
+        (searchText === "" || item.designation.toLowerCase().includes(searchText.toLowerCase()))
+      );
+    });
 
   return (
     <div>
@@ -61,10 +96,10 @@ const DesignationMaster = () => {
             <label htmlFor="" className="font-bold">
               Status
             </label>
-            <select className="border border-black rounded-md  py-2 ">
-              <option>---select---</option>
-              <option>Active</option>
-              <option>Inactive</option>
+            <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+              <option value="All">All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
@@ -75,6 +110,8 @@ const DesignationMaster = () => {
               type="text"
               className="border border-black rounded-md pr-24 py-2 "
               placeholder="Search Designation By Name"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
             />
           </div>
 
@@ -95,13 +132,13 @@ const DesignationMaster = () => {
               </thead>
               <tbody>
                  
-{data.map(( itm, index)=>{
+{filteredData.map(( itm, index)=>{
   return(
      
        <tr key={index}>
 <td className="text-center">{itm.srNo}</td>
-<td className="text-center">{itm.department}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">Active</div></div> </td>
+<td className="text-center">{itm.designation}</td>
+<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
 <td > <div className="text-center flex justify-center gap-3 items-center"><div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"><FaRegEdit /></div> <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"><IoBan /></div></div></td>
 </tr>
       

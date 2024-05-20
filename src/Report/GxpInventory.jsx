@@ -43,7 +43,7 @@ return (
       sidebarOpen ? "ml-64" : ""
     } content-with-fixed-header  px-4 flex flex-col gap-10 `}
   >
-    <div className="grid grid-cols-3 border-b pb-5">
+    <div className="fixed grid grid-cols-3 border-b pb-5 w-[80%]">
       <div className="text-3xl font-semibold text-[#673ab7] col-span-2">
       GxP Inventory
       </div>
@@ -56,8 +56,8 @@ return (
         </div>
      </div>
     </div>
-    <div className="grid grid-cols-4 justify-center items-center gap-5">
-      <div className="col-span-1 flex items-center gap-5">
+    <div className="mt-16 grid grid-cols-4 justify-center items-center gap-5">
+      <div className="fixed w-[30%] mt-16  col-span-1 flex items-center gap-5">
         <div className="flex flex-col w-full">
           <label htmlFor="" className="font-bold">
           Select Filter
@@ -79,7 +79,7 @@ return (
         
       </div>
     <div className="overflow-auto">
-        <table className="min-w-full border-collapse">
+        <table className="min-w-full border-collapse mt-16">
             <thead className="sticky top-0 bg-white">
                 <tr >
                     <th className="text-center">SR.NO.</th>
