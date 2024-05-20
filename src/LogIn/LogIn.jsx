@@ -36,7 +36,7 @@ const LogIn = () => {
   };
 
   return (
-<div className='login-container h-full flex flex-col'>
+<div className='login-container flex flex-col'>
             <div className='flex flex-col justify-center items-center h-full'>
                 
                 <div className='h-[594px] w-[470px] bg-white flex justify-center items-center border border-black rounded card'>
@@ -77,7 +77,7 @@ const LogIn = () => {
                     </div>
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </div>
   )
 }
