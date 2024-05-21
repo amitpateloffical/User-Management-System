@@ -12,6 +12,12 @@ import { IoIdCardOutline } from "react-icons/io5";
 import { TbAsset } from "react-icons/tb";
 import { MdOutlineQuickreply } from "react-icons/md";
 import { SiConsul } from "react-icons/si";
+import { FaUserCheck } from "react-icons/fa";
+import { MdInventory } from "react-icons/md";
+import { PiUserListBold } from "react-icons/pi";
+import { TbFileReport } from "react-icons/tb";
+import { FaUserGroup } from "react-icons/fa6";
+import { AiOutlineAudit } from "react-icons/ai";
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
   const [masters, setMasters] = useState(false);
@@ -180,7 +186,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
             >
               {report && (
                 <div
-                  className="flex flex-col gap-2 text-gray-500 "
+                  className="flex flex-col gap-5 text-gray-500 "
                   onClick={stopPropagation}
                 >
                   <p
@@ -189,7 +195,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/active-users-list")}
                   >
-                    Active Users List
+                  <FaUserCheck />  Active Users List
                   </p>
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
@@ -197,7 +203,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/request-report")}
                   >
-                    Request Report
+                   <IoMdGitPullRequest /> Request Report
                   </p>
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
@@ -205,7 +211,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/assets-inventory")}
                   >
-                    Assets Inventory
+                   <TbAsset /> Assets Inventory
                   </p>
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
@@ -213,7 +219,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/gxp-inventory")}
                   >
-                    GxP Inventory
+                  <MdInventory />  GxP Inventory
                   </p>
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
@@ -221,7 +227,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/user-list")}
                   >
-                    User List
+                   <PiUserListBold /> User List
                   </p>
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
@@ -229,7 +235,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/sign-up-report")}
                   >
-                    Sign-Up Report
+                   <TbFileReport /> Sign-Up Report
                   </p>
                 </div>
               )}
@@ -251,7 +257,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
               onClick={stopPropagation}
             >
               {CFR && (
-                <div className="flex flex-col gap-2 text-gray-500 ">
+                <div className="flex flex-col gap-5 text-gray-500 ">
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
                       "/user-management"
@@ -259,7 +265,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     onClick={() => handleNavigation("/user-management")}
                   >
                     {" "}
-                    User Management{" "}
+                    <FaUserGroup />  User Management{" "}
                   </p>
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
@@ -268,7 +274,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     onClick={() => handleNavigation("/audit-trail")}
                   >
                     {" "}
-                    Audit Trail{" "}
+                    <AiOutlineAudit /> Audit Trail{" "}
                   </p>
                 </div>
               )}
