@@ -7,37 +7,129 @@ import { IoSearchSharp } from "react-icons/io5";
 
 const AuditTrail = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [searchText, setSearchText] = useState("");
 
   const data = [
     {
-        srNo : "1.",
-        department:"QC"
+        srNo: "1.",
+        dateTime: "2024-05-21 08:30:00",
+        actionFrom: "System",
+        actionRowName: "Department",
+        oldValue: "IT",
+        newValue: "HR",
+        employeeName: "John Doe",
+        remark: "Updated department from IT to HR"
     },
     {
-        srNo : "2.",
-        department:"Test-1"
+        srNo: "2.",
+        dateTime: "2024-05-21 10:45:00",
+        actionFrom: "User",
+        actionRowName: "Designation",
+        oldValue: "Software Engineer",
+        newValue: "Senior Software Engineer",
+        employeeName: "Alice Johnson",
+        remark: "Promoted to Senior Software Engineer"
     },
     {
-        srNo : "3.",
-        department:"User"
+        srNo: "3.",
+        dateTime: "2024-05-21 14:20:00",
+        actionFrom: "Admin",
+        actionRowName: "Status",
+        oldValue: "Active",
+        newValue: "Inactive",
+        employeeName: "Bob Williams",
+        remark: "Deactivated account"
     },
     {
-        srNo : "4.",
-        department:"IT"
+        srNo: "4.",
+        dateTime: "2024-05-22 09:15:00",
+        actionFrom: "System",
+        actionRowName: "Department",
+        oldValue: "Sales",
+        newValue: "Marketing",
+        employeeName: "Charlie Brown",
+        remark: "Transferred to Marketing department"
     },
     {
-        srNo : "5.",
-        department:"QA"
+        srNo: "5.",
+        dateTime: "2024-05-22 11:30:00",
+        actionFrom: "User",
+        actionRowName: "Designation",
+        oldValue: "Sales Manager",
+        newValue: "Sales Director",
+        employeeName: "Eve Black",
+        remark: "Promoted to Sales Director"
     },
     {
-        srNo : "6.",
-        department:"System Admin"
+        srNo: "6.",
+        dateTime: "2024-05-23 09:30:00",
+        actionFrom: "System",
+        actionRowName: "Department",
+        oldValue: "HR",
+        newValue: "Finance",
+        employeeName: "Frank White",
+        remark: "Transferred to Finance department"
     },
     {
-        srNo : "7.",
-        department:"HR"
+        srNo: "7.",
+        dateTime: "2024-05-24 14:45:00",
+        actionFrom: "Admin",
+        actionRowName: "Status",
+        oldValue: "Active",
+        newValue: "Inactive",
+        employeeName: "Grace Green",
+        remark: "Deactivated account"
     },
-  ]
+    {
+        srNo: "8.",
+        dateTime: "2024-05-25 11:20:00",
+        actionFrom: "User",
+        actionRowName: "Designation",
+        oldValue: "Network Engineer",
+        newValue: "Senior Network Engineer",
+        employeeName: "Henry Gold",
+        remark: "Promoted to Senior Network Engineer"
+    },
+    {
+        srNo: "9.",
+        dateTime: "2024-05-26 08:00:00",
+        actionFrom: "System",
+        actionRowName: "Department",
+        oldValue: "Marketing",
+        newValue: "IT",
+        employeeName: "Ivy Blue",
+        remark: "Transferred to IT department"
+    },
+    {
+        srNo: "10.",
+        dateTime: "2024-05-27 10:10:00",
+        actionFrom: "Admin",
+        actionRowName: "Status",
+        oldValue: "Inactive",
+        newValue: "Active",
+        employeeName: "Jack Brown",
+        remark: "Activated account"
+    }
+];
+
+data.map(entry => console.log(entry.employeeName));
+
+    const handleStatusFilterChange = (event) => {
+      setStatusFilter(event.target.value);
+    };
+
+    
+    const filteredData = data.filter(item => {
+      return (
+        (statusFilter === "All" || 
+        (statusFilter === "System" && item.actionFrom === "System") || 
+        (statusFilter === "User" && item.actionFrom === "User")||
+        (statusFilter === "Admin" && item.actionFrom === "Admin"))
+        &&
+        (searchText === "" || item.employeeName.toLowerCase().includes(searchText.toLowerCase()))
+      );
+    });
 return (
   <div>
     
@@ -64,13 +156,14 @@ return (
       <div className="col-span-3 flex items-center gap-5">
       <div className="flex flex-col w-full">
           <label htmlFor="" className="font-bold">
-            Status
+            Action
           </label>
-          <select className="border border-black rounded-md  py-2 ">
-            <option>---select---</option>
-            <option>Active</option>
-            <option>Inactive</option>
-          </select>
+          <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+              <option value="All">All</option>
+              <option value="System">System</option>
+              <option value="User">User</option>
+              <option value="Admin">Admin</option>
+            </select>
         </div>
         <div className="flex flex-col w-full">
             <label htmlFor="" className="font-bold">
@@ -79,7 +172,9 @@ return (
             <input
               type="text"
               className="border border-black rounded-md pr-24 py-2 "
-              placeholder="Search Consolodate"
+              placeholder="Search By Name"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
             />
           </div>
           <div className="flex flex-col w-full">
@@ -127,18 +222,18 @@ return (
             </thead>
             <tbody>
                
-{data.map(( itm, index)=>{
+{filteredData.map(( itm, index)=>{
 return(
    
      <tr key={index}>
 <td className="text-center">{itm.srNo}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
+<td className="text-center">{itm.dateTime}</td>
+<td className="text-center">{itm.actionFrom}</td>
+<td className="text-center">{itm.actionRowName}</td>
+<td className="text-center">{itm.oldValue}</td>
+<td className="text-center">{itm.newValue}</td>
+<td className="text-center">{itm.employeeName}</td>
+<td className="text-center">{itm.remark}</td>
 
 </tr>
     

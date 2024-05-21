@@ -2,3 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (max-width: 640px) {
+    .content-with-fixed-header {
+        padding: 0.5rem;
+    }
+    
+    .grid-cols-1 {
+        grid-template-columns: 1fr;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    table thead th, table tbody td {
+        padding: 0.5rem;
+    }
+
+    .min-w-full {
+        min-width: 100%;
+    }
+
+    .divide-y {
+        border-top-width: 1px;
+        border-bottom-width: 1px;
+    }
+}

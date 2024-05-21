@@ -8,37 +8,194 @@ import { IoSearchSharp } from "react-icons/io5";
 
 const RequestReport = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selfFilter,setSelfFilter]=useState("All")
 
   const data = [
     {
-        srNo : "1.",
-        department:"QC"
+        srNo: "1.",
+        report: "Calibration Report",
+        requestNo: "REQ-001",
+        department: "QC",
+        requestType: "Calibration",
+        equipmentId: "EID-001",
+        assetId: "AID-101",
+        applicationNameVersion: "App A v1.0",
+        requestedRole: "Technician",
+        requestFor: "Self",
+        selfExternal: "Self",
+        remark: "Scheduled for routine calibration",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-01",
+        status: "Active"
     },
     {
-        srNo : "2.",
-        department:"Test-1"
+        srNo: "2.",
+        report: "Maintenance Report",
+        requestNo: "REQ-002",
+        department: "Test-1",
+        requestType: "Maintenance",
+        equipmentId: "EID-002",
+        assetId: "AID-102",
+        applicationNameVersion: "App B v1.1",
+        requestedRole: "Engineer",
+        requestFor: "System Check",
+        selfExternal: "External",
+        remark: "Reported malfunction",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-02",
+        status: "Inactive"
     },
     {
-        srNo : "3.",
-        department:"User"
+        srNo: "3.",
+        report: "Inspection Report",
+        requestNo: "REQ-003",
+        department: "User",
+        requestType: "Inspection",
+        equipmentId: "EID-003",
+        assetId: "AID-103",
+        applicationNameVersion: "App A v1.2",
+        requestedRole: "Inspector",
+        requestFor: "Performance",
+        selfExternal: "Self",
+        remark: "Routine inspection",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-03",
+        status: "Active"
     },
     {
-        srNo : "4.",
-        department:"IT"
+        srNo: "4.",
+        report: "Replacement Report",
+        requestNo: "REQ-004",
+        department: "IT",
+        requestType: "Replacement",
+        equipmentId: "EID-004",
+        assetId: "AID-104",
+        applicationNameVersion: "App C v2.0",
+        requestedRole: "IT Specialist",
+        requestFor: "System Upgrade",
+        selfExternal: "External",
+        remark: "Obsolete equipment",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-04",
+        status: "Inactive"
     },
     {
-        srNo : "5.",
-        department:"QA"
+        srNo: "5.",
+        report: "Calibration Report",
+        requestNo: "REQ-005",
+        department: "QA",
+        requestType: "Calibration",
+        equipmentId: "EID-005",
+        assetId: "AID-105",
+        applicationNameVersion: "App A v1.3",
+        requestedRole: "Technician",
+        requestFor: "Self",
+        selfExternal: "Self",
+        remark: "Scheduled calibration",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-05",
+        status: "Active"
     },
     {
-        srNo : "6.",
-        department:"System Admin"
+        srNo: "6.",
+        report: "Maintenance Report",
+        requestNo: "REQ-006",
+        department: "System Admin",
+        requestType: "Maintenance",
+        equipmentId: "EID-006",
+        assetId: "AID-106",
+        applicationNameVersion: "App D v2.1",
+        requestedRole: "Engineer",
+        requestFor: "System Check",
+        selfExternal: "External",
+        remark: "Needs urgent repair",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-06",
+        status: "Inactive"
     },
     {
-        srNo : "7.",
-        department:"HR"
+        srNo: "7.",
+        report: "Inspection Report",
+        requestNo: "REQ-007",
+        department: "HR",
+        requestType: "Inspection",
+        equipmentId: "EID-007",
+        assetId: "AID-107",
+        applicationNameVersion: "App B v1.4",
+        requestedRole: "Inspector",
+        requestFor: "Performance",
+        selfExternal: "Self",
+        remark: "Regular check-up",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-07",
+        status: "Active"
     },
-  ]
+    {
+        srNo: "8.",
+        report: "Calibration Report",
+        requestNo: "REQ-008",
+        department: "Finance",
+        requestType: "Calibration",
+        equipmentId: "EID-008",
+        assetId: "AID-108",
+        applicationNameVersion: "App A v1.5",
+        requestedRole: "Technician",
+        requestFor: "Self",
+        selfExternal: "Self",
+        remark: "Scheduled calibration",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-08",
+        status: "Active"
+    },
+    {
+        srNo: "9.",
+        report: "Maintenance Report",
+        requestNo: "REQ-009",
+        department: "Marketing",
+        requestType: "Maintenance",
+        equipmentId: "EID-009",
+        assetId: "AID-109",
+        applicationNameVersion: "App B v1.6",
+        requestedRole: "Engineer",
+        requestFor: "System Check",
+        selfExternal: "External",
+        remark: "Repair needed",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-09",
+        status: "Inactive"
+    },
+    {
+        srNo: "10.",
+        report: "Inspection Report",
+        requestNo: "REQ-010",
+        department: "Operations",
+        requestType: "Inspection",
+        equipmentId: "EID-010",
+        assetId: "AID-110",
+        applicationNameVersion: "App C v2.2",
+        requestedRole: "Inspector",
+        requestFor: "Performance",
+        selfExternal: "Self",
+        remark: "Routine inspection",
+        initiatedBy: "Admin",
+        initiatedOn: "2024-05-10",
+        status: "Active"
+    }
+];
+
+
+const handleSelfFilter = (event)=>{
+  setSelfFilter(event.target.value);
+}
+
+const filteredData = data.filter(item=>{
+  return(
+    (selfFilter ==="All"||
+    (selfFilter==="Self" && item.selfExternal ==="Self")||
+    (selfFilter==="External" && item.selfExternal==="External"))
+  )
+})
+
 return (
   <div>
     
@@ -67,10 +224,10 @@ return (
           <label htmlFor="" className="font-bold">
           Self/External
           </label>
-          <select className="border border-black rounded-md  py-2 ">
-            <option>---select---</option>
-            <option>Active</option>
-            <option>Inactive</option>
+          <select className="border border-black rounded-md  py-2 " onChange={handleSelfFilter}>
+            <option value="All" >All</option>
+            <option value="Self">Self</option>
+            <option value="External">External</option>
           </select>
         </div>
         <div className="flex flex-col w-full">
@@ -130,25 +287,25 @@ return (
             </thead>
             <tbody>
                
-{data.map(( itm, index)=>{
+{filteredData.map(( itm, index)=>{
 return(
    
      <tr key={index}>
 <td className="text-center">{itm.srNo}</td>
+<td className="text-center">{itm.report}</td>
+<td className="text-center">{itm.requestNo}</td>
 <td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">Active</div></div> </td>
+<td className="text-center">{itm.requestType}</td>
+<td className="text-center">{itm.equipmentId}</td>
+<td className="text-center">{itm.assetId}</td>
+<td className="text-center">{itm.applicationNameVersion}</td>
+<td className="text-center">{itm.requestedRole}</td>
+<td className="text-center">{itm.requestFor}</td>
+<td className="text-center">{itm.selfExternal}</td>
+<td className="text-center">{itm.remark}</td>
+<td className="text-center">{itm.initiatedBy}</td>
+<td className="text-center">{itm.initiatedOn}</td>
+<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
 </tr>
     
 )

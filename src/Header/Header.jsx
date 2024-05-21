@@ -107,6 +107,7 @@ const Header = ({onMenuClick }) => {
         
       </div>
     </div>
+  
   );
 };
 

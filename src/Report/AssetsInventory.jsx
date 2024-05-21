@@ -8,37 +8,115 @@ import { IoSearchSharp } from "react-icons/io5";
 
 const AssetsInventory = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("All");
 
   const data = [
     {
-        srNo : "1.",
-        department:"QC"
+        srNo: "1.",
+        assetType: "Instrument",
+        assetId: "AID-101",
+        make: "Make X",
+        model: "Model A1",
+        serialNo: "SN-001",
+        status: "Active"
     },
     {
-        srNo : "2.",
-        department:"Test-1"
+        srNo: "2.",
+        assetType: "Equipment",
+        assetId: "AID-102",
+        make: "Make Y",
+        model: "Model B1",
+        serialNo: "SN-002",
+        status: "Inactive"
     },
     {
-        srNo : "3.",
-        department:"User"
+        srNo: "3.",
+        assetType: "Instrument",
+        assetId: "AID-103",
+        make: "Make X",
+        model: "Model A2",
+        serialNo: "SN-003",
+        status: "Active"
     },
     {
-        srNo : "4.",
-        department:"IT"
+        srNo: "4.",
+        assetType: "Equipment",
+        assetId: "AID-104",
+        make: "Make Z",
+        model: "Model C1",
+        serialNo: "SN-004",
+        status: "Inactive"
     },
     {
-        srNo : "5.",
-        department:"QA"
+        srNo: "5.",
+        assetType: "Instrument",
+        assetId: "AID-105",
+        make: "Make X",
+        model: "Model A3",
+        serialNo: "SN-005",
+        status: "Active"
     },
     {
-        srNo : "6.",
-        department:"System Admin"
+        srNo: "6.",
+        assetType: "Equipment",
+        assetId: "AID-106",
+        make: "Make W",
+        model: "Model D1",
+        serialNo: "SN-006",
+        status: "Inactive"
     },
     {
-        srNo : "7.",
-        department:"HR"
+        srNo: "7.",
+        assetType: "Instrument",
+        assetId: "AID-107",
+        make: "Make Y",
+        model: "Model B2",
+        serialNo: "SN-007",
+        status: "Active"
     },
-  ]
+    {
+        srNo: "8.",
+        assetType: "Instrument",
+        assetId: "AID-108",
+        make: "Make X",
+        model: "Model A4",
+        serialNo: "SN-008",
+        status: "Active"
+    },
+    {
+        srNo: "9.",
+        assetType: "Equipment",
+        assetId: "AID-109",
+        make: "Make Y",
+        model: "Model B3",
+        serialNo: "SN-009",
+        status: "Inactive"
+    },
+    {
+        srNo: "10.",
+        assetType: "Equipment",
+        assetId: "AID-110",
+        make: "Make Z",
+        model: "Model C2",
+        serialNo: "SN-010",
+        status: "Active"
+    }
+];
+
+
+const handleStatusFilterChange = (event) => {
+  setStatusFilter(event.target.value);
+};
+
+
+const filteredData = data.filter(item => {
+  return (
+    (statusFilter === "All" || 
+    (statusFilter === "Active" && item.status === "Active") || 
+    (statusFilter === "Inactive" && item.status === "Inactive"))
+  
+  );
+});
 return (
   <div>
     
@@ -67,10 +145,10 @@ return (
           <label htmlFor="" className="font-bold">
             Status
           </label>
-          <select className="border border-black rounded-md  py-2 ">
-            <option>---select---</option>
-            <option>Active</option>
-            <option>Inactive</option>
+          <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+              <option value="All">All</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
           </select>
         </div>
         <div className="flex flex-col w-full">
@@ -110,17 +188,17 @@ return (
             </thead>
             <tbody>
                
-{data.map(( itm, index)=>{
+{filteredData.map(( itm, index)=>{
 return(
    
      <tr key={index}>
 <td className="text-center">{itm.srNo}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.department}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">Active</div></div> </td>
+<td className="text-center">{itm.assetType}</td>
+<td className="text-center">{itm.assetId}</td>
+<td className="text-center">{itm.make}</td>
+<td className="text-center">{itm.model}</td>
+<td className="text-center">{itm.serialNo}</td>
+<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
 </tr>
     
 )
