@@ -128,41 +128,37 @@ const ConsolidateMaster = () => {
     <div>
       
       
-    <div
-      className={`content-with-fixed-header  px-4 flex flex-col gap-10 ${
-        sidebarOpen ? "ml-64" : ""
-      } content-with-fixed-header  px-4 flex flex-col gap-10`}
-    >
-      <div className="grid grid-cols-3 border-b pb-5">
+      <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 border-b pb-5">
         <div className="text-3xl font-semibold text-[#673ab7] col-span-2">
-        Consolidate Master
+          Consolidate Master
         </div>
-       <div className="flex justify-around col-span-1 w-full">
-       <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[30%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
-           Server Base &nbsp;<MdAddBox />
+        <div className="flex justify-around col-span-1 w-full">
+          <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40%] h-[40px] flex justify-center items-center" onClick={togglePopup}>
+            Server Base &nbsp;<MdAddBox />
           </div>
-          <div className="bg-[#d3eafd]  rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[30%] h-[40px] flex justify-center items-center" onClick={togglePopupII}>
-           Standalone &nbsp;<MdAddBox />
+          <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40%] h-[40px] flex justify-center items-center" onClick={togglePopupII}>
+            Standalone &nbsp;<MdAddBox />
           </div>
-       </div>
+        </div>
       </div>
-      <div className="grid grid-cols-3 justify-center items-center gap-5">
-        <div className="col-span-2 flex gap-5">
-        <div className="flex flex-col w-full">
-            <label htmlFor="" className="font-bold">
+      <div className="grid grid-cols-1 lg:grid-cols-3 justify-center items-center gap-5">
+        <div className="col-span-3 flex flex-col lg:flex-row gap-5">
+          <div className="flex flex-col w-full">
+            <label htmlFor="status" className="font-bold">
               Status
             </label>
-            <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+            <select id="status" className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
               <option value="All">All</option>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
-            <label htmlFor="" className="font-bold">
-            Asset Type
+            <label htmlFor="assetType" className="font-bold">
+              Asset Type
             </label>
-            <select className="border border-black rounded-md  py-2 ">
+            <select id="assetType" className="border border-black rounded-md py-2">
               <option>---select---</option>
               <option>HMI</option>
               <option>SCADA</option>
@@ -172,58 +168,68 @@ const ConsolidateMaster = () => {
             </select>
           </div>
           <div className="flex flex-col w-full">
-            <label htmlFor="" className="font-bold">
+            <label htmlFor="search" className="font-bold">
               Search
             </label>
             <input
+              id="search"
               type="text"
-              className="border border-black rounded-md pr-24 py-2 "
-              placeholder="Search Consolodate"
+              className="border border-black rounded-md py-2 lg:pr-24"
+              placeholder="Search Consolidate"
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
             />
           </div>
         </div>
-
-          
-        </div>
-      <div>
-          <table>
-              <thead>
-                  <tr >
-                      <th className="text-center">SR.NO.</th>
-                      <th className="text-center">CONSOLIDATE</th>
-                      <th className="text-center">EQUIPMENT/INSTRUMENT ID	</th>
-                      <th className="text-center">ASSET ID</th>
-                      <th className="text-center">APPLICATION NAME & VERSION</th>
-                      <th className="text-center">DEPARTMENT</th>
-                      <th className="text-center">STATUS</th>
-                      <th className="text-center">ACTION</th>
-                  </tr>
-              </thead>
-              <tbody>
-                 
-{filteredData.map(( itm, index)=>{
-  return(
-     
-       <tr key={index}>
-<td className="text-center">{itm.srNo}</td>
-<td className="text-center">{itm.consolidate}</td>
-<td className="text-center">{itm.equipmentId}</td>
-<td className="text-center">{itm.assetId}</td>
-<td className="text-center">{itm.applicationNameVersion}</td>
-<td className="text-center">{itm.department}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
-<td > <div className="text-center flex justify-center gap-3 items-center"><div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"><FaRegEdit /></div> <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"><IoBan /></div></div></td>
-</tr>
-      
-  )
-})}
-                  
-              </tbody>
-          </table>
       </div>
-    </div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">SR.NO.</th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">CONSOLIDATE</th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">EQUIPMENT/INSTRUMENT ID</th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">ASSET ID</th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">APPLICATION NAME & VERSION</th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">DEPARTMENT</th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">STATUS</th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">ACTION</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {filteredData.map((itm, index) => (
+              <tr key={index}>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.srNo}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.consolidate}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.equipmentId}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.assetId}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.applicationNameVersion}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.department}</td>
+                <td>
+                  <div className="text-center flex justify-center items-center">
+                    <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
+                      {itm.status}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div className="text-center flex justify-center gap-3 items-center">
+                    <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                      <FaRegEdit />
+                    </div>
+                    <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                      <IoBan />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      </div>
+
+
     <PopUp
         heading="Server Base"
         buttonText="Submit"
@@ -292,7 +298,7 @@ const ConsolidateMaster = () => {
           { label: 'Backup Path', type:"text" },
         ]}
         open={popupOpen}
-        onClose={togglePopup}
+        onClose={togglePopup} 
       />
        <PopUp
         heading="Equipment/Instrument Master"

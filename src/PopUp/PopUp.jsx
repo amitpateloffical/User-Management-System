@@ -64,4 +64,4 @@ const PopUp =({ heading, buttonText, inputs, open, onClose}) => {
   )
 }
 
-export default PopUp
+export default PopUp 

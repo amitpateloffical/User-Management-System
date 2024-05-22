@@ -213,132 +213,125 @@ return (
   <div>
     
     
-  <div
-    className={`content-with-fixed-header  px-4 flex flex-col gap-10 ${
-      sidebarOpen ? "ml-64" : ""
-    } content-with-fixed-header  px-4 flex flex-col gap-10 `}
-  >
-    <div className="grid grid-cols-3 border-b pb-5">
-      <div className="text-3xl font-semibold text-[#673ab7] col-span-2">
-      Active Users List
+    <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
+      <div className="grid grid-cols-1 md:grid-cols-3 border-b pb-5">
+        <div className="text-3xl font-semibold text-[#673ab7] col-span-2">
+          Active Users List
+        </div>
+        <div className="flex justify-end gap-7 col-span-1">
+          <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-10 h-10 flex justify-center items-center">
+            <FiRefreshCw />
+          </div>
+          <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-10 h-10 flex justify-center items-center" onClick={downloadPDF}>
+            <FaFilePdf />
+          </div>
+        </div>
       </div>
-     <div className="flex justify-end gap-7 col-span-1 w-full">
-     <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center">
-     <FiRefreshCw />
-        </div>
-        <div className="bg-[#d3eafd]  rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center"  onClick={downloadPDF}>
-        <FaFilePdf />
-        </div>
-     </div>
-    </div>
-    <div className="grid grid-cols-4 justify-center items-center gap-5">
-      <div className="col-span-3 flex items-center gap-5">
-      <div className="flex flex-col w-full">
-          <label htmlFor="" className="font-bold">
-            Status
-          </label>
-          <select className="border border-black rounded-md  py-2 " onChange={handleStatusFilterChange}>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div className="col-span-3 flex flex-wrap gap-5">
+          <div className="flex flex-col w-full md:w-1/5">
+            <label htmlFor="status" className="font-bold">
+              Status
+            </label>
+            <select className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
               <option value="All">All</option>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
-          </select>
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="" className="font-bold">
-          Application Name & Version
-          </label>
-          <select className="border border-black rounded-md  py-2 ">
-            <option>---select---</option>
-            <option>HMI</option>
-            <option>SCADA</option>
-            <option>IPC</option>
-            <option>COMPUTER SYSTEM</option>
-            <option>OTHER</option>
-          </select>
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="" className="font-bold">
-          User
-          </label>
-          <select className="border border-black rounded-md  py-2 ">
-            <option>---select---</option>
-            <option>HMI</option>
-            <option>SCADA</option>
-            <option>IPC</option>
-            <option>COMPUTER SYSTEM</option>
-            <option>OTHER</option>
-          </select>
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="" className="font-bold">
-          Equipment ID
-          </label>
-          <select className="border border-black rounded-md  py-2 ">
-            <option>---select---</option>
-            <option>HMI</option>
-            <option>SCADA</option>
-            <option>IPC</option>
-            <option>COMPUTER SYSTEM</option>
-            <option>OTHER</option>
-          </select>
-        </div>
-        <div className="bg-purple-200 mt-5 rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-purple-700 hover:text-white cursor-pointer text-purple-500 w-[15%] h-[40px] flex justify-center items-center">
-        <IoSearchSharp size={25}/>
+            </select>
+          </div>
+          <div className="flex flex-col w-full md:w-1/5">
+            <label htmlFor="appNameVersion" className="font-bold">
+              Application Name & Version
+            </label>
+            <select className="border border-black rounded-md py-2">
+              <option>---select---</option>
+              <option>HMI</option>
+              <option>SCADA</option>
+              <option>IPC</option>
+              <option>COMPUTER SYSTEM</option>
+              <option>OTHER</option>
+            </select>
+          </div>
+          <div className="flex flex-col w-full md:w-1/5">
+            <label htmlFor="user" className="font-bold">
+              User
+            </label>
+            <select className="border border-black rounded-md py-2">
+              <option>---select---</option>
+              <option>HMI</option>
+              <option>SCADA</option>
+              <option>IPC</option>
+              <option>COMPUTER SYSTEM</option>
+              <option>OTHER</option>
+            </select>
+          </div>
+          <div className="flex flex-col w-full md:w-1/5">
+            <label htmlFor="equipmentId" className="font-bold">
+              Equipment ID
+            </label>
+            <select className="border border-black rounded-md py-2">
+              <option>---select---</option>
+              <option>HMI</option>
+              <option>SCADA</option>
+              <option>IPC</option>
+              <option>COMPUTER SYSTEM</option>
+              <option>OTHER</option>
+            </select>
+          </div>
+          <div className="bg-purple-200 w-[5%]   mt-5 rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-purple-700 hover:text-white cursor-pointer text-purple-500  h-[40px] flex justify-center items-center">
+            <IoSearchSharp size={25} />
+          </div>
         </div>
       </div>
-
-        
-      </div>
-    <div id="active-user-list">
-        <table>
-            <thead>
-                <tr >
-                    <th className="text-center">SR.NO.</th>
-                    <th className="text-center">EMP CODE</th>
-                    <th className="text-center">EMPLOYEE NAME</th>
-                    <th className="text-center">EQUIPMENT/INSTRUMENT ID	</th>
-                    <th className="text-center">EQUIPMENT/INSTRUMENT NAME</th>
-                    <th className="text-center">ASSETS ID</th>
-                    <th className="text-center">ASSETS NAME</th>
-                    <th className="text-center">APPLICATION</th>
-                    <th className="text-center">APPLICATION VERSION</th>
-                    <th className="text-center">ROLE</th>
-                    <th className="text-center">DEPARTMENT</th>
-                    <th className="text-center">CREATED BY</th>
-                    <th className="text-center">CREATED DATE</th>
-                    <th className="text-center">STATUS</th>
-                   
-                </tr>
-            </thead>
-            <tbody>
-               
-{filteredData.map(( itm, index)=>{
-return(
-   
-     <tr key={index}>
-<td className="text-center">{itm.srNo}</td>
-<td className="text-center">{itm.empCode}</td>
-<td className="text-center">{itm.employeeName}</td>
-<td className="text-center">{itm.equipmentId}</td>
-<td className="text-center">{itm.equipmentName}</td>
-<td className="text-center">{itm.assetId}</td>
-<td className="text-center">{itm.assetName}</td>
-<td className="text-center">{itm.application}</td>
-<td className="text-center">{itm.applicationVersion}</td>
-<td className="text-center">{itm.role}</td>
-<td className="text-center">{itm.department}</td>
-<td className="text-center">{itm.createdBy}</td>
-<td className="text-center">{itm.createdDate}</td>
-<td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
-</tr>
-    
-)
-})}
-                
-            </tbody>
+      <div id="active-user-list" className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="text-center px-6 py-3">SR.NO.</th>
+              <th className="text-center px-6 py-3">EMP CODE</th>
+              <th className="text-center px-6 py-3">EMPLOYEE NAME</th>
+              <th className="text-center px-6 py-3">EQUIPMENT/INSTRUMENT ID</th>
+              <th className="text-center px-6 py-3">EQUIPMENT/INSTRUMENT NAME</th>
+              <th className="text-center px-6 py-3">ASSETS ID</th>
+              <th className="text-center px-6 py-3">ASSETS NAME</th>
+              <th className="text-center px-6 py-3">APPLICATION</th>
+              <th className="text-center px-6 py-3">APPLICATION VERSION</th>
+              <th className="text-center px-6 py-3">ROLE</th>
+              <th className="text-center px-6 py-3">DEPARTMENT</th>
+              <th className="text-center px-6 py-3">CREATED BY</th>
+              <th className="text-center px-6 py-3">CREATED DATE</th>
+              <th className="text-center px-6 py-3">STATUS</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {filteredData.map((itm, index) => (
+              <tr key={index}>
+                <td className="text-center px-6 py-4">{itm.srNo}</td>
+                <td className="text-center px-6 py-4">{itm.empCode}</td>
+                <td className="text-center px-6 py-4">{itm.employeeName}</td>
+                <td className="text-center px-6 py-4">{itm.equipmentId}</td>
+                <td className="text-center px-6 py-4">{itm.equipmentName}</td>
+                <td className="text-center px-6 py-4">{itm.assetId}</td>
+                <td className="text-center px-6 py-4">{itm.assetName}</td>
+                <td className="text-center px-6 py-4">{itm.application}</td>
+                <td className="text-center px-6 py-4">{itm.applicationVersion}</td>
+                <td className="text-center px-6 py-4">{itm.role}</td>
+                <td className="text-center px-6 py-4">{itm.department}</td>
+                <td className="text-center px-6 py-4">{itm.createdBy}</td>
+                <td className="text-center px-6 py-4">{itm.createdDate}</td>
+                <td className="text-center px-6 py-4">
+                  <div className="text-center flex justify-center items-center">
+                    <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
+                      {itm.status}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
+      </div>
     </div>
-  </div>
 </div>
 )
 }

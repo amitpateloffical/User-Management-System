@@ -174,90 +174,90 @@ const UserManagementRquest = () => {
   });
     return (
       <div>
-        
-        
-        <div
-          className={`content-with-fixed-header  px-4 flex flex-col gap-10 ${
-            sidebarOpen ? "ml-64" : ""
-          } content-with-fixed-header  px-4 flex flex-col gap-10`}
-        >
-          <div className="grid grid-cols-3">
-            <div className="text-3xl font-semibold text-[#673ab7] col-span-2">
-            User Management Request
-            </div>
-            <div className="flex justify-center items-center gap-5 col-span-1">
-              <div className="flex flex-col w-full">
-                <label htmlFor="" className="font-bold">
-                  Search
-                </label>
-                <input
-                  type="text"
-                  className="border border-black rounded-md pr-24 py-2 "
-                  placeholder="Search By Request Number"
-                  value={searchText}
-                  onChange={e => setSearchText(e.target.value)}
-                />
-              </div>
-  
-              <div className="bg-[#d3eafd] text-[#2196f3] w-[10%] h-[40px] flex justify-center items-center">
-                <MdAddBox />
-              </div>
-            </div>
+         <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
+      <div className="flex flex-col lg:flex-row justify-between items-center border-b pb-5">
+        <div className="text-3xl font-semibold text-[#673ab7] mb-4 lg:mb-0">
+          User Management Request
+        </div>
+        <div className="flex justify-center items-center gap-5 w-full lg:w-auto">
+          <div className="flex flex-col w-full">
+            <label htmlFor="search" className="font-bold">
+              Search
+            </label>
+            <input
+              id="search"
+              type="text"
+              className="border border-black rounded-md py-2 w-full lg:w-auto"
+              placeholder="Search By Request Number"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+            />
           </div>
-          <div>
-              <table>
-                  <thead>
-                      <tr >
-                          <th className="text-center">SR.NO.</th>
-                          <th className="text-center">ACTION</th>
-                          <th className="text-center">REQUEST NO</th>
-                          <th className="text-center">REQUEST TYPE	</th>
-                          <th className="text-center">DEPARTMENT</th>
-                          <th className="text-center">EQUIPMENT ID</th>
-                          <th className="text-center">ASSET ID</th>
-                          <th className="text-center">APPLICATION NAME & VERSION</th>
-                          <th className="text-center">REQUESTED ROLE</th>
-                          <th className="text-center">REQUEST FOR	</th>
-                          <th className="text-center">SELF / EXTERNAL</th>
-                          <th className="text-center">REMARK</th>
-                          <th className="text-center">INITIATED ON</th>
-                          <th className="text-center">STATUS</th>
-                          <th className="text-center">EDIT</th>
-                          
-                      </tr>
-                  </thead>
-                  <tbody>
-                     
-  {filteredData.map(( itm, index)=>{
-      return(
-         
-           <tr key={index}>
-  <td className="text-center">{itm.srNo}</td>
-  <td className="text-center">{itm.action}</td>
-  <td className="text-center">{itm.requestNo}</td>
-  <td className="text-center">{itm.requestType}</td>
-  <td className="text-center">{itm.department}</td>
-  <td className="text-center">{itm.equipmentId}</td>
-  <td className="text-center">{itm.assetId}</td>
-  <td className="text-center">{itm.applicationNameVersion}</td>
-  <td className="text-center">{itm.requestedRole}</td>
-  <td className="text-center">{itm.requestFor}</td>
-  <td className="text-center">{itm.selfExternal}</td>
-  <td className="text-center">{itm.remark}</td>
-  <td className="text-center">{itm.initiatedOn}</td>
-  <td > <div className="text-center flex justify-center items-center"><div className="bg-green-300 text-green-700 rounded-full text-center w-[70px]">{itm.status}</div></div> </td>
-
-  
-  <td > <div className="text-center flex justify-center gap-3 items-center"><div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"><FaRegEdit /></div> <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"><IoBan /></div></div></td>
-  </tr>
-          
-      )
-  })}
-                      
-                  </tbody>
-              </table>
+          <div className="bg-[#d3eafd] text-[#2196f3] w-10 h-10 flex justify-center items-center cursor-pointer">
+            <MdAddBox />
           </div>
         </div>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">SR.NO.</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">ACTION</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">REQUEST NO</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">REQUEST TYPE</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">DEPARTMENT</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">EQUIPMENT ID</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">ASSET ID</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">APPLICATION NAME & VERSION</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">REQUESTED ROLE</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">REQUEST FOR</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">SELF / EXTERNAL</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">REMARK</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">INITIATED ON</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">STATUS</th>
+              <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider">EDIT</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {filteredData.map((itm, index) => (
+              <tr key={index}>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.srNo}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.action}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestNo}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestType}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.department}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.equipmentId}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.assetId}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.applicationNameVersion}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestedRole}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestFor}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.selfExternal}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.remark}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.initiatedOn}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">
+                  <div className="text-center flex justify-center items-center">
+                    <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
+                      {itm.status}
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">
+                  <div className="text-center flex justify-center gap-3 items-center">
+                    <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                      <FaRegEdit />
+                    </div>
+                    <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                      <IoBan />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
       </div>
     );
 }
