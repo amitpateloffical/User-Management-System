@@ -69,9 +69,9 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
   };
 
   return (
-    <div>
+    <div className="">
       {sidebarOpen && (
-        <div className="fixed top-24 h-full w-64 flex flex-col gap-10  p-4" style={{zIndex:1, backgroundColor:"#fff",overflowY:"auto",height:"calc(100vh - 7rem)"}}>
+        <div className="fixed top-20 w-64 flex flex-col gap-10  bg-gray-200 p-4" style={{zIndex:1, overflowY:"auto",height:"calc(100vh - 7rem)"}}>
           <div
             className={`flex gap-5 items-center cursor-pointer ${isActive(
               "/dashboard"

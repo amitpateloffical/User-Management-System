@@ -39,10 +39,7 @@ const Header = ({onMenuClick }) => {
   return (
     <div className="w-full px-4 py-2 bg-white shadow-md">
   <div className="flex items-center justify-between">
-    <img
-      src="/login.png"
-      className="h-[70px] w-[208px]"
-    />
+  
 
     <div className="flex items-center gap-3">
       <div
@@ -58,38 +55,19 @@ const Header = ({onMenuClick }) => {
       </div>
     </div>
 
-    <div className="flex items-center gap-4">
-      <ul className="hidden lg:flex items-center gap-8">
-        <li>
-          <b className="text-xl flex items-center text-[#673ab7]">
-            <img src="/user.png" className="mr-2 h-6 w-6" />
-            :Mayank
-          </b>
-        </li>
-        <li>
-          <b className="flex items-center text-[#673ab7]">
-            <img
-              src="http://104.238.222.219/EUMR_JB/assets/images/pharmaceutical.png"
-             
-              className="h-10 w-12 mr-2"
-            />
-            <p className="text-xl">:VidyaGxP</p>
-          </b>
-        </li>
-        <li className="text-[#673ab7]">
-          <b className="text-xl">Test (EMP001)</b>
-        </li>
-      </ul>
+ 
+      <div className="flex items-center gap-4">
       <div className="  flex items-center gap-2">
+         
+    <img
+      src="/login.png"
+      className="h-[70px] w-[208px]"
+    />
         <div className=" hidden lg:flex justify-center items-center bg-green-200 text-green-500 h-10 w-10 rounded-full">
           <FaWifi />
         </div>
-        <div className="relative flex items-center justify-center gap-2 h-10 w-10 sm:w-20 bg-blue-100 rounded-full hover:bg-blue-300 cursor-pointer">
-          <img
-            src="http://104.238.222.219/EUMR_JB/assets/userPhoto/user.png"
-            
-            className="hidden lg:flex  rounded-full h-8 w-8 sm:h-10 sm:w-10"
-          />
+        <div className="relative flex items-center justify-center gap-2 h-10 w-10 sm:w-10 bg-blue-100 rounded-full hover:bg-blue-300 cursor-pointer">
+         
           <button onClick={handleDropdownToggle} className="text-cyan-500 hover:text-white text-xl">
             <IoSettingsOutline />
           </button>
