@@ -148,7 +148,7 @@ const Dashboard = () => {
   return (
     <div>
       
-      <div className={`content-with-fixed-header bg-gray-200 dashboard-container px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}>
+      <div className={`content-with-fixed-header dashboard-container px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
       <div className="bg-gradient-to-r rounded-xl from-purple-500 to-purple-700 p-8" onClick={() => setOpen(true)}>
         <div className="text-[24px] text-white flex items-center gap-2">

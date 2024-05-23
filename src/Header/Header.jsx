@@ -63,9 +63,6 @@ const Header = ({onMenuClick }) => {
       src="/login.png"
       className="h-[70px] w-[208px]"
     />
-        <div className=" hidden lg:flex justify-center items-center bg-green-200 text-green-500 h-10 w-10 rounded-full">
-          <FaWifi />
-        </div>
         <div className="relative flex items-center justify-center gap-2 h-10 w-10 sm:w-10 bg-blue-100 rounded-full hover:bg-blue-300 cursor-pointer">
          
           <button onClick={handleDropdownToggle} className="text-cyan-500 hover:text-white text-xl">
