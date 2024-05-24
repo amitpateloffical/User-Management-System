@@ -71,7 +71,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <div className="">
       {sidebarOpen && (
-        <div className="fixed top-20 w-64 flex flex-col gap-10  bg-gray-200 p-4" style={{zIndex:1, overflowY:"auto",height:"calc(100vh - 7rem)"}}>
+        <div className="fixed top-20 w-64 flex flex-col gap-10  bg-purple-300 p-4 " style={{zIndex:1, overflowY:"auto",height:"calc(100vh - 5rem)"}}>
           <div
             className={`flex gap-5 items-center cursor-pointer ${isActive(
               "/dashboard"
@@ -97,7 +97,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
               onClick={stopPropagation}
             >
               {masters && (
-                <div className="flex flex-col gap-5 text-gray-500 ">
+                <div className="flex flex-col gap-5 text-gray-700 ">
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
                       "/department-master"
@@ -186,7 +186,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
             >
               {report && (
                 <div
-                  className="flex flex-col gap-5 text-gray-500 "
+                  className="flex flex-col gap-5 text-gray-700 "
                   onClick={stopPropagation}
                 >
                   <p
@@ -257,7 +257,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
               onClick={stopPropagation}
             >
               {CFR && (
-                <div className="flex flex-col gap-5 text-gray-500 ">
+                <div className="flex flex-col gap-5 text-gray-700 ">
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
                       "/user-management"
