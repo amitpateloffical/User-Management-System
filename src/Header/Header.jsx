@@ -60,7 +60,8 @@ const Header = ({onMenuClick }) => {
       <div className="  flex items-center gap-2">
          
     <img
-      src="/login.png"
+      src="https://connexo.io/assets/img/logo/logo.png"
+      // src="/login.png"
       className="h-[70px] w-[208px]"
     />
         <div className="relative flex items-center justify-center gap-2 h-10 w-10 sm:w-10 bg-blue-100 rounded-full hover:bg-blue-300 cursor-pointer">

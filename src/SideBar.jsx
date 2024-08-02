@@ -77,6 +77,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
               "/dashboard"
             )}`}
             onClick={() => handleNavigation("/dashboard")}
+            
           >
             <AiOutlineDashboard size={30} />
             Dashboard

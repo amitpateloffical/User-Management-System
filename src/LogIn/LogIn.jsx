@@ -1,26 +1,26 @@
-import React, { useState } from 'react'
-import "./LogIn.css"
-import { useNavigate } from 'react-router-dom'
-import Footer from '../Footer/Footer'
-import { toast } from 'react-toastify'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Footer from '../Footer/Footer';
 import 'react-toastify/dist/ReactToastify.css';
+import "./LogIn.css";
 
 const LogIn = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     if (username === 'admin@vidyagxp.com' && password === 'Amit@121') {
-        toast.success('LogIn Successfully.', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+      toast.success('LogIn Successfully.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       navigate('/dashboard');
     } else {
       toast.error('Invalid username or password. Please try again.', {
@@ -44,7 +44,7 @@ const LogIn = () => {
               WELCOME TO USER MANAGEMENT RECORD SYSTEM
             </div>
             <div className='flex justify-center items-center'>
-              <img src='/login.png' className='h-24 w-full max-w-xs' alt='Logo' />
+              <img src='https://connexo.io/assets/img/logo/logo.png' className='h-24 w-full max-w-xs' alt='Logo' />
             </div>
             <div className="flex flex-col">
               <label><b>User Name</b></label>
@@ -66,17 +66,17 @@ const LogIn = () => {
             <div>
               <button
                 className="bg-[#e69743] py-2 w-full rounded-md text-white"
-                onClick={handleLogin}
+                onClick={()=>handleLogin()}
               >
                 Sign In
               </button>
-            </div>   
+            </div>
           </div>
         </div>
       </div>
       <Footer />
     </div>
-  )
+  );
 }
 
-export default LogIn
+export default LogIn;
