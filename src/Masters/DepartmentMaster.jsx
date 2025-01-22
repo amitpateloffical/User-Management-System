@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const DepartmentMaster = () => {
   const [statusFilter, setStatusFilter] = useState("All");
@@ -41,7 +43,7 @@ const DepartmentMaster = () => {
     setStatusFilter(event.target.value);
   };
 
-  const filteredDepartments = departments.filter((item) => {
+  const filteredData = data.filter((item) => {
     return (
       (statusFilter === "All" ||
         (statusFilter === "Active" && item.status === "Active") ||
@@ -52,28 +54,20 @@ const DepartmentMaster = () => {
   });
 
   return (
-    <div className="content-with-fixed-header px-4 flex flex-col gap-10">
+    <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
       <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
         <div className="text-3xl font-semibold text-[#673ab7]">Department Master</div>
         <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
           <div className="flex flex-col w-full md:w-auto">
-            <label htmlFor="status" className="font-bold">
-              Status
-            </label>
-            <select
-              id="status"
-              className="border border-black rounded-md py-2"
-              onChange={handleStatusFilterChange}
-            >
+            <label htmlFor="status" className="font-bold">Status</label>
+            <select id="status" className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
               <option value="All">All</option>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>
           </div>
           <div className="flex flex-col w-full md:w-auto">
-            <label htmlFor="search" className="font-bold">
-              Search
-            </label>
+            <label htmlFor="search" className="font-bold">Search</label>
             <input
               id="search"
               type="text"
@@ -85,12 +79,16 @@ const DepartmentMaster = () => {
           </div>
           <div
             className="bg-[#d3eafd] text-[#2196f3] w-full md:w-auto h-[40px] flex justify-center items-center cursor-pointer"
-            onClick={toggleAddModal}
+            onClick={togglePopup}
           >
             <MdAddBox className="text-2xl" />
           </div>
         </div>
       </div>
+        
+      {/* Import/Export Buttons Component */}
+      <ImportExportButtons data={data} setData={setData} fileName="DepartmentMaster.xlsx" />
+      
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -102,19 +100,13 @@ const DepartmentMaster = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredDepartments.map((itm, index) => (
+            {filteredData.map((itm, index) => (
               <tr key={index}>
                 <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
                 <td className="border-b px-4 py-2 text-center">{itm.department}</td>
                 <td className="border-b px-4 py-2 text-center">
                   <div className="flex justify-center items-center">
-                    <div
-                      className={`rounded-full px-2 ${
-                        itm.status === "Active"
-                          ? "bg-green-300 text-green-700"
-                          : "bg-red-300 text-red-700"
-                      }`}
-                    >
+                    <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
                       {itm.status}
                     </div>
                   </div>
@@ -134,41 +126,15 @@ const DepartmentMaster = () => {
           </tbody>
         </table>
       </div>
-
-      {addModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-2xl font-semibold mb-4">Add New Department</h2>
-            <div className="flex flex-col gap-4">
-              <label htmlFor="department" className="font-bold">
-                Department Name
-              </label>
-              <input
-                id="department"
-                type="text"
-                className="border border-black rounded-md py-2 px-3"
-                placeholder="Enter Department Name"
-                value={newDepartment}
-                onChange={(e) => setNewDepartment(e.target.value)}
-              />
-            </div>
-            <div className="flex justify-end gap-4 mt-6">
-              <button
-                className="bg-gray-300 text-black py-2 px-4 rounded-md"
-                onClick={toggleAddModal}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-blue-500 text-white py-2 px-4 rounded-md"
-                onClick={handleAddDepartment}
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      
+      <PopUp
+        heading="Department Master"
+        buttonText="Submit"
+        labelHeading="Department"
+        inputs={[{ label: "Department", placeholder: "Enter Department Name" }]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
     </div>
   );
 };

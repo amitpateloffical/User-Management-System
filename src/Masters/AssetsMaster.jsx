@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const AssetsMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -53,92 +55,122 @@ const AssetsMaster = () => {
 
   const filteredData = data.filter(item => {
     return (
-      (statusFilter === "All" || item.status === statusFilter) &&
-      (assetTypeFilter === "All" || item.assetType === assetTypeFilter) &&
-      (searchText === "" || item.assetID.toLowerCase().includes(searchText.toLowerCase()))
+      (statusFilter === "All" ||
+        (statusFilter === "Active" && item.status === "Active") ||
+        (statusFilter === "Inactive" && item.status === "Inactive")) &&
+      (searchText === "" ||
+        item.assetID.toLowerCase().includes(searchText.toLowerCase()))
     );
   });
 
   return (
-    <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
-      <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
-        <div className="text-3xl font-semibold text-[#673ab7]">Assets Master</div>
-        <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
-          <div className="flex flex-col w-full md:w-auto">
-            <label htmlFor="status" className="font-bold">Status</label>
-            <select id="status" className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
-              <option value="All">All</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
+    <div>
+      <div
+        className={`content-with-fixed-header px-4 flex flex-col gap-10 ${
+          sidebarOpen ? "ml-64" : ""
+        }`}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
+          <div className="text-3xl font-semibold text-[#673ab7]">
+            Assets Master
           </div>
-          <div className="flex flex-col w-full md:w-auto">
-            <label htmlFor="assetType" className="font-bold">Asset Type</label>
-            <select id="assetType" className="border border-black rounded-md py-2" onChange={handleAssetTypeFilterChange}>
-              <option value="All">All</option>
-              <option value="Server">Server</option>
-              <option value="Desktop">Desktop</option>
-              <option value="IPS">IPS</option>
-            </select>
-          </div>
-          <div className="flex flex-col w-full md:w-auto">
-            <label htmlFor="search" className="font-bold">Search</label>
-            <input
-              id="search"
-              type="text"
-              className="border border-black rounded-md py-2"
-              placeholder="Search Assets By Name"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
-          <div className="bg-[#d3eafd] text-[#2196f3] w-[20%] h-[40px] flex justify-center items-center cursor-pointer" onClick={togglePopup}>
-            <MdAddBox />
+          <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
+            <div className="flex flex-col w-full md:w-auto">
+              <label htmlFor="" className="font-bold">
+                Status
+              </label>
+              <select
+                className="border border-black rounded-md py-2"
+                onChange={handleStatusFilterChange}
+              >
+                <option value="All">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <div className="flex flex-col w-full md:w-auto">
+              <label htmlFor="" className="font-bold">
+                Search
+              </label>
+              <input
+                type="text"
+                className="border border-black rounded-md pr-24 py-2"
+                placeholder="Search Asset By ID"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+            <div
+              className="bg-[#d3eafd] text-[#2196f3] w-full md:w-auto h-[40px] flex justify-center items-center cursor-pointer"
+              onClick={togglePopup}
+            >
+              <MdAddBox className="text-2xl" />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr>
-              <th className="border-b px-4 py-2 text-center">SR.NO.</th>
-              <th className="border-b px-4 py-2 text-center">ASSET TYPE</th>
-              <th className="border-b px-4 py-2 text-center">ASSET ID</th>
-              <th className="border-b px-4 py-2 text-center">MAKE</th>
-              <th className="border-b px-4 py-2 text-center">MODEL</th>
-              <th className="border-b px-4 py-2 text-center">SERIAL NO.</th>
-              <th className="border-b px-4 py-2 text-center">STATUS</th>
-              <th className="border-b px-4 py-2 text-center">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((itm, index) => (
-              <tr key={index}>
-                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.assetType}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.assetID}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.make}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.model}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.serialNo}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
-                    {itm.status}
-                  </div>
-                </td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center gap-3 items-center">
-                    <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
-                      <FaRegEdit />
-                    </div>
-                    <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
-                      <IoBan />
-                    </div>
-                  </div>
-                </td>
+
+        {/* Reusable ImportExportButtons */}
+        <ImportExportButtons
+          data={data}
+          setData={setData}
+          fileName="AssetsData.xlsx"
+        />
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr>
+                <th className="border-b px-4 py-2 text-center">SR.NO.</th>
+                <th className="border-b px-4 py-2 text-center">ASSET TYPE</th>
+                <th className="border-b px-4 py-2 text-center">ASSET ID</th>
+                <th className="border-b px-4 py-2 text-center">MAKE</th>
+                <th className="border-b px-4 py-2 text-center">MODEL</th>
+                <th className="border-b px-4 py-2 text-center">SERIAL NO.</th>
+                <th className="border-b px-4 py-2 text-center">STATUS</th>
+                <th className="border-b px-4 py-2 text-center">ACTION</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredData.map((itm, index) => (
+                <tr key={index}>
+                  <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
+                  <td className="border-b px-4 py-2 text-center">
+                    {itm.assetType}
+                  </td>
+                  <td className="border-b px-4 py-2 text-center">{itm.assetID}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm.make}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm.model}</td>
+                  <td className="border-b px-4 py-2 text-center">
+                    {itm.serialNo}
+                  </td>
+                  <td className="border-b px-4 py-2 text-center">
+                    <div className="flex justify-center items-center">
+                      <div
+                        className={`rounded-full px-2 ${
+                          itm.status === "Active"
+                            ? "bg-green-300 text-green-700"
+                            : "bg-red-300 text-red-700"
+                        }`}
+                      >
+                        {itm.status}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="border-b px-4 py-2 text-center">
+                    <div className="flex justify-center gap-3 items-center">
+                      <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                        <FaRegEdit />
+                      </div>
+                      <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                        <IoBan />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Modal for adding new asset */}

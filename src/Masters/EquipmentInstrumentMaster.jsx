@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const EquipmentInstrumentMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -118,6 +120,9 @@ const EquipmentInstrumentMaster = () => {
           </div>
         </div>
       </div>
+
+      {/* Import/Export Buttons */}
+        <ImportExportButtons data={data} setData={setData} fileName="Equipment_Instrument_Data.xlsx" />
 
       {/* Table */}
       <div className="overflow-x-auto">

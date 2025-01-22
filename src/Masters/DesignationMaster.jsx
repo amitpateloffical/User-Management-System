@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import PopUp from "../PopUp/PopUp";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const DesignationMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,9 +28,9 @@ const DesignationMaster = () => {
     setPopupOpen(!popupOpen);
   };
 
-  const handleStatusFilterChange = (event) => {
-    setStatusFilter(event.target.value);
-  };
+    const handleStatusFilterChange = (event) => {
+        setStatusFilter(event.target.value);
+    };
 
   const handleAddDesignation = () => {
     if (!newDesignation.trim()) {
@@ -55,126 +57,92 @@ const DesignationMaster = () => {
     );
   });
 
-  return (
-    <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}>
-      <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
-        <div className="text-3xl font-semibold text-[#673ab7]">Designation Master</div>
-        <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
-          <div className="flex flex-col w-full md:w-auto">
-            <label htmlFor="status" className="font-bold">
-              Status
-            </label>
-            <select
-              id="status"
-              className="border border-black rounded-md py-2"
-              onChange={handleStatusFilterChange}
-            >
-              <option value="All">All</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-          <div className="flex flex-col w-full md:w-auto">
-            <label htmlFor="search" className="font-bold">
-              Search
-            </label>
-            <input
-              id="search"
-              type="text"
-              className="border border-black rounded-md pr-24 py-2"
-              placeholder="Search Designation By Name"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
-          <div
-            className="bg-[#d3eafd] text-[#2196f3] w-full md:w-auto h-[40px] flex justify-center items-center cursor-pointer"
-            onClick={togglePopup}
-          >
-            <MdAddBox className="text-2xl" />
-          </div>
-        </div>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr>
-              <th className="border-b px-4 py-2 text-center">SR.NO.</th>
-              <th className="border-b px-4 py-2 text-center">DESIGNATION</th>
-              <th className="border-b px-4 py-2 text-center">STATUS</th>
-              <th className="border-b px-4 py-2 text-center">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((itm, index) => (
-              <tr key={index}>
-                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.designation}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center items-center">
+    return (
+        <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
+                <div className="text-3xl font-semibold text-[#673ab7]">Designation Master</div>
+                <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
+                    <div className="flex flex-col w-full md:w-auto">
+                        <label htmlFor="status" className="font-bold">Status</label>
+                        <select id="status" className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
+                            <option value="All">All</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col w-full md:w-auto">
+                        <label htmlFor="search" className="font-bold">Search</label>
+                        <input
+                            id="search"
+                            type="text"
+                            className="border border-black rounded-md pr-24 py-2"
+                            placeholder="Search Designation By Name"
+                            value={searchText}
+                            onChange={e => setSearchText(e.target.value)}
+                        />
+                    </div>
                     <div
-                      className={`rounded-full px-2 ${
-                        itm.status === "Active"
-                          ? "bg-green-300 text-green-700"
-                          : "bg-red-300 text-red-700"
-                      }`}
+                        className="bg-[#d3eafd] text-[#2196f3] w-full md:w-auto h-[40px] flex justify-center items-center cursor-pointer"
+                        onClick={togglePopup}
                     >
-                      {itm.status}
+                        <MdAddBox className="text-2xl" />
                     </div>
-                  </div>
-                </td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center gap-3 items-center">
-                    <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
-                      <FaRegEdit />
-                    </div>
-                    <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
-                      <IoBan />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                </div>
+            </div>
 
-      {popupOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-2xl font-semibold mb-4">Add New Designation</h2>
-            <div className="flex flex-col gap-4">
-              <label htmlFor="designation" className="font-bold">
-                Designation
-              </label>
-              <input
-                id="designation"
-                type="text"
-                className="border border-black rounded-md py-2 px-3"
-                placeholder="Enter Designation Name"
-                value={newDesignation}
-                onChange={(e) => setNewDesignation(e.target.value)}
-              />
+            {/* Add ImportExportButtons component here */}
+            <ImportExportButtons data={data} setData={setData} fileName="Designation_Master" />
+
+            <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th className="border-b px-4 py-2 text-center">SR.NO.</th>
+                            <th className="border-b px-4 py-2 text-center">DESIGNATION</th>
+                            <th className="border-b px-4 py-2 text-center">STATUS</th>
+                            <th className="border-b px-4 py-2 text-center">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredData.map((itm, index) => (
+                            <tr key={index}>
+                                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
+                                <td className="border-b px-4 py-2 text-center">{itm.designation}</td>
+                                <td className="border-b px-4 py-2 text-center">
+                                    <div className="flex justify-center items-center">
+                                        <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
+                                            {itm.status}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className="border-b px-4 py-2 text-center">
+                                    <div className="flex justify-center gap-3 items-center">
+                                        <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                                            <FaRegEdit />
+                                        </div>
+                                        <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                                            <IoBan />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-            <div className="flex justify-end gap-4 mt-6">
-              <button
-                className="bg-gray-300 text-black py-2 px-4 rounded-md"
-                onClick={togglePopup}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-blue-500 text-white py-2 px-4 rounded-md"
-                onClick={handleAddDesignation}
-              >
-                Add
-              </button>
-            </div>
-          </div>
+
+            <PopUp
+                heading="Designation Master"
+                buttonText="Submit"
+                labelHeading="Designation"
+                inputs={[
+                    { label: 'Designation', placeholder: 'Enter Designation Name' },
+                ]}
+                open={popupOpen}
+                onClose={togglePopup}
+            />
         </div>
-      )}
-    </div>
-  );
-};
+    );
+}
 
 export default DesignationMaster;
