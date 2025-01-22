@@ -9,7 +9,6 @@ const LogIn = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const handleLogin = () => {
     if (username === 'admin@vidyagxp.com' && password === 'Amit@121') {
       toast.success('LogIn Successfully.', {
@@ -44,7 +43,7 @@ const LogIn = () => {
               WELCOME TO USER MANAGEMENT RECORD SYSTEM
             </div>
             <div className='flex justify-center items-center'>
-              <img src='https://connexo.io/assets/img/logo/logo.png' className='h-24 w-full max-w-xs' alt='Logo' />
+              <img src='gxplogo.png' className='h-24 w-full max-w-xs' alt='Logo' />
             </div>
             <div className="flex flex-col">
               <label><b>User Name</b></label>

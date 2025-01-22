@@ -50,7 +50,7 @@ const Header = ({onMenuClick }) => {
       </div>
       <div className="hidden sm:block">
         <b className="text-[#673ab7] text-2xl">
-          USER MANAGEMENT RECORD SYSTEM
+          USER ACCESS MANAGEMENT
         </b>
       </div>
     </div>
@@ -60,7 +60,7 @@ const Header = ({onMenuClick }) => {
       <div className="  flex items-center gap-2">
          
     <img
-      src="https://connexo.io/assets/img/logo/logo.png"
+      src="gxplogo.png"
       // src="/login.png"
       className="h-[70px] w-[208px]"
     />
