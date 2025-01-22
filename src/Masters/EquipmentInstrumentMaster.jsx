@@ -3,134 +3,33 @@ import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
 import PopUp from "../PopUp/PopUp";
-
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const EquipmentInstrumentMaster = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [popupOpen, setPopupOpen] = useState(false);
-    const [statusFilter, setStatusFilter] = useState("All");
-    const [searchText, setSearchText] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [searchText, setSearchText] = useState("");
+  const [data, setData] = useState([
+    // Your existing data
+  ]);
 
-    const data = [
-      {
-          srNo: "1.",
-          equipmentId: "EID-001",
-          equipmentName: "Thermometer",
-          make: "Make X",
-          model: "Model A1",
-          type: "Measurement",
-          status: "Active",
-          action: "Calibrate"
-      },
-      {
-          srNo: "2.",
-          equipmentId: "EID-002",
-          equipmentName: "Multimeter",
-          make: "Make Y",
-          model: "Model B1",
-          type: "Testing",
-          status: "Inactive",
-          action: "Repair"
-      },
-      {
-          srNo: "3.",
-          equipmentId: "EID-003",
-          equipmentName: "Oscilloscope",
-          make: "Make X",
-          model: "Model A2",
-          type: "Measurement",
-          status: "Active",
-          action: "Check"
-      },
-      {
-          srNo: "4.",
-          equipmentId: "EID-004",
-          equipmentName: "Power Supply",
-          make: "Make Z",
-          model: "Model C1",
-          type: "Power",
-          status: "Inactive",
-          action: "Replace"
-      },
-      {
-          srNo: "5.",
-          equipmentId: "EID-005",
-          equipmentName: "Spectrum Analyzer",
-          make: "Make X",
-          model: "Model A3",
-          type: "Measurement",
-          status: "Active",
-          action: "Calibrate"
-      },
-      {
-          srNo: "6.",
-          equipmentId: "EID-006",
-          equipmentName: "Function Generator",
-          make: "Make W",
-          model: "Model D1",
-          type: "Signal",
-          status: "Inactive",
-          action: "Repair"
-      },
-      {
-          srNo: "7.",
-          equipmentId: "EID-007",
-          equipmentName: "Data Logger",
-          make: "Make Y",
-          model: "Model B2",
-          type: "Recording",
-          status: "Active",
-          action: "Check"
-      },
-      {
-          srNo: "8.",
-          equipmentId: "EID-008",
-          equipmentName: "Anemometer",
-          make: "Make X",
-          model: "Model A4",
-          type: "Measurement",
-          status: "Active",
-          action: "Calibrate"
-      },
-      {
-          srNo: "9.",
-          equipmentId: "EID-009",
-          equipmentName: "LCR Meter",
-          make: "Make Y",
-          model: "Model B3",
-          type: "Testing",
-          status: "Inactive",
-          action: "Repair"
-      },
-      {
-          srNo: "10.",
-          equipmentId: "EID-010",
-          equipmentName: "Temperature Chamber",
-          make: "Make Z",
-          model: "Model C2",
-          type: "Environmental",
-          status: "Active",
-          action: "Check"
-      }
-  ];
+  const togglePopup = () => {
+    setPopupOpen(!popupOpen);
+  };
 
-    const togglePopup = () => {
-      setPopupOpen(!popupOpen);
-    };
+  const handleStatusFilterChange = (event) => {
+    setStatusFilter(event.target.value);
+  };
 
-    const handleStatusFilterChange = (event) => {
-      setStatusFilter(event.target.value);
-    };
-    
-    const filteredData = data.filter(item => {
-      return (
-        (statusFilter === "All" || 
-        (statusFilter === "Active" && item.status === "Active") || 
-        (statusFilter === "Inactive" && item.status === "Inactive"))
-        &&
-        (searchText === "" || item.equipmentId.toLowerCase().includes(searchText.toLowerCase()))
-      );
-    });
+  const filteredData = data.filter(item => {
+    return (
+      (statusFilter === "All" ||
+        (statusFilter === "Active" && item.status === "Active") ||
+        (statusFilter === "Inactive" && item.status === "Inactive")) &&
+      (searchText === "" || item.equipmentId.toLowerCase().includes(searchText.toLowerCase()))
+    );
+  });
 
   return (
     <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
@@ -174,6 +73,11 @@ const EquipmentInstrumentMaster = () => {
           </div>
         </div>
       </div>
+
+      {/* Import/Export Buttons */}
+        <ImportExportButtons data={data} setData={setData} fileName="Equipment_Instrument_Data.xlsx" />
+
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 text-white">
@@ -186,7 +90,7 @@ const EquipmentInstrumentMaster = () => {
               <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">TYPE</th>
               <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">STATUS</th>
               <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">ACTION</th>
-            </tr> 
+            </tr>
           </thead>
           <tbody className="bg-white divide-gray-200">
             {filteredData.map((itm, index) => (
@@ -217,32 +121,17 @@ const EquipmentInstrumentMaster = () => {
           </tbody>
         </table>
       </div>
-      <PopUp
-        heading="Equipment/Instrument Master"
-        buttonText="Submit"
-        inputs={[
-          { label: 'Equipment/Instrument Id', type: "text" },
-          { label: 'Equipment/Instrument Name', type: "text" },
-          { label: 'Make', type: "text" },
-          { label: 'Model', type: "text" },
-          {
-            label: 'Type',
-            type: 'dropdown',
-            options: [
-              { label: '-select-', value: 'select' },
-              { label: 'HMI', value: 'hmi' },
-              { label: 'SCADA', value: 'scada' },
-              { label: 'IPC', value: 'ipc' },
-              { label: 'COMPUTER SYSTEM', value: 'cs' },
-              { label: 'Other', value: 'other' },
-            ],
-          },
-        ]}
-        open={popupOpen}
-        onClose={togglePopup}
-      />
-    </div>
-  )
-}
 
-export default EquipmentInstrumentMaster
+      {popupOpen && (
+        <PopUp
+          title="Add Equipment"
+          closePopup={togglePopup}
+        >
+          {/* Popup content */}
+        </PopUp>
+      )}
+    </div>
+  );
+};
+
+export default EquipmentInstrumentMaster;
