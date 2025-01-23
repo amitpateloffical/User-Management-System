@@ -1,201 +1,318 @@
 import React, { useState } from "react";
-import { MdAddBox } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
-import { IoBan } from "react-icons/io5";
 import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
 
 const AssetsInventory = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [data, setData] = useState([
+    {
+      srNo: "1.",
+      assetType: "Instrument",
+      assetId: "AID-101",
+      make: "Make X",
+      model: "Model A1",
+      serialNo: "SN-001",
+      status: "Active",
+    },
+    // Add initial data here...
+  ]);
+
+  const [modalData, setModalData] = useState({
+    assetType: "",
+    assetId: "",
+    make: "",
+    model: "",
+    serialNo: "",
+    status: "Active",
+  });
+  const [isEdit, setIsEdit] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [statusFilter, setStatusFilter] = useState("All");
 
-  const data = [
-    {
-        srNo: "1.",
-        assetType: "Instrument",
-        assetId: "AID-101",
-        make: "Make X",
-        model: "Model A1",
-        serialNo: "SN-001",
-        status: "Active"
-    },
-    {
-        srNo: "2.",
-        assetType: "Equipment",
-        assetId: "AID-102",
-        make: "Make Y",
-        model: "Model B1",
-        serialNo: "SN-002",
-        status: "Inactive"
-    },
-    {
-        srNo: "3.",
-        assetType: "Instrument",
-        assetId: "AID-103",
-        make: "Make X",
-        model: "Model A2",
-        serialNo: "SN-003",
-        status: "Active"
-    },
-    {
-        srNo: "4.",
-        assetType: "Equipment",
-        assetId: "AID-104",
-        make: "Make Z",
-        model: "Model C1",
-        serialNo: "SN-004",
-        status: "Inactive"
-    },
-    {
-        srNo: "5.",
-        assetType: "Instrument",
-        assetId: "AID-105",
-        make: "Make X",
-        model: "Model A3",
-        serialNo: "SN-005",
-        status: "Active"
-    },
-    {
-        srNo: "6.",
-        assetType: "Equipment",
-        assetId: "AID-106",
-        make: "Make W",
-        model: "Model D1",
-        serialNo: "SN-006",
-        status: "Inactive"
-    },
-    {
-        srNo: "7.",
-        assetType: "Instrument",
-        assetId: "AID-107",
-        make: "Make Y",
-        model: "Model B2",
-        serialNo: "SN-007",
-        status: "Active"
-    },
-    {
-        srNo: "8.",
-        assetType: "Instrument",
-        assetId: "AID-108",
-        make: "Make X",
-        model: "Model A4",
-        serialNo: "SN-008",
-        status: "Active"
-    },
-    {
-        srNo: "9.",
-        assetType: "Equipment",
-        assetId: "AID-109",
-        make: "Make Y",
-        model: "Model B3",
-        serialNo: "SN-009",
-        status: "Inactive"
-    },
-    {
-        srNo: "10.",
-        assetType: "Equipment",
-        assetId: "AID-110",
-        make: "Make Z",
-        model: "Model C2",
-        serialNo: "SN-010",
-        status: "Active"
-    }
-];
+  const handleStatusFilterChange = (event) => setStatusFilter(event.target.value);
 
-
-const handleStatusFilterChange = (event) => {
-  setStatusFilter(event.target.value);
-};
-
-
-const filteredData = data.filter(item => {
-  return (
-    (statusFilter === "All" || 
-    (statusFilter === "Active" && item.status === "Active") || 
-    (statusFilter === "Inactive" && item.status === "Inactive"))
-  
+  const filteredData = data.filter(
+    (item) =>
+      statusFilter === "All" ||
+      (statusFilter === "Active" && item.status === "Active") ||
+      (statusFilter === "Inactive" && item.status === "Inactive")
   );
-});
-return (
-  <div>
-    
-    
-    <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? 'ml-64' : ''}`}>
-      <div className="grid grid-cols-1 md:grid-cols-3 border-b pb-5">
-        <div className="text-3xl font-semibold text-[#673ab7] col-span-2">Assets Inventory</div>
-        <div className="flex justify-end gap-4 md:gap-7 col-span-1 w-full">
-          <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40px] md:w-[10%] h-[40px] flex justify-center items-center">
-            <FiRefreshCw />
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setModalData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAdd = () => {
+    setShowModal(true);
+    setIsEdit(false);
+    setModalData({
+      assetType: "",
+      assetId: "",
+      make: "",
+      model: "",
+      serialNo: "",
+      status: "Active",
+    });
+  };
+
+  const handleEdit = (index) => {
+    setModalData(data[index]);
+    setIsEdit(true);
+    setShowModal(true);
+  };
+
+  const handleDelete = (index) => {
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
+  };
+
+  const handleSave = () => {
+    if (isEdit) {
+      const updatedData = data.map((item) =>
+        item.assetId === modalData.assetId ? modalData : item
+      );
+      setData(updatedData);
+    } else {
+      setData((prev) => [...prev, { ...modalData, srNo: `${prev.length + 1}.` }]);
+    }
+    setShowModal(false);
+  };
+
+  return (
+    <div>
+      <div className="content-with-fixed-header px-4 flex flex-col gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 border-b pb-5">
+          <div className="text-3xl font-semibold text-[#673ab7] col-span-2">
+            Assets Inventory
           </div>
-          <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40px] md:w-[10%] h-[40px] flex justify-center items-center">
-            <FaFilePdf />
+          <div className="flex justify-end gap-4 md:gap-7 col-span-1 w-full">
+            <div
+              className="bg-[#d3eafd] rounded-md hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40px] h-[40px] flex justify-center items-center"
+              onClick={handleAdd}
+            >
+              <span>+</span>
+            </div>
+            <div className="bg-[#d3eafd] rounded-md hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40px] h-[40px] flex justify-center items-center">
+              <FiRefreshCw />
+            </div>
+            <div className="bg-[#d3eafd] rounded-md hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40px] h-[40px] flex justify-center items-center">
+              <FaFilePdf />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div className="col-span-1 md:col-span-3 flex flex-wrap md:flex-nowrap gap-5 items-end">
-          <div className="flex flex-col w-full md:w-1/3">
-            <label htmlFor="status" className="font-bold">Status</label>
-            <select className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
-              <option value="All">All</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-          <div className="flex flex-col w-full md:w-1/3">
-            <label htmlFor="assetType" className="font-bold">Asset Type</label>
-            <select className="border border-black rounded-md py-2">
-              <option>---select---</option>
-              <option>HMI</option>
-              <option>SCADA</option>
-              <option>IPC</option>
-              <option>COMPUTER SYSTEM</option>
-              <option>OTHER</option>
-            </select>
-          </div>
-          <div className="bg-purple-200 mt-5 md:mt-0 rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-purple-700 hover:text-white cursor-pointer text-purple-500 w-full md:w-[15%] h-[40px] flex justify-center items-center">
-            <IoSearchSharp size={25} />
-          </div>
-        </div>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="text-center px-6 py-3">SR.NO.</th>
-              <th className="text-center px-6 py-3">ASSET TYPE</th>
-              <th className="text-center px-6 py-3">ASSET ID</th>
-              <th className="text-center px-6 py-3">MAKE</th>
-              <th className="text-center px-6 py-3">MODEL</th>
-              <th className="text-center px-6 py-3">SERIAL NO.</th>
-              <th className="text-center px-6 py-3">STATUS</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredData.map((itm, index) => (
-              <tr key={index}>
-                <td className="text-center px-6 py-4">{itm.srNo}</td>
-                <td className="text-center px-6 py-4">{itm.assetType}</td>
-                <td className="text-center px-6 py-4">{itm.assetId}</td>
-                <td className="text-center px-6 py-4">{itm.make}</td>
-                <td className="text-center px-6 py-4">{itm.model}</td>
-                <td className="text-center px-6 py-4">{itm.serialNo}</td>
-                <td className="text-center px-6 py-4">
-                  <div className="flex justify-center items-center">
-                    <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="text-center px-6 py-3">SR.NO.</th>
+                <th className="text-center px-6 py-3">ASSET TYPE</th>
+                <th className="text-center px-6 py-3">ASSET ID</th>
+                <th className="text-center px-6 py-3">MAKE</th>
+                <th className="text-center px-6 py-3">MODEL</th>
+                <th className="text-center px-6 py-3">SERIAL NO.</th>
+                <th className="text-center px-6 py-3">STATUS</th>
+                <th className="text-center px-6 py-3">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredData.map((itm, index) => (
+                <tr key={index}>
+                  <td className="text-center px-6 py-4">{itm.srNo}</td>
+                  <td className="text-center px-6 py-4">{itm.assetType}</td>
+                  <td className="text-center px-6 py-4">{itm.assetId}</td>
+                  <td className="text-center px-6 py-4">{itm.make}</td>
+                  <td className="text-center px-6 py-4">{itm.model}</td>
+                  <td className="text-center px-6 py-4">{itm.serialNo}</td>
+                  <td className="text-center px-6 py-4">
+                    <div
+                      className={`rounded-full px-2 ${
+                        itm.status === "Active"
+                          ? "bg-green-300 text-green-700"
+                          : "bg-red-300 text-red-700"
+                      }`}
+                    >
                       {itm.status}
                     </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </td>
+                  <td className="text-center px-6 py-4">
+                    <button
+                      onClick={() => handleEdit(index)}
+                      className="bg-blue-500 text-white px-2 py-1 rounded"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(index)}
+                      className="bg-red-500 text-white px-2 py-1 rounded ml-2"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+      {/* {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-5 rounded">
+            <h2>{isEdit ? "Edit Asset" : "Add Asset"}</h2>
+            <div>
+              <label>Asset Type</label>
+              <input
+                type="text"
+                name="assetType"
+                value={modalData.assetType}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Asset ID</label>
+              <input
+                type="text"
+                name="assetId"
+                value={modalData.assetId}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Make</label>
+              <input
+                type="text"
+                name="make"
+                value={modalData.make}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Model</label>
+              <input
+                type="text"
+                name="model"
+                value={modalData.model}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Serial No</label>
+              <input
+                type="text"
+                name="serialNo"
+                value={modalData.serialNo}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Status</label>
+              <select
+                name="status"
+                value={modalData.status}
+                onChange={handleInputChange}
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <div>
+              <button onClick={handleSave}>Save</button>
+              <button onClick={() => setShowModal(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )} */}
+      {showModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h2 className="text-2xl font-semibold mb-4 text-center">
+        {isEdit ? "Edit Asset" : "Add Asset"}
+      </h2>
+      <form>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Asset Type</label>
+          <input
+            type="text"
+            name="assetType"
+            value={modalData.assetType}
+            onChange={handleInputChange}
+            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Asset ID</label>
+          <input
+            type="text"
+            name="assetId"
+            value={modalData.assetId}
+            onChange={handleInputChange}
+            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Make</label>
+          <input
+            type="text"
+            name="make"
+            value={modalData.make}
+            onChange={handleInputChange}
+            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Model</label>
+          <input
+            type="text"
+            name="model"
+            value={modalData.model}
+            onChange={handleInputChange}
+            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Serial No</label>
+          <input
+            type="text"
+            name="serialNo"
+            value={modalData.serialNo}
+            onChange={handleInputChange}
+            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Status</label>
+          <select
+            name="status"
+            value={modalData.status}
+            onChange={handleInputChange}
+            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+        <div className="flex justify-end gap-4">
+          <button
+            onClick={() => setShowModal(false)}
+            className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-500 focus:outline-none"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none"
+          >
+            {isEdit ? "Save Changes" : "Add Asset"}
+          </button>
+        </div>
+      </form>
     </div>
-</div>
-)
-}
+  </div>
+)}
 
-export default AssetsInventory
+    </div>
+  );
+};
+
+export default AssetsInventory;
