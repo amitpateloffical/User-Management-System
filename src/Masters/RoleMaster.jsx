@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const RoleMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,12 +15,7 @@ const RoleMaster = () => {
     addGroup: "",
     status: "Active",
   });
-  const [data, setData] = useState([
-    { srNo: "1.", role: "QC", description: "Quality Control", addGroup: "Group A", status: "Active" },
-    { srNo: "2.", role: "Test-1", description: "Testing Department 1", addGroup: "Group B", status: "Inactive" },
-    { srNo: "3.", role: "User", description: "User Management", addGroup: "Group A", status: "Active" },
-    { srNo: "4.", role: "IT", description: "Information Technology", addGroup: "Group C", status: "Inactive" },
-  ]);
+  const [data, setData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
   const togglePopup = () => {
@@ -79,6 +75,7 @@ const RoleMaster = () => {
       (searchText === "" || item.role.toLowerCase().includes(searchText.toLowerCase()))
     );
   });
+  
 
   return (
     <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}>
@@ -112,6 +109,12 @@ const RoleMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Designation_Master"
+        sheetNumbers={2} 
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -124,19 +127,22 @@ const RoleMaster = () => {
               <th className="border-b px-4 py-2 text-center">ACTION</th>
             </tr>
           </thead>
-          <tbody>
-            {filteredData.map((itm, index) => (
-              <tr key={index}>
-                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.role}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.description}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.addGroup}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className={`rounded-full px-2 ${itm.status === "Active" ? "bg-green-300 text-green-700" : "bg-red-300 text-red-700"}`}>
-                    {itm.status}
-                  </div>
+           <tbody>
+            {filteredData.length === 0 ? (
+              <tr>
+                <td className="border-b px-4 py-2 text-center" colSpan="4">
+                  No Data Available
                 </td>
-                <td className="border-b px-4 py-2 text-center">
+              </tr>
+            ) : (
+              filteredData.map((itm, index) => (
+                <tr key={index}>
+                  <td className="border-b px-4 py-2 text-center">{itm["SR.NO."]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["ROLE"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["DESCRIPTION"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["ADD GROUP"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["STATUS"]}</td>
+                  <td className="border-b px-4 py-2 text-center">
                   <div className="flex justify-center gap-3 items-center">
                     <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer" onClick={() => handleEdit(index)}>
                       <FaRegEdit />
@@ -146,8 +152,9 @@ const RoleMaster = () => {
                     </div>
                   </div>
                 </td>
-              </tr>
-            ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
-
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 const ConsolidateMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [serverBaseModalOpen, setServerBaseModalOpen] = useState(false);
@@ -20,11 +20,7 @@ const ConsolidateMaster = () => {
   const [status, setStatus] = useState("Active");
 
   // State to hold data
-  const [data, setData] = useState([
-    { srNo: "1.", consolidate: "Group 1", equipmentId: "EID-001", assetId: "AID-101", applicationNameVersion: "App A v1.0", department: "QC", status: "Active" },
-    { srNo: "2.", consolidate: "Group 2", equipmentId: "EID-002", assetId: "AID-102", applicationNameVersion: "App B v1.1", department: "Test-1", status: "Inactive" },
-    // Add more data if necessary
-  ]);
+  const [data, setData] = useState([]);
 
   const [selectedItem, setSelectedItem] = useState(null); // To store the item to be edited
 
@@ -108,6 +104,12 @@ const ConsolidateMaster = () => {
             </div>
           </div>
         </div>
+        <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="ConsolidateMaster"
+        sheetNumbers={7}
+      />
 
         {/* Filter Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 justify-center items-center gap-5">
@@ -150,15 +152,23 @@ const ConsolidateMaster = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredData.map((itm, index) => (
+              {filteredData.length === 0 ? (
+              <tr>
+                <td className="border-b px-4 py-2 text-center" colSpan="4">
+                  No Data Available
+                </td>
+              </tr>
+            ) : (
+              
+              filteredData.map((itm, index) => (
                 <tr key={index}>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.srNo}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.consolidate}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.equipmentId}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.assetId}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.applicationNameVersion}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.department}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.status}</td>
+                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm["SR.NO."]}</td>
+                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm["CONSOLIDATE"]}</td>
+                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm["EQUIPMENT/INSTRUMENT ID"]}</td>
+                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm["ASSET ID"]}</td>
+                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm["APPLICATION NAME & VERSION"]}</td>
+                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm["DEPARTMENT"]}</td>
+                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm["STATUS"]}</td>
                   <td>
                     <div className="text-center flex justify-center gap-3 items-center">
                       <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"
@@ -172,7 +182,7 @@ const ConsolidateMaster = () => {
                     </div>
                   </td>
                 </tr>
-              ))}
+             ) ))}
             </tbody>
           </table>
         </div>

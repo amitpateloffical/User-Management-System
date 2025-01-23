@@ -3,8 +3,7 @@ import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
 import { useEffect } from "react";
-import ImportExportButtons from "../ImportExportButtons/ImportExportButtons"
-
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const DesignationMaster = () => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -12,7 +11,10 @@ const DesignationMaster = () => {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
 
-  const [formData, setFormData] = useState({ designation: "", status: "Active" });
+  const [formData, setFormData] = useState({
+    designation: "",
+    status: "Active",
+  });
   const [editIndex, setEditIndex] = useState(null);
 
   const togglePopup = () => {
@@ -57,13 +59,13 @@ const DesignationMaster = () => {
   };
 
   const handleDelete = (index) => {
-    const updatedDesignations = designations.filter((_, i) => i !== index);
+    const updatedDesignations = data.filter((_, i) => i !== index);
     // Reassign serial numbers
     const updatedWithSerials = updatedDesignations.map((item, idx) => ({
       ...item,
       srNo: `${idx + 1}.`,
     }));
-    setDesignations(updatedWithSerials);
+    setData(updatedWithSerials);
   };
 
   const handleEdit = (index) => {
@@ -74,15 +76,14 @@ const DesignationMaster = () => {
     });
     togglePopup();
   };
-  
- 
 
   const filteredData = data.filter((item) => {
     return (
       (statusFilter === "All" ||
         (statusFilter === "Active" && item.STATUS === "Active") ||
         (statusFilter === "Inactive" && item.STATUS === "Inactive")) &&
-      (searchText === "" || item.DESIGNATION?.toLowerCase().includes(searchText.toLowerCase()))
+      (searchText === "" ||
+        item.DESIGNATION?.toLowerCase().includes(searchText.toLowerCase()))
     );
   });
 
@@ -94,7 +95,9 @@ const DesignationMaster = () => {
   return (
     <div className="content-with-fixed-header px-4 flex flex-col gap-10">
       <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
-        <div className="text-3xl font-semibold text-[#673ab7]">Designation Master</div>
+        <div className="text-3xl font-semibold text-[#673ab7]">
+          Designation Master
+        </div>
         <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
           <div className="flex flex-col w-full md:w-auto">
             <label htmlFor="status" className="font-bold">
@@ -103,8 +106,7 @@ const DesignationMaster = () => {
             <select
               id="status"
               className="border border-black rounded-md py-2"
-              onChange={handleStatusFilterChange}
-            >
+              onChange={handleStatusFilterChange}>
               <option value="All">All</option>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
@@ -125,8 +127,7 @@ const DesignationMaster = () => {
           </div>
           <div
             className="bg-[#d3eafd] text-[#2196f3] w-full md:w-auto h-[40px] flex justify-center items-center cursor-pointer"
-            onClick={togglePopup}
-          >
+            onClick={togglePopup}>
             <MdAddBox className="text-2xl" />
           </div>
         </div>
@@ -135,9 +136,8 @@ const DesignationMaster = () => {
         data={data}
         setData={setData}
         fileName="Designation_Master"
-        sheetNumbers={1} 
+        sheetNumbers={1}
       />
-
 
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
@@ -159,17 +159,27 @@ const DesignationMaster = () => {
             ) : (
               filteredData.map((itm, index) => (
                 <tr key={index}>
-                  <td className="border-b px-4 py-2 text-center">{itm["SR.NO."]}</td>
-                  <td className="border-b px-4 py-2 text-center">{itm["DESIGNATION"]}</td>
-                  <td className="border-b px-4 py-2 text-center">{itm["STATUS"]}</td>
                   <td className="border-b px-4 py-2 text-center">
-                    <div className="flex justify-center gap-3 items-center">
-                      <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                    {itm["SR.NO."]}
+                  </td>
+                  <td className="border-b px-4 py-2 text-center">
+                    {itm["DESIGNATION"]}
+                  </td>
+                  <td className="border-b px-4 py-2 text-center">
+                    {itm["STATUS"]}
+                  </td>
+                  <td className="border-b px-4 py-2 text-center">
+                    <div className="flex justify-center gap-3">
+                      <button
+                        className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"
+                        onClick={() => handleEdit(index)}>
                         <FaRegEdit />
-                      </div>
-                      <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                      </button>
+                      <button
+                        className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"
+                        onClick={() => handleDelete(index)}>
                         <IoBan />
-                      </div>
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -208,8 +218,7 @@ const DesignationMaster = () => {
                 value={formData.status}
                 onChange={(e) =>
                   setFormData({ ...formData, status: e.target.value })
-                }
-              >
+                }>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
@@ -217,14 +226,12 @@ const DesignationMaster = () => {
             <div className="flex justify-end gap-4 mt-6">
               <button
                 className="bg-gray-300 text-black py-2 px-4 rounded-md"
-                onClick={togglePopup}
-              >
+                onClick={togglePopup}>
                 Cancel
               </button>
               <button
                 className="bg-blue-500 text-white py-2 px-4 rounded-md"
-                onClick={handleAddOrEditDesignation}
-              >
+                onClick={handleAddOrEditDesignation}>
                 {editIndex !== null ? "Update" : "Add"}
               </button>
             </div>

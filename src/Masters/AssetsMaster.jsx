@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
-
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons"
 const AssetsMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -19,13 +19,7 @@ const AssetsMaster = () => {
   });
   const [editIndex, setEditIndex] = useState(null);
 
-  const [data, setData] = useState([
-    { srNo: "1.", assetType: "Server", assetID: "A001", make: "Dell", model: "XPS", serialNo: "S1234", status: "Active" },
-    { srNo: "2.", assetType: "Desktop", assetID: "A002", make: "HP", model: "Elite", serialNo: "S5678", status: "Inactive" },
-    { srNo: "3.", assetType: "IPS", assetID: "A003", make: "Cisco", model: "IPS-1000", serialNo: "S91011", status: "Active" },
-    { srNo: "4.", assetType: "Desktop", assetID: "A004", make: "Lenovo", model: "ThinkPad", serialNo: "S1213", status: "Active" },
-    { srNo: "5.", assetType: "Server", assetID: "A005", make: "Acer", model: "Predator", serialNo: "S1415", status: "Inactive" },
-  ]);
+  const [data, setData] = useState([]);
 
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
@@ -122,6 +116,12 @@ const AssetsMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Asset_Master"
+        sheetNumbers={4} 
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -137,19 +137,26 @@ const AssetsMaster = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((itm, index) => (
-              <tr key={index}>
-                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.assetType}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.assetID}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.make}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.model}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.serialNo}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className={`rounded-full px-2 ${itm.status === 'Active' ? 'bg-green-300 text-green-700' : 'bg-red-300 text-red-700'}`}>
-                    {itm.status}
-                  </div>
+          {filteredData.length === 0 ? (
+              <tr>
+                <td className="border-b px-4 py-2 text-center" colSpan="4">
+                  No Data Available
                 </td>
+              </tr>
+            ) : (
+
+
+
+            filteredData.map((itm, index) => (
+              <tr key={index}>
+                <td className="border-b px-4 py-2 text-center">{itm["SR.NO."]}</td>
+                <td className="border-b px-4 py-2 text-center">{itm["ASSET TYPE"]}</td>
+                <td className="border-b px-4 py-2 text-center">{itm["ASSET ID"]}</td>
+                <td className="border-b px-4 py-2 text-center">{itm["MAKE"]}</td>
+                <td className="border-b px-4 py-2 text-center">{itm["MODEL"]}</td>
+                <td className="border-b px-4 py-2 text-center">{itm["SERIAL NO."]}</td>
+                <td className="border-b px-4 py-2 text-center">{itm["STATUS"]}</td>
+
                 <td className="border-b px-4 py-2 text-center">
                   <div className="flex justify-center gap-3 items-center">
                     <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer" onClick={() => handleEdit(index)}>
@@ -161,7 +168,7 @@ const AssetsMaster = () => {
                   </div>
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const EquipmentInstrumentMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,19 +17,7 @@ const EquipmentInstrumentMaster = () => {
     type: "select",
   });
 
-  const [data, setData] = useState([
-    {
-      srNo: "1.",
-      equipmentId: "EID-001",
-      equipmentName: "Thermometer",
-      make: "Make X",
-      model: "Model A1",
-      type: "Measurement",
-      status: "Active",
-      action: "Calibrate",
-    },
-    // Add more initial data if needed
-  ]);
+  const [data, setData] = useState([]);
 
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
@@ -130,6 +119,12 @@ const EquipmentInstrumentMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Equipment_InstrumentMaster"
+        sheetNumbers={6}
+      />
 
       {/* Table */}
       <div className="overflow-x-auto">
@@ -163,21 +158,32 @@ const EquipmentInstrumentMaster = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-gray-200">
-            {filteredData.map((itm, index) => (
+            {filteredData.length === 0 ? (
+              <tr>
+                <td className="border-b px-4 py-2 text-center" colSpan="4">
+                  No Data Available
+                </td>
+              </tr>
+            ) : (
+            
+            
+            
+            filteredData.map((itm, index) => (
               <tr key={index}>
-                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.srNo}</td>
-                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.equipmentId}</td>
-                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.equipmentName}</td>
-                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.make}</td>
-                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.model}</td>
-                <td className="px-6 py-4 text-center whitespace-nowrap">{itm.type}</td>
-                <td className="px-6 py-4 text-center whitespace-nowrap">
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm["SR.NO."]}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm["EQUIPMENT/INSTRUMENT ID"]}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm["EQUIPMENT/INSTRUMENT NAME"]}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm["MAKE"]}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm["MODEL"]}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm["TYPE"]}</td>
+                <td className="px-6 py-4 text-center whitespace-nowrap">{itm["STATUS"]}</td>
+                {/* <td className="px-6 py-4 text-center whitespace-nowrap">
                   <div
                     className={`rounded-full px-2 ${itm.status === "Active" ? "bg-green-300 text-green-700" : "bg-red-300 text-red-700"}`}
                   >
                     {itm.status}
                   </div>
-                </td>
+                </td> */}
                 <td className="px-6 py-4 text-center whitespace-nowrap">
                   <div className="flex justify-center gap-3 items-center">
                     <div
@@ -195,7 +201,7 @@ const EquipmentInstrumentMaster = () => {
                   </div>
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>
