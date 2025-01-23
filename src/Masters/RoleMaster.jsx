@@ -2,24 +2,21 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const RoleMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState("All");
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchTaext] = useState("");
   const [formData, setFormData] = useState({
     role: "",
     description: "",
     addGroup: "",
     status: "Active",
   });
-  const [data, setData] = useState([
-    { srNo: "1.", role: "QC", description: "Quality Control", addGroup: "Group A", status: "Active" },
-    { srNo: "2.", role: "Test-1", description: "Testing Department 1", addGroup: "Group B", status: "Inactive" },
-    { srNo: "3.", role: "User", description: "User Management", addGroup: "Group A", status: "Active" },
-    { srNo: "4.", role: "IT", description: "Information Technology", addGroup: "Group C", status: "Inactive" },
-  ]);
+  const [data, setData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
   const togglePopup = () => {
@@ -112,6 +109,12 @@ const RoleMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="RoleMaster"
+        sheetNumbers={2}
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const EquipmentInstrumentMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,19 +17,7 @@ const EquipmentInstrumentMaster = () => {
     type: "select",
   });
 
-  const [data, setData] = useState([
-    {
-      srNo: "1.",
-      equipmentId: "EID-001",
-      equipmentName: "Thermometer",
-      make: "Make X",
-      model: "Model A1",
-      type: "Measurement",
-      status: "Active",
-      action: "Calibrate",
-    },
-    // Add more initial data if needed
-  ]);
+  const [data, setData] = useState([]);
 
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
@@ -130,6 +119,12 @@ const EquipmentInstrumentMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="EquipmentInstrumentMaster"
+        sheetNumbers={5}
+      />
 
       {/* Table */}
       <div className="overflow-x-auto">

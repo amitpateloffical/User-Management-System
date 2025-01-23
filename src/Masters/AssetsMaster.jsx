@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const AssetsMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,13 +21,7 @@ const AssetsMaster = () => {
   });
   const [editIndex, setEditIndex] = useState(null);
 
-  const [data, setData] = useState([
-    { srNo: "1.", assetType: "Server", assetID: "A001", make: "Dell", model: "XPS", serialNo: "S1234", status: "Active" },
-    { srNo: "2.", assetType: "Desktop", assetID: "A002", make: "HP", model: "Elite", serialNo: "S5678", status: "Inactive" },
-    { srNo: "3.", assetType: "IPS", assetID: "A003", make: "Cisco", model: "IPS-1000", serialNo: "S91011", status: "Active" },
-    { srNo: "4.", assetType: "Desktop", assetID: "A004", make: "Lenovo", model: "ThinkPad", serialNo: "S1213", status: "Active" },
-    { srNo: "5.", assetType: "Server", assetID: "A005", make: "Acer", model: "Predator", serialNo: "S1415", status: "Inactive" },
-  ]);
+  const [data, setData] = useState([ ]);
 
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
@@ -122,6 +118,12 @@ const AssetsMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Assets Master"
+        sheetNumbers={4}
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>

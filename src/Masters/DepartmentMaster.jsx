@@ -2,19 +2,12 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const DepartmentMaster = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchText, setSearchText] = useState("");
-  const [departments, setDepartments] = useState([
-    { srNo: "1.", department: "QC", status: "Active" },
-    { srNo: "2.", department: "Test-1", status: "Inactive" },
-    { srNo: "3.", department: "User", status: "Active" },
-    { srNo: "4.", department: "IT", status: "Inactive" },
-    { srNo: "5.", department: "QA", status: "Active" },
-    { srNo: "6.", department: "System Admin", status: "Inactive" },
-    { srNo: "7.", department: "HR", status: "Active" },
-  ]);
+  const [departments, setDepartments] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({ department: "", status: "Active" });
@@ -120,6 +113,12 @@ const DepartmentMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={departments}
+        setData={setDepartments}
+        fileName="Department_Master"
+        sheetNumbers={0}
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -131,42 +130,33 @@ const DepartmentMaster = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredDepartments.map((itm, index) => (
-              <tr key={index}>
-                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.department}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center items-center">
-                    <div
-                      className={`rounded-full px-2 ${
-                        itm.status === "Active"
-                          ? "bg-green-300 text-green-700"
-                          : "bg-red-300 text-red-700"
-                      }`}
-                    >
-                      {itm.status}
-                    </div>
-                  </div>
-                </td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center gap-3 items-center">
-                    <div
-                      className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"
-                      onClick={() => handleEdit(index)}
-                    >
-                      <FaRegEdit />
-                    </div>
-                    <div
-                      className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"
-                      onClick={() => handleDelete(index)}
-                    >
-                      <IoBan />
-                    </div>
-                  </div>
+            {filteredDepartments.length === 0 ? (
+              <tr>
+                <td className="border-b px-4 py-2 text-center" colSpan="4">
+                  No Data Available
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredDepartments.map((itm, index) => (
+                <tr key={index}>
+                  <td className="border-b px-4 py-2 text-center">{itm["srNo"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["department"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["status"]}</td>
+                  <td className="border-b px-4 py-2 text-center">
+                    <div className="flex justify-center gap-3 items-center">
+                      <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                        <FaRegEdit />
+                      </div>
+                      <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                        <IoBan />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
+
         </table>
       </div>
 

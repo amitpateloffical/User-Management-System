@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const ConsolidateMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,11 +22,7 @@ const ConsolidateMaster = () => {
   const [status, setStatus] = useState("Active");
 
   // State to hold data
-  const [data, setData] = useState([
-    { srNo: "1.", consolidate: "Group 1", equipmentId: "EID-001", assetId: "AID-101", applicationNameVersion: "App A v1.0", department: "QC", status: "Active" },
-    { srNo: "2.", consolidate: "Group 2", equipmentId: "EID-002", assetId: "AID-102", applicationNameVersion: "App B v1.1", department: "Test-1", status: "Inactive" },
-    // Add more data if necessary
-  ]);
+  const [data, setData] = useState([ ]);
 
   const [selectedItem, setSelectedItem] = useState(null); // To store the item to be edited
 
@@ -133,6 +131,12 @@ const ConsolidateMaster = () => {
             </div>
           </div>
         </div>
+        <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="ConsolidateMaster"
+        sheetNumbers={7}
+      />
 
         {/* Table */}
         <div className="overflow-x-auto">

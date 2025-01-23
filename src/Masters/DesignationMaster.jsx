@@ -2,23 +2,14 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const DesignationMaster = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchText, setSearchText] = useState("");
-  const [designations, setDesignations] = useState([
-    { srNo: "1.", designation: "QC", status: "Active" },
-    { srNo: "2.", designation: "Test-1", status: "Inactive" },
-    { srNo: "3.", designation: "User", status: "Active" },
-    { srNo: "4.", designation: "IT", status: "Inactive" },
-    { srNo: "5.", designation: "QA", status: "Active" },
-    { srNo: "6.", designation: "System Admin", status: "Inactive" },
-    { srNo: "7.", designation: "HR", status: "Active" },
-    { srNo: "8.", designation: "Finance", status: "Active" },
-    { srNo: "9.", designation: "Marketing", status: "Inactive" },
-    { srNo: "10.", designation: "Operations", status: "Active" },
-  ]);
+  const [designations, setDesignations] = useState([]);
 
   const [formData, setFormData] = useState({ designation: "", status: "Active" });
   const [editIndex, setEditIndex] = useState(null);
@@ -133,6 +124,12 @@ const DesignationMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={designations}
+        setData={setDesignations}
+        fileName="Designation_Master"
+        sheetNumbers={1}
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>

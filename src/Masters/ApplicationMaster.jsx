@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const ApplicationMaster = () => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -18,11 +20,7 @@ const ApplicationMaster = () => {
 
   // Dummy data state
   const [data, setData] = useState([
-    { srNo: "1.", application: "App A", version: "1.0", make: "Make X", assignRole: "QC", status: "Active" },
-    { srNo: "2.", application: "App B", version: "1.1", make: "Make Y", assignRole: "Test-1", status: "Inactive" },
-    { srNo: "3.", application: "App C", version: "1.2", make: "Make Z", assignRole: "User", status: "Active" },
-    { srNo: "4.", application: "App D", version: "2.0", make: "Make A", assignRole: "QC", status: "Inactive" },
-    { srNo: "5.", application: "App E", version: "1.3", make: "Make B", assignRole: "Test-1", status: "Active" },
+
   ]);
 
   // Open or close popup
@@ -137,6 +135,12 @@ const ApplicationMaster = () => {
             </div>
           </div>
         </div>
+        <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Application Master"
+        sheetNumbers={3}
+      />
 
         {/* Data table */}
         <div className="overflow-x-auto">
