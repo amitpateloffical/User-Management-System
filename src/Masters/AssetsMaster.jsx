@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
@@ -22,6 +22,21 @@ const AssetsMaster = () => {
   const [editIndex, setEditIndex] = useState(null);
 
   const [data, setData] = useState([ ]);
+  const staticAssetData = [
+    { srNo: "1.", assetType: "Laptop", assetId: "A001", make: "Dell", model: "Inspiron 15", serialNo: "SN12345", status: "Active" },
+    { srNo: "2.", assetType: "Printer", assetId: "A002", make: "HP", model: "LaserJet Pro", serialNo: "SN12346", status: "Inactive" },
+    { srNo: "3.", assetType: "Monitor", assetId: "A003", make: "Samsung", model: "Curved 27\"", serialNo: "SN12347", status: "Active" },
+    { srNo: "4.", assetType: "Desktop", assetId: "A004", make: "HP", model: "Pavilion", serialNo: "SN12348", status: "Active" },
+    { srNo: "5.", assetType: "Laptop", assetId: "A005", make: "Lenovo", model: "ThinkPad", serialNo: "SN12349", status: "Inactive" },
+    { srNo: "6.", assetType: "Scanner", assetId: "A006", make: "Canon", model: "imageFORMULA", serialNo: "SN12350", status: "Active" },
+    { srNo: "7.", assetType: "Router", assetId: "A007", make: "TP-Link", model: "Archer C7", serialNo: "SN12351", status: "Inactive" },
+    { srNo: "8.", assetType: "Server", assetId: "A008", make: "IBM", model: "Power Systems", serialNo: "SN12352", status: "Active" },
+    { srNo: "9.", assetType: "Smartphone", assetId: "A009", make: "Apple", model: "iPhone 12", serialNo: "SN12353", status: "Active" },
+    { srNo: "10.", assetType: "Tablet", assetId: "A010", make: "Samsung", model: "Galaxy Tab S6", serialNo: "SN12354", status: "Inactive" },
+  ];
+useEffect(()=>{
+setData(staticAssetData)
+},[])  
 
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
@@ -118,10 +133,22 @@ const AssetsMaster = () => {
           </div>
         </div>
       </div>
-      <ImportExportButtons
+      {/* <ImportExportButtons
         data={data}
         setData={setData}
         fileName="Assets Master"
+        sheetNumbers={4}
+      /> */}
+      <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Application Master"
         sheetNumbers={4}
       />
       <div className="overflow-x-auto">
@@ -143,7 +170,7 @@ const AssetsMaster = () => {
               <tr key={index}>
                 <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
                 <td className="border-b px-4 py-2 text-center">{itm.assetType}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.assetID}</td>
+                <td className="border-b px-4 py-2 text-center">{itm.assetId}</td>
                 <td className="border-b px-4 py-2 text-center">{itm.make}</td>
                 <td className="border-b px-4 py-2 text-center">{itm.model}</td>
                 <td className="border-b px-4 py-2 text-center">{itm.serialNo}</td>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
@@ -22,6 +22,21 @@ const EquipmentInstrumentMaster = () => {
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
   };
+  const staticEquipmentData = [
+    { srNo: "1.", equipmentId: "E001", equipmentName: "Centrifuge", make: "Thermo Scientific", model: "Sorvall ST8", type: "Laboratory", status: "Active" },
+    { srNo: "2.", equipmentId: "E002", equipmentName: "Spectrophotometer", make: "Shimadzu", model: "UV-1800", type: "Lab Instrument", status: "Inactive" },
+    { srNo: "3.", equipmentId: "E003", equipmentName: "Autoclave", make: "Steris", model: "Steris Amsco 600", type: "Sterilization", status: "Active" },
+    { srNo: "4.", equipmentId: "E004", equipmentName: "pH Meter", make: "Hanna Instruments", model: "HI2210", type: "Laboratory", status: "Active" },
+    { srNo: "5.", equipmentId: "E005", equipmentName: "HPLC", make: "Agilent", model: "1200 Series", type: "Chromatography", status: "Inactive" },
+    { srNo: "6.", equipmentId: "E006", equipmentName: "Biosafety Cabinet", make: "Class II", model: "Labconco", type: "Lab Safety", status: "Active" },
+    { srNo: "7.", equipmentId: "E007", equipmentName: "Freezer", make: "Fisher Scientific", model: "Ultra-low Freezer", type: "Storage", status: "Active" },
+    { srNo: "8.", equipmentId: "E008", equipmentName: "Vortex Mixer", make: "Fisher Scientific", model: "Fisher Vortex", type: "Laboratory", status: "Inactive" },
+    { srNo: "9.", equipmentId: "E009", equipmentName: "Incubator", make: "Thermo Fisher", model: "Heratherm", type: "Growth", status: "Active" },
+    { srNo: "10.", equipmentId: "E010", equipmentName: "Refractometer", make: "ATAGO", model: "PAL-1", type: "Measurement", status: "Inactive" },
+  ];
+useEffect(()=>{
+setData(staticEquipmentData)
+},[])  
 
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);
@@ -119,9 +134,22 @@ const EquipmentInstrumentMaster = () => {
           </div>
         </div>
       </div>
-      <ImportExportButtons
+      {/* <ImportExportButtons
         data={data}
         setData={setData}
+        fileName="EquipmentInstrumentMaster"
+        sheetNumbers={5}
+      /> */}
+
+<ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setDesignations((prev) => [...prev, ...updatedData]); // Append data
+        }}
         fileName="EquipmentInstrumentMaster"
         sheetNumbers={5}
       />

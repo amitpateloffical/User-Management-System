@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
@@ -17,6 +17,18 @@ const DepartmentMaster = () => {
     if (!modalOpen) setFormData({ department: "", status: "Active" });
     setEditIndex(null);
   };
+  const staticData = [
+    { srNo: "1.", department: "HR", status: "Active" },
+    { srNo: "2.", department: "IT", status: "Active" },
+    { srNo: "3.", department: "Finance", status: "Inactive" },
+    { srNo: "4.", department: "HR", status: "Active" },
+    { srNo: "5.", department: "IT", status: "Active" },
+    { srNo: "6.", department: "Finance", status: "Inactive" },
+  ];
+  useEffect(() => {
+    // Initialize departments with static data
+    setDepartments(staticData);
+  }, []);
 
   const handleAddOrEditDepartment = () => {
     if (!formData.department.trim()) {
@@ -115,7 +127,13 @@ const DepartmentMaster = () => {
       </div>
       <ImportExportButtons
         data={departments}
-        setData={setDepartments}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${departments.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setDepartments((prev) => [...prev, ...updatedData]); // Append data
+        }}
         fileName="Department_Master"
         sheetNumbers={0}
       />

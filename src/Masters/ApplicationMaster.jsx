@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
 import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 
 const ApplicationMaster = () => {
@@ -22,6 +23,21 @@ const ApplicationMaster = () => {
   const [data, setData] = useState([
 
   ]);
+  const staticData = [
+    { srNo: "1.", application: "LIMS", version: "1.0.0", make: "Company A", status: "Active" },
+    { srNo: "2.", application: "Inventory Management", version: "2.1.5", make: "Company B", status: "Inactive" },
+    { srNo: "3.", application: "CRM", version: "3.2.1", make: "Company C", status: "Active" },
+    { srNo: "4.", application: "HRMS", version: "4.0.3", make: "Company D", status: "Active" },
+    { srNo: "5.", application: "ERP", version: "5.0.0", make: "Company E", status: "Inactive" },
+    { srNo: "6.", application: "Payroll System", version: "1.3.7", make: "Company F", status: "Active" },
+    { srNo: "7.", application: "Project Management", version: "2.4.6", make: "Company G", status: "Inactive" },
+    { srNo: "8.", application: "Supply Chain", version: "3.5.2", make: "Company H", status: "Active" },
+    { srNo: "9.", application: "Document Management", version: "1.2.0", make: "Company I", status: "Inactive" },
+    { srNo: "10.", application: "Customer Support", version: "4.1.8", make: "Company J", status: "Active" },
+  ];
+useEffect(()=>{
+setData(staticData)
+},[])  
 
   // Open or close popup
   const togglePopup = () => {
@@ -135,9 +151,21 @@ const ApplicationMaster = () => {
             </div>
           </div>
         </div>
-        <ImportExportButtons
+        {/* <ImportExportButtons
         data={data}
         setData={setData}
+        fileName="Application Master"
+        sheetNumbers={3}
+      /> */}
+      <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
         fileName="Application Master"
         sheetNumbers={3}
       />

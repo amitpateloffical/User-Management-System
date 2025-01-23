@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const ActiveUserList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -13,24 +15,7 @@ const ActiveUserList = () => {
     role: "",
     employeeName: "",
   });
-  const [data, setData] = useState([
-    {
-      srNo: "1.",
-      empCode: "EMP-001",
-      employeeName: "John Doe",
-      equipmentId: "EID-001",
-      equipmentName: "Thermometer",
-      assetId: "AID-101",
-      assetName: "Asset A",
-      application: "App A",
-      applicationVersion: "1.0",
-      role: "Technician",
-      department: "Quality Control",
-      createdBy: "Admin",
-      createdDate: "2024-05-01",
-      status: "Active",
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
   const [newUser, setNewUser] = useState({
@@ -50,6 +35,41 @@ const ActiveUserList = () => {
     status: "Active",
   });
 
+  const staticEmployeeData = [
+    { 
+      srNo: "1.", empCode: "E001", employeeName: "John Doe", equipmentId: "EQ001", equipmentName: "Laptop", assetId: "A123", assetName: "Dell XPS", application: "Windows 10", applicationVersion: "v10.0", role: "Manager", department: "IT", createdBy: "Admin", createdDate: "2022-01-15", status: "Active" 
+    },
+    { 
+      srNo: "2.", empCode: "E002", employeeName: "Jane Smith", equipmentId: "EQ002", equipmentName: "Monitor", assetId: "A124", assetName: "LG 27", application: "Windows 11", applicationVersion: "v11.0", role: "Developer", department: "Engineering", createdBy: "Admin", createdDate: "2022-03-18", status: "Inactive" 
+    },
+    { 
+      srNo: "3.", empCode: "E003", employeeName: "Alex Johnson", equipmentId: "EQ003", equipmentName: "Keyboard", assetId: "A125", assetName: "Logitech K840", application: "macOS", applicationVersion: "v12.2", role: "Designer", department: "Marketing", createdBy: "Admin", createdDate: "2022-02-10", status: "Active" 
+    },
+    { 
+      srNo: "4.", empCode: "E004", employeeName: "Emily Davis", equipmentId: "EQ004", equipmentName: "Mouse", assetId: "A126", assetName: "Razer DeathAdder", application: "Windows 7", applicationVersion: "v7.0", role: "Analyst", department: "Finance", createdBy: "Admin", createdDate: "2021-11-05", status: "Active" 
+    },
+    { 
+      srNo: "5.", empCode: "E005", employeeName: "Michael Brown", equipmentId: "EQ005", equipmentName: "Laptop", assetId: "A127", assetName: "HP Spectre", application: "Linux Ubuntu", applicationVersion: "v20.04", role: "HR", department: "Human Resources", createdBy: "Admin", createdDate: "2023-01-22", status: "Inactive" 
+    },
+    { 
+      srNo: "6.", empCode: "E006", employeeName: "Sophia Lee", equipmentId: "EQ006", equipmentName: "Monitor", assetId: "A128", assetName: "Samsung Curved", application: "Windows 10", applicationVersion: "v10.1", role: "Tester", department: "QA", createdBy: "Admin", createdDate: "2022-04-25", status: "Active" 
+    },
+    { 
+      srNo: "7.", empCode: "E007", employeeName: "David Wilson", equipmentId: "EQ007", equipmentName: "Printer", assetId: "A129", assetName: "Canon PIXMA", application: "macOS", applicationVersion: "v11.6", role: "Supervisor", department: "Operations", createdBy: "Admin", createdDate: "2021-12-30", status: "Active" 
+    },
+    { 
+      srNo: "8.", empCode: "E008", employeeName: "Olivia Martinez", equipmentId: "EQ008", equipmentName: "Scanner", assetId: "A130", assetName: "Epson V600", application: "Linux Ubuntu", applicationVersion: "v18.04", role: "Manager", department: "Logistics", createdBy: "Admin", createdDate: "2022-05-15", status: "Inactive" 
+    },
+    { 
+      srNo: "9.", empCode: "E009", employeeName: "James Harris", equipmentId: "EQ009", equipmentName: "Laptop", assetId: "A131", assetName: "MacBook Pro", application: "Windows 10", applicationVersion: "v10.2", role: "Developer", department: "Engineering", createdBy: "Admin", createdDate: "2022-06-10", status: "Active" 
+    },
+    { 
+      srNo: "10.", empCode: "E010", employeeName: "Isabella Clark", equipmentId: "EQ010", equipmentName: "Desktop", assetId: "A132", assetName: "iMac", application: "macOS", applicationVersion: "v11.4", role: "Designer", department: "Marketing", createdBy: "Admin", createdDate: "2023-02-01", status: "Active" 
+    },
+  ];
+useEffect(()=>{
+  setData(staticEmployeeData)
+},[])  
   const downloadPDF = () => {
     const input = document.getElementById("active-user-list");
     html2canvas(input, {
@@ -194,6 +214,24 @@ const ActiveUserList = () => {
               Add
             </div>
           </div>
+          {/* <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Active User List"
+        sheetNumbers={9}
+      /> */}
+         <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Designation_Master"
+        sheetNumbers={1}
+      />
         </div>
 
         {/* Table */}
@@ -201,7 +239,8 @@ const ActiveUserList = () => {
           <table className="table-auto w-full border-collapse border border-gray-400">
             <thead>
               <tr>
-                <th className="border border-gray-400 px-4 py-2">#</th>
+                {/* <th className="border border-gray-400 px-4 py-2">#</th> */}
+                <th className="border border-gray-400 px-4 py-2">SR.NO.</th>
                 <th className="border border-gray-400 px-4 py-2">Employee Code</th>
                 <th className="border border-gray-400 px-4 py-2">Employee Name</th>
                 <th className="border border-gray-400 px-4 py-2">Equipment ID</th>

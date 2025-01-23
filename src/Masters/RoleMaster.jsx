@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
@@ -26,6 +26,23 @@ const RoleMaster = () => {
       setEditIndex(null);
     }
   };
+
+  const staticData = [
+    { srNo: "1.", role: "Administrator", description: "Has full access to all system features", addGroup: "Yes", status: "Active" },
+    { srNo: "2.", role: "Manager", description: "Manages team and projects", addGroup: "Yes", status: "Inactive" },
+    { srNo: "3.", role: "Developer", description: "Responsible for writing code and testing", addGroup: "No", status: "Active" },
+    { srNo: "4.", role: "HR", description: "Manages employee records and recruitment", addGroup: "No", status: "Inactive" },
+    { srNo: "5.", role: "Team Lead", description: "Leads the development team", addGroup: "Yes", status: "Active" },
+    { srNo: "6.", role: "Quality Analyst", description: "Ensures the quality of the product through testing", addGroup: "No", status: "Active" },
+    { srNo: "7.", role: "UI/UX Designer", description: "Designs user interfaces and experiences", addGroup: "Yes", status: "Inactive" },
+    { srNo: "8.", role: "Project Manager", description: "Oversees project progress and coordination", addGroup: "Yes", status: "Active" },
+    { srNo: "9.", role: "DevOps Engineer", description: "Manages deployment and infrastructure", addGroup: "No", status: "Active" },
+    { srNo: "10.", role: "Support Engineer", description: "Provides technical support to users", addGroup: "Yes", status: "Inactive" },
+  ];
+ 
+  useEffect(()=>{
+    setData(staticData)
+  },[])
 
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);
@@ -109,10 +126,22 @@ const RoleMaster = () => {
           </div>
         </div>
       </div>
-      <ImportExportButtons
+      {/* <ImportExportButtons
         data={data}
         setData={setData}
         fileName="RoleMaster"
+        sheetNumbers={2}
+      /> */}
+         <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Role_master"
         sheetNumbers={2}
       />
       <div className="overflow-x-auto">

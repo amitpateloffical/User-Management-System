@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
@@ -29,6 +29,23 @@ const ConsolidateMaster = () => {
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);
   };
+
+  const staticConsolidateData = [
+    { srNo: "1.", consolidate: "Yes", equipmentId: "E001", assetId: "A123", applicationNameVersion: "LabView 2022", department: "Research", status: "Active" },
+    { srNo: "2.", consolidate: "No", equipmentId: "E002", assetId: "A124", applicationNameVersion: "SPSS 28", department: "Statistics", status: "Inactive" },
+    { srNo: "3.", consolidate: "Yes", equipmentId: "E003", assetId: "A125", applicationNameVersion: "MATLAB R2023", department: "Engineering", status: "Active" },
+    { srNo: "4.", consolidate: "No", equipmentId: "E004", assetId: "A126", applicationNameVersion: "AutoCAD 2024", department: "Design", status: "Inactive" },
+    { srNo: "5.", consolidate: "Yes", equipmentId: "E005", assetId: "A127", applicationNameVersion: "Microsoft Office 365", department: "Administration", status: "Active" },
+    { srNo: "6.", consolidate: "No", equipmentId: "E006", assetId: "A128", applicationNameVersion: "EndNote X9", department: "Library", status: "Inactive" },
+    { srNo: "7.", consolidate: "Yes", equipmentId: "E007", assetId: "A129", applicationNameVersion: "Zoom 5.10", department: "HR", status: "Active" },
+    { srNo: "8.", consolidate: "No", equipmentId: "E008", assetId: "A130", applicationNameVersion: "Adobe Photoshop 2023", department: "Marketing", status: "Inactive" },
+    { srNo: "9.", consolidate: "Yes", equipmentId: "E009", assetId: "A131", applicationNameVersion: "QuickBooks 2022", department: "Finance", status: "Active" },
+    { srNo: "10.", consolidate: "No", equipmentId: "E010", assetId: "A132", applicationNameVersion: "Slack 4.0", department: "Operations", status: "Inactive" },
+  ];
+  
+  useEffect(()=>{
+setData(staticConsolidateData)
+  },[])
 
   const filteredData = data.filter(item => {
     return (
@@ -131,13 +148,25 @@ const ConsolidateMaster = () => {
             </div>
           </div>
         </div>
-        <ImportExportButtons
+        {/* <ImportExportButtons
         data={data}
         setData={setData}
         fileName="ConsolidateMaster"
         sheetNumbers={7}
-      />
+      /> */}
 
+<ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="ConsolidateMaster"
+        sheetNumbers={7}
+      />
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">

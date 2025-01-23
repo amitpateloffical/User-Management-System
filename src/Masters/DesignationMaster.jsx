@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
@@ -14,7 +14,7 @@ const DesignationMaster = () => {
   const [formData, setFormData] = useState({ designation: "", status: "Active" });
   const [editIndex, setEditIndex] = useState(null);
 
-  const togglePopup = () => {
+  const togglePopup = () => {a
     setPopupOpen(!popupOpen);
     if (!popupOpen) {
       // Reset form data when opening popup
@@ -23,6 +23,21 @@ const DesignationMaster = () => {
     }
   };
 
+  const staticData = [
+    { srNo: "1.", designation: "Manager", status: "Active" },
+    { srNo: "2.", designation: "Senior Developer", status: "Active" },
+    { srNo: "3.", designation: "Junior Developer", status: "Inactive" },
+    { srNo: "4.", designation: "HR Executive", status: "Active" },
+    { srNo: "5.", designation: "Team Lead", status: "Inactive" },
+    { srNo: "6.", designation: "Project Manager", status: "Active" },
+    { srNo: "7.", designation: "Quality Analyst", status: "Inactive" },
+    { srNo: "8.", designation: "UI/UX Designer", status: "Active" },
+    { srNo: "9.", designation: "DevOps Engineer", status: "Active" },
+    { srNo: "10.", designation: "Support Engineer", status: "Inactive" },
+  ];
+useEffect(()=>{
+  setDesignations(staticData)
+},[])  
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);
   };
@@ -124,9 +139,21 @@ const DesignationMaster = () => {
           </div>
         </div>
       </div>
-      <ImportExportButtons
+      {/* <ImportExportButtons
         data={designations}
         setData={setDesignations}
+        fileName="Designation_Master"
+        sheetNumbers={1}
+      /> */}
+        <ImportExportButtons
+        data={designations}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${designations.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setDesignations((prev) => [...prev, ...updatedData]); // Append data
+        }}
         fileName="Designation_Master"
         sheetNumbers={1}
       />
