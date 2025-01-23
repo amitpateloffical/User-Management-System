@@ -8,70 +8,125 @@ const UserManagementRequest = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
-  
+  const [newRequest, setNewRequest] = useState({
+    action: "",
+    requestNo: "",
+    requestType: "",
+    department: "",
+    equipmentId: "",
+    assetId: "",
+    applicationNameVersion: "",
+    requestedRole: "",
+    requestFor: "",
+    selfExternal: "",
+    remark: "",
+    status: "Active",
+    initiatedOn: "",
+  });
   const [data, setData] = useState([
+    // Static data
     {
       srNo: "1.",
-      action: "Calibrate",
-      requestNo: "REQ-001",
-      requestType: "Calibration",
-      department: "QC",
-      equipmentId: "EID-001",
-      assetId: "AID-101",
-      applicationNameVersion: "App A v1.0",
-      requestedRole: "Technician",
-      requestFor: "Self",
+      action: "ADD",
+      requestNo: "REQ001",
+      requestType: "New Request",
+      department: "HR",
+      equipmentId: "EQUIP001",
+      assetId: "ASSET001",
+      applicationNameVersion: "App1 v1.0",
+      requestedRole: "Admin",
+      requestFor: "John Doe",
       selfExternal: "Self",
-      remark: "Scheduled for routine calibration",
+      remark: "Urgent request",
       status: "Active",
-      initiatedOn: "2024-05-01",
+      initiatedOn: "01-01-2025",
     },
     {
       srNo: "2.",
-      action: "Calibrate",
-      requestNo: "REQ-001",
-      requestType: "Calibration",
-      department: "QC",
-      equipmentId: "EID-001",
-      assetId: "AID-101",
-      applicationNameVersion: "App A v1.0",
-      requestedRole: "Technician",
-      requestFor: "Self",
-      selfExternal: "Self",
-      remark: "Scheduled for routine calibration",
+      action: "UPDATE",
+      requestNo: "REQ002",
+      requestType: "Update Request",
+      department: "IT",
+      equipmentId: "EQUIP002",
+      assetId: "ASSET002",
+      applicationNameVersion: "App2 v2.0",
+      requestedRole: "User",
+      requestFor: "Jane Smith",
+      selfExternal: "External",
+      remark: "Regular update",
       status: "Active",
-      initiatedOn: "2024-05-01",
+      initiatedOn: "02-01-2025",
     },
-    {
-      srNo: "3.",
-      action: "Calibrate",
-      requestNo: "REQ-001",
-      requestType: "Calibration",
-      department: "QC",
-      equipmentId: "EID-001",
-      assetId: "AID-101",
-      applicationNameVersion: "App A v1.0",
-      requestedRole: "Technician",
-      requestFor: "Self",
-      selfExternal: "Self",
-      remark: "Scheduled for routine calibration",
-      status: "Active",
-      initiatedOn: "2024-05-01",
-    },
-    // Add other data items...
+    // Add more static data as required
   ]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewRequest((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleAddRequest = () => {
+    setData((prev) => [
+      ...prev,
+      {
+        ...newRequest,
+        srNo: `${prev.length + 1}.`,
+        initiatedOn: new Date().toLocaleDateString(),
+      },
+    ]);
+    setShowAddModal(false);
+    setNewRequest({
+      action: "",
+      requestNo: "",
+      requestType: "",
+      department: "",
+      equipmentId: "",
+      assetId: "",
+      applicationNameVersion: "",
+      requestedRole: "",
+      requestFor: "",
+      selfExternal: "",
+      remark: "",
+      status: "Active",
+      initiatedOn: "",
+    });
+  };
+
+  const handleDeleteRequest = (requestNo) => {
+    setData((prev) => prev.filter((item) => item.requestNo !== requestNo));
+  };
+
+  const handleEditRequest = (requestNo) => {
+    const requestToEdit = data.find((item) => item.requestNo === requestNo);
+    setNewRequest(requestToEdit);
+    setShowAddModal(true); // Show the modal to edit
+  };
 
   const filteredData = data.filter((item) => {
     return searchText === "" || item.requestNo.toLowerCase().includes(searchText.toLowerCase());
   });
-
-  console.log("Filtered Data:", filteredData); // Check if the data is filtered properly
 
   return (
     <div>
       <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}>
         <div className="flex flex-col lg:flex-row justify-between items-center border-b pb-5">
           <div className="text-3xl font-semibold text-[#673ab7] mb-4 lg:mb-0">User Management Request</div>
+              <ImportExportButtons
+                data={data}
+                setData={(importedData) => {
+                  const updatedData = importedData.map((item, index) => ({
+                    ...item,
+                    initiatedOn: new Date(item.initiatedOn).toLocaleDateString(),
+                    srNo: `${data.length + index + 1}.`,
+                  }));
+                  setData((prev) => [...prev, ...updatedData]);
+                }}
+                fileName="User Management Request"
+                sheetNumbers={8}
+              />
           <div className="flex justify-center items-center gap-5 w-full lg:w-auto">
             <div className="flex flex-col w-full">
               <label htmlFor="search" className="font-bold">Search</label>
@@ -91,19 +146,6 @@ const UserManagementRequest = () => {
               <MdAddBox />
             </div>
           </div>
-          <ImportExportButtons
-            data={data}
-            setData={(importedData) => {
-              const updatedData = importedData.map((item, index) => ({
-                ...item,
-                initiatedOn: new Date(item.initiatedOn).toLocaleDateString(), // Convert timestamp to a date string
-                srNo: `${data.length + index + 1}.`, // Continue SR.NO.
-              }));
-              setData((prev) => [...prev, ...updatedData]); // Append data
-            }}
-            fileName="User Management Request"
-            sheetNumbers={8}
-          />
         </div>
 
         <div className="overflow-x-auto">
@@ -155,7 +197,10 @@ const UserManagementRequest = () => {
                     </td>
                     <td className="px-6 py-4 text-center whitespace-nowrap">
                       <div className="text-center flex justify-center gap-3 items-center">
-                        <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                        <div
+                          className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"
+                          onClick={() => handleEditRequest(itm.requestNo)}
+                        >
                           <FaRegEdit />
                         </div>
                         <div
@@ -178,11 +223,11 @@ const UserManagementRequest = () => {
         </div>
       </div>
 
-      {/* Add Request Modal */}
+      {/* Add / Edit Request Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-md w-[400px]">
-            <h2 className="text-xl font-semibold mb-4">Add New Request</h2>
+            <h2 className="text-xl font-semibold mb-4">{newRequest.requestNo ? "Edit Request" : "Add New Request"}</h2>
             <form>
               <div className="mb-3">
                 <label htmlFor="action" className="block">Action</label>
@@ -202,7 +247,7 @@ const UserManagementRequest = () => {
                   className="bg-blue-500 text-white p-2 rounded-md"
                   onClick={handleAddRequest}
                 >
-                  Add
+                  {newRequest.requestNo ? "Save" : "Add"}
                 </button>
                 <button
                   type="button"

@@ -176,11 +176,13 @@ const DepartmentMaster = () => {
                   <td className="border-b px-4 py-2 text-center">
                     <div className="flex justify-center gap-3 items-center">
                       <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
-                        <FaRegEdit />
+                        <FaRegEdit
+                         onClick={() => handleEdit(index)} />
                       </div>
                       <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
                         
-                        <IoBan />
+                        <IoBan 
+                        onClick={() => handleDelete(index)} />
                       </div>
                     </div>
                   </td>

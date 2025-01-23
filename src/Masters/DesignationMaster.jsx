@@ -4,17 +4,15 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
 import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
-
 const DesignationMaster = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchText, setSearchText] = useState("");
   const [designations, setDesignations] = useState([]);
-
   const [formData, setFormData] = useState({ designation: "", status: "Active" });
   const [editIndex, setEditIndex] = useState(null);
 
-  const togglePopup = () => {a
+  const togglePopup = () => {
     setPopupOpen(!popupOpen);
     if (!popupOpen) {
       // Reset form data when opening popup
@@ -35,9 +33,11 @@ const DesignationMaster = () => {
     { srNo: "9.", designation: "DevOps Engineer", status: "Active" },
     { srNo: "10.", designation: "Support Engineer", status: "Inactive" },
   ];
-useEffect(()=>{
-  setDesignations(staticData)
-},[])  
+
+  useEffect(() => {
+    setDesignations(staticData);
+  }, []);
+
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);
   };
@@ -52,7 +52,8 @@ useEffect(()=>{
       // Update existing designation
       const updatedDesignations = [...designations];
       updatedDesignations[editIndex] = {
-        srNo: designations[editIndex].srNo,
+        // Keep srNo unchanged when editing
+        srNo: updatedDesignations[editIndex].srNo,
         designation: formData.designation,
         status: formData.status,
       };
@@ -60,7 +61,7 @@ useEffect(()=>{
     } else {
       // Add new designation
       const newEntry = {
-        srNo: `${designations.length + 1}.`,
+        srNo: `${designations.length + 1}.`, // Continue serial number incrementing
         designation: formData.designation,
         status: formData.status,
       };
@@ -72,10 +73,10 @@ useEffect(()=>{
 
   const handleDelete = (index) => {
     const updatedDesignations = designations.filter((_, i) => i !== index);
-    // Reassign serial numbers
+    // Reassign serial numbers after deletion
     const updatedWithSerials = updatedDesignations.map((item, idx) => ({
       ...item,
-      srNo: `${idx + 1}.`,
+      srNo: `${idx + 1}.`, // Renumber serial numbers
     }));
     setDesignations(updatedWithSerials);
   };
@@ -139,13 +140,8 @@ useEffect(()=>{
           </div>
         </div>
       </div>
-      {/* <ImportExportButtons
-        data={designations}
-        setData={setDesignations}
-        fileName="Designation_Master"
-        sheetNumbers={1}
-      /> */}
-        <ImportExportButtons
+
+      <ImportExportButtons
         data={designations}
         setData={(importedData) => {
           const updatedData = importedData.map((item, index) => ({
@@ -157,6 +153,7 @@ useEffect(()=>{
         fileName="Designation_Master"
         sheetNumbers={1}
       />
+
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
