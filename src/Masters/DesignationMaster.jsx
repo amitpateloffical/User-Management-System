@@ -2,23 +2,15 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import { useEffect } from "react";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons"
+
 
 const DesignationMaster = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchText, setSearchText] = useState("");
-  const [designations, setDesignations] = useState([
-    { srNo: "1.", designation: "QC", status: "Active" },
-    { srNo: "2.", designation: "Test-1", status: "Inactive" },
-    { srNo: "3.", designation: "User", status: "Active" },
-    { srNo: "4.", designation: "IT", status: "Inactive" },
-    { srNo: "5.", designation: "QA", status: "Active" },
-    { srNo: "6.", designation: "System Admin", status: "Inactive" },
-    { srNo: "7.", designation: "HR", status: "Active" },
-    { srNo: "8.", designation: "Finance", status: "Active" },
-    { srNo: "9.", designation: "Marketing", status: "Inactive" },
-    { srNo: "10.", designation: "Operations", status: "Active" },
-  ]);
+  const [data, setData] = useState([]);
 
   const [formData, setFormData] = useState({ designation: "", status: "Active" });
   const [editIndex, setEditIndex] = useState(null);
@@ -82,16 +74,22 @@ const DesignationMaster = () => {
     });
     togglePopup();
   };
+  
+ 
 
-  const filteredData = designations.filter((item) => {
+  const filteredData = data.filter((item) => {
     return (
       (statusFilter === "All" ||
-        (statusFilter === "Active" && item.status === "Active") ||
-        (statusFilter === "Inactive" && item.status === "Inactive")) &&
-      (searchText === "" ||
-        item.designation.toLowerCase().includes(searchText.toLowerCase()))
+        (statusFilter === "Active" && item.STATUS === "Active") ||
+        (statusFilter === "Inactive" && item.STATUS === "Inactive")) &&
+      (searchText === "" || item.DESIGNATION?.toLowerCase().includes(searchText.toLowerCase()))
     );
   });
+
+  useEffect(() => {
+    // Add this useEffect to check the data being set and filtered
+    console.log("Filtered Data: ", filteredData);
+  }, [filteredData]);
 
   return (
     <div className="content-with-fixed-header px-4 flex flex-col gap-10">
@@ -133,6 +131,14 @@ const DesignationMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Designation_Master"
+        sheetNumbers={1} 
+      />
+
+
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -144,35 +150,31 @@ const DesignationMaster = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((itm, index) => (
-              <tr key={index}>
-                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.designation}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <span
-                    className={`rounded-full px-2 ${
-                      itm.status === "Active"
-                        ? "bg-green-300 text-green-700"
-                        : "bg-red-300 text-red-700"
-                    }`}
-                  >
-                    {itm.status}
-                  </span>
-                </td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center gap-3 items-center">
-                    <FaRegEdit
-                      className="text-cyan-600 cursor-pointer"
-                      onClick={() => handleEdit(index)}
-                    />
-                    <IoBan
-                      className="text-red-600 cursor-pointer"
-                      onClick={() => handleDelete(index)}
-                    />
-                  </div>
+            {filteredData.length === 0 ? (
+              <tr>
+                <td className="border-b px-4 py-2 text-center" colSpan="4">
+                  No Data Available
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredData.map((itm, index) => (
+                <tr key={index}>
+                  <td className="border-b px-4 py-2 text-center">{itm["SR.NO."]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["DESIGNATION"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["STATUS"]}</td>
+                  <td className="border-b px-4 py-2 text-center">
+                    <div className="flex justify-center gap-3 items-center">
+                      <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                        <FaRegEdit />
+                      </div>
+                      <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                        <IoBan />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

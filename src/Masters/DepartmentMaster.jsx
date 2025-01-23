@@ -2,19 +2,13 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import { useEffect } from "react";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const DepartmentMaster = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchText, setSearchText] = useState("");
-  const [departments, setDepartments] = useState([
-    { srNo: "1.", department: "QC", status: "Active" },
-    { srNo: "2.", department: "Test-1", status: "Inactive" },
-    { srNo: "3.", department: "User", status: "Active" },
-    { srNo: "4.", department: "IT", status: "Inactive" },
-    { srNo: "5.", department: "QA", status: "Active" },
-    { srNo: "6.", department: "System Admin", status: "Inactive" },
-    { srNo: "7.", department: "HR", status: "Active" },
-  ]);
+ const [data, setData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({ department: "", status: "Active" });
@@ -68,15 +62,20 @@ const DepartmentMaster = () => {
     setStatusFilter(event.target.value);
   };
 
-  const filteredDepartments = departments.filter((item) => {
-    return (
-      (statusFilter === "All" ||
-        (statusFilter === "Active" && item.status === "Active") ||
-        (statusFilter === "Inactive" && item.status === "Inactive")) &&
-      (searchText === "" ||
-        item.department.toLowerCase().includes(searchText.toLowerCase()))
-    );
-  });
+ const filteredData = data.filter((item) => {
+     return (
+       (statusFilter === "All" ||
+         (statusFilter === "Active" && item.STATUS === "Active") ||
+         (statusFilter === "Inactive" && item.STATUS === "Inactive")) &&
+       (searchText === "" || item.DESIGNATION?.toLowerCase().includes(searchText.toLowerCase()))
+     );
+   });
+ 
+   useEffect(() => {
+     // Add this useEffect to check the data being set and filtered
+     console.log("Filtered Data: ", filteredData);
+   }, [filteredData]);
+ 
 
   return (
     <div className="content-with-fixed-header px-4 flex flex-col gap-10">
@@ -120,6 +119,12 @@ const DepartmentMaster = () => {
           </div>
         </div>
       </div>
+      <ImportExportButtons
+        data={data}
+        setData={setData}
+        fileName="Designation_Master"
+        sheetNumbers={0} 
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -131,41 +136,31 @@ const DepartmentMaster = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredDepartments.map((itm, index) => (
-              <tr key={index}>
-                <td className="border-b px-4 py-2 text-center">{itm.srNo}</td>
-                <td className="border-b px-4 py-2 text-center">{itm.department}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center items-center">
-                    <div
-                      className={`rounded-full px-2 ${
-                        itm.status === "Active"
-                          ? "bg-green-300 text-green-700"
-                          : "bg-red-300 text-red-700"
-                      }`}
-                    >
-                      {itm.status}
-                    </div>
-                  </div>
-                </td>
-                <td className="border-b px-4 py-2 text-center">
-                  <div className="flex justify-center gap-3 items-center">
-                    <div
-                      className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"
-                      onClick={() => handleEdit(index)}
-                    >
-                      <FaRegEdit />
-                    </div>
-                    <div
-                      className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"
-                      onClick={() => handleDelete(index)}
-                    >
-                      <IoBan />
-                    </div>
-                  </div>
+            {filteredData.length === 0 ? (
+              <tr>
+                <td className="border-b px-4 py-2 text-center" colSpan="4">
+                  No Data Available
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredData.map((itm, index) => (
+                <tr key={index}>
+                  <td className="border-b px-4 py-2 text-center">{itm["srNo"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["department"]}</td>
+                  <td className="border-b px-4 py-2 text-center">{itm["status"]}</td>
+                  <td className="border-b px-4 py-2 text-center">
+                    <div className="flex justify-center gap-3 items-center">
+                      <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                        <FaRegEdit />
+                      </div>
+                      <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                        <IoBan />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
