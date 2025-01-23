@@ -56,7 +56,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
       "/active-users-list",
       "/request-report",
       "/assets-inventory",
-      "/gxp-inventory",
+      // "/gxp-inventory",
       "/user-list",
       "/sign-up-report",
     ];
@@ -214,14 +214,14 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                   >
                    <TbAsset /> Assets Inventory
                   </p>
-                  <p
+                  {/* <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
                       "/gxp-inventory"
                     )}`}
                     onClick={() => handleNavigation("/gxp-inventory")}
                   >
                   <MdInventory />  GxP Inventory
-                  </p>
+                  </p> */}
                   <p
                     className={`hover:text-purple-500 flex items-center gap-3 ${isActive(
                       "/user-list"
