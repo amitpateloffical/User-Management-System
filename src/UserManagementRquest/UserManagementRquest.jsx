@@ -112,8 +112,10 @@ const UserManagementRequest = () => {
   return (
     <div>
       <div className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}>
-        <div className="flex flex-col lg:flex-row justify-between items-center border-b pb-5">
+        <div className="flex w-[75%] justify-between items-center border-b pb-5">
           <div className="text-3xl font-semibold text-[#673ab7] mb-4 lg:mb-0">User Management Request</div>
+          <div className="mt-2 flex justify-center items-center gap-x-10 fixed right-2">
+          <div className=" flex justify-start md:justify-between items-center gap-10">
               <ImportExportButtons
                 data={data}
                 setData={(importedData) => {
@@ -127,23 +129,25 @@ const UserManagementRequest = () => {
                 fileName="User Management Request"
                 sheetNumbers={8}
               />
+              </div>
           <div className="flex justify-center items-center gap-5 w-full lg:w-auto">
-            <div className="flex flex-col w-full">
+            <div className="flex flex-row items-center gap-x-10 w-full">
               <label htmlFor="search" className="font-bold">Search</label>
               <input
                 id="search"
                 type="text"
-                className="border border-black rounded-md py-2 w-full lg:w-auto"
+                className="border border-black rounded-md py-2 px-2 text-sm w-full lg:w-auto"
                 placeholder="Search By Request Number"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
-            </div>
+
             <div
               className="bg-[#d3eafd] text-[#2196f3] w-10 h-10 flex justify-center items-center cursor-pointer"
               onClick={() => setShowAddModal(true)}
             >
               <MdAddBox />
+            </div>            </div>
             </div>
           </div>
         </div>

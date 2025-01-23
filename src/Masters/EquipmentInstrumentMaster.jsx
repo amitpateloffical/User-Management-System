@@ -103,6 +103,21 @@ setData(staticEquipmentData)
           Equipment/Instrument Master
         </div>
         <div className="flex flex-col lg:flex-row justify-center lg:justify-end items-center gap-5">
+          <div className="mt-4 flex justify-start md:justify-between gap-10">
+    
+    <ImportExportButtons
+            data={data}
+            setData={(importedData) => {
+              const updatedData = importedData.map((item, index) => ({
+                ...item,
+                srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+              }));
+              setDesignations((prev) => [...prev, ...updatedData]); // Append data
+            }}
+            fileName="EquipmentInstrumentMaster"
+            sheetNumbers={5}
+          />
+          </div>
           <div className="flex flex-col w-full lg:w-auto">
             <label htmlFor="status" className="font-bold">Status</label>
             <select
@@ -140,19 +155,6 @@ setData(staticEquipmentData)
         fileName="EquipmentInstrumentMaster"
         sheetNumbers={5}
       /> */}
-
-<ImportExportButtons
-        data={data}
-        setData={(importedData) => {
-          const updatedData = importedData.map((item, index) => ({
-            ...item,
-            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
-          }));
-          setDesignations((prev) => [...prev, ...updatedData]); // Append data
-        }}
-        fileName="EquipmentInstrumentMaster"
-        sheetNumbers={5}
-      />
 
       {/* Table */}
       <div className="overflow-x-auto">

@@ -105,6 +105,20 @@ const DesignationMaster = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
         <div className="text-3xl font-semibold text-[#673ab7]">Designation Master</div>
         <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
+          <div className="mt-4 flex justify-start md:justify-between gap-10">
+      <ImportExportButtons
+        data={designations}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${designations.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setDesignations((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Designation_Master"
+        sheetNumbers={1}
+      />
+      </div>
           <div className="flex flex-col w-full md:w-auto">
             <label htmlFor="status" className="font-bold">
               Status
@@ -140,19 +154,7 @@ const DesignationMaster = () => {
           </div>
         </div>
       </div>
-
-      <ImportExportButtons
-        data={designations}
-        setData={(importedData) => {
-          const updatedData = importedData.map((item, index) => ({
-            ...item,
-            srNo: `${designations.length + index + 1}.`, // Continue SR.NO.
-          }));
-          setDesignations((prev) => [...prev, ...updatedData]); // Append data
-        }}
-        fileName="Designation_Master"
-        sheetNumbers={1}
-      />
+     
 
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">

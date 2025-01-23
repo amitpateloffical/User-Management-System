@@ -99,6 +99,20 @@ const RoleMaster = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 border-b pb-5">
         <div className="text-3xl font-semibold text-[#673ab7]">Role List</div>
         <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
+        <div className="mt-4 flex justify-start md:justify-between gap-10">
+         <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Role_master"
+        sheetNumbers={2}
+      />
+      </div>
           <div className="flex flex-col w-full md:w-auto">
             <label htmlFor="status" className="font-bold">Status</label>
             <select id="status" className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
@@ -132,18 +146,7 @@ const RoleMaster = () => {
         fileName="RoleMaster"
         sheetNumbers={2}
       /> */}
-         <ImportExportButtons
-        data={data}
-        setData={(importedData) => {
-          const updatedData = importedData.map((item, index) => ({
-            ...item,
-            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
-          }));
-          setData((prev) => [...prev, ...updatedData]); // Append data
-        }}
-        fileName="Role_master"
-        sheetNumbers={2}
-      />
+       
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>

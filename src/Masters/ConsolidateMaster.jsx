@@ -114,6 +114,7 @@ setData(staticConsolidateData)
           <div className="text-3xl font-semibold text-[#673ab7] col-span-2">
             Consolidate Master
           </div>
+
           <div className="flex justify-around col-span-1 w-full">
             <div
               className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-[40%] h-[40px] flex justify-center items-center"
@@ -123,10 +124,24 @@ setData(staticConsolidateData)
             </div>
           </div>
         </div>
-
         {/* Filter Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 justify-center items-center gap-5">
           <div className="col-span-3 flex flex-col lg:flex-row gap-5">
+                <div className="mt-4 flex justify-start md:justify-between gap-10">
+          
+          <ImportExportButtons
+                  data={data}
+                  setData={(importedData) => {
+                    const updatedData = importedData.map((item, index) => ({
+                      ...item,
+                      srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+                    }));
+                    setData((prev) => [...prev, ...updatedData]); // Append data
+                  }}
+                  fileName="ConsolidateMaster"
+                  sheetNumbers={7}
+                />
+                </div>
             <div className="flex flex-col w-full">
               <label htmlFor="status" className="font-bold">Status</label>
               <select id="status" className="border border-black rounded-md py-2" onChange={handleStatusFilterChange}>
@@ -154,19 +169,6 @@ setData(staticConsolidateData)
         fileName="ConsolidateMaster"
         sheetNumbers={7}
       /> */}
-
-<ImportExportButtons
-        data={data}
-        setData={(importedData) => {
-          const updatedData = importedData.map((item, index) => ({
-            ...item,
-            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
-          }));
-          setData((prev) => [...prev, ...updatedData]); // Append data
-        }}
-        fileName="ConsolidateMaster"
-        sheetNumbers={7}
-      />
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
