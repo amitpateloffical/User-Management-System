@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
-import PopUp from "../PopUp/PopUp";
-import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const EquipmentInstrumentMaster = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -63,6 +61,24 @@ const EquipmentInstrumentMaster = () => {
     setPopupOpen(false);
   };
 
+  const handleEdit = (index) => {
+    const equipmentToEdit = data[index];
+    setNewEquipment({
+      equipmentId: equipmentToEdit.equipmentId,
+      equipmentName: equipmentToEdit.equipmentName,
+      make: equipmentToEdit.make,
+      model: equipmentToEdit.model,
+      type: equipmentToEdit.type,
+    });
+    setPopupOpen(true);
+    // Modify popup to show "Edit" instead of "Add"
+  };
+
+  const handleDelete = (index) => {
+    const updatedData = data.filter((item, i) => i !== index);
+    setData(updatedData);
+  };
+
   const filteredData = data.filter((item) => {
     return (
       (statusFilter === "All" ||
@@ -75,9 +91,7 @@ const EquipmentInstrumentMaster = () => {
 
   return (
     <div
-      className={`content-with-fixed-header px-4 flex flex-col gap-10 ${
-        sidebarOpen ? "ml-64" : ""
-      }`}
+      className={`content-with-fixed-header px-4 flex flex-col gap-10 ${sidebarOpen ? "ml-64" : ""}`}
     >
       {/* Header */}
       <div className="grid grid-cols-1 lg:grid-cols-2 border-b pb-5 gap-5 lg:gap-0">
@@ -86,9 +100,7 @@ const EquipmentInstrumentMaster = () => {
         </div>
         <div className="flex flex-col lg:flex-row justify-center lg:justify-end items-center gap-5">
           <div className="flex flex-col w-full lg:w-auto">
-            <label htmlFor="status" className="font-bold">
-              Status
-            </label>
+            <label htmlFor="status" className="font-bold">Status</label>
             <select
               id="status"
               className="border border-black rounded-md py-2"
@@ -100,9 +112,7 @@ const EquipmentInstrumentMaster = () => {
             </select>
           </div>
           <div className="flex flex-col w-full lg:w-auto">
-            <label htmlFor="search" className="font-bold">
-              Search
-            </label>
+            <label htmlFor="search" className="font-bold">Search</label>
             <input
               id="search"
               type="text"
@@ -121,36 +131,33 @@ const EquipmentInstrumentMaster = () => {
         </div>
       </div>
 
-      {/* Import/Export Buttons */}
-        <ImportExportButtons data={data} setData={setData} fileName="Equipment_Instrument_Data.xlsx" />
-
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 text-white">
             <tr className="text-white">
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 SR.NO.
               </th>
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 EQUIPMENT/INSTRUMENT ID
               </th>
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 EQUIPMENT/INSTRUMENT NAME
               </th>
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 MAKE
               </th>
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 MODEL
               </th>
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 TYPE
               </th>
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 STATUS
               </th>
-              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider ">
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
                 ACTION
               </th>
             </tr>
@@ -166,21 +173,23 @@ const EquipmentInstrumentMaster = () => {
                 <td className="px-6 py-4 text-center whitespace-nowrap">{itm.type}</td>
                 <td className="px-6 py-4 text-center whitespace-nowrap">
                   <div
-                    className={`rounded-full px-2 ${
-                      itm.status === "Active"
-                        ? "bg-green-300 text-green-700"
-                        : "bg-red-300 text-red-700"
-                    }`}
+                    className={`rounded-full px-2 ${itm.status === "Active" ? "bg-green-300 text-green-700" : "bg-red-300 text-red-700"}`}
                   >
                     {itm.status}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap">
                   <div className="flex justify-center gap-3 items-center">
-                    <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                    <div
+                      className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer"
+                      onClick={() => handleEdit(index)}
+                    >
                       <FaRegEdit />
                     </div>
-                    <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                    <div
+                      className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"
+                      onClick={() => handleDelete(index)}
+                    >
                       <IoBan />
                     </div>
                   </div>
@@ -195,7 +204,9 @@ const EquipmentInstrumentMaster = () => {
       {popupOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white p-6 rounded-md w-[80%] lg:w-[40%]">
-            <div className="text-center text-2xl font-bold mb-4">Add New Equipment</div>
+            <div className="text-center text-2xl font-bold mb-4">
+              {newEquipment.equipmentId ? "Edit Equipment" : "Add New Equipment"}
+            </div>
             <form>
               <div className="mb-4">
                 <label className="block font-semibold">Equipment/Instrument ID</label>
