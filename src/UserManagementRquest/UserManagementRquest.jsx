@@ -2,28 +2,14 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const UserManagementRequest = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newRequest, setNewRequest] = useState({
-    action: "",
-    requestNo: "",
-    requestType: "",
-    department: "",
-    equipmentId: "",
-    assetId: "",
-    applicationNameVersion: "",
-    requestedRole: "",
-    requestFor: "",
-    selfExternal: "",
-    remark: "",
-    status: "Active",
-    initiatedOn: "",
-  });
-
-  const data = [
+  
+  const [data, setData] = useState([
     {
       srNo: "1.",
       action: "Calibrate",
@@ -40,28 +26,46 @@ const UserManagementRequest = () => {
       status: "Active",
       initiatedOn: "2024-05-01",
     },
-    // other data...
-  ];
+    {
+      srNo: "2.",
+      action: "Calibrate",
+      requestNo: "REQ-001",
+      requestType: "Calibration",
+      department: "QC",
+      equipmentId: "EID-001",
+      assetId: "AID-101",
+      applicationNameVersion: "App A v1.0",
+      requestedRole: "Technician",
+      requestFor: "Self",
+      selfExternal: "Self",
+      remark: "Scheduled for routine calibration",
+      status: "Active",
+      initiatedOn: "2024-05-01",
+    },
+    {
+      srNo: "3.",
+      action: "Calibrate",
+      requestNo: "REQ-001",
+      requestType: "Calibration",
+      department: "QC",
+      equipmentId: "EID-001",
+      assetId: "AID-101",
+      applicationNameVersion: "App A v1.0",
+      requestedRole: "Technician",
+      requestFor: "Self",
+      selfExternal: "Self",
+      remark: "Scheduled for routine calibration",
+      status: "Active",
+      initiatedOn: "2024-05-01",
+    },
+    // Add other data items...
+  ]);
 
-  const [requests, setRequests] = useState(data);
-
-  const filteredData = requests.filter((item) => {
+  const filteredData = data.filter((item) => {
     return searchText === "" || item.requestNo.toLowerCase().includes(searchText.toLowerCase());
   });
 
-  const handleAddRequest = () => {
-    setRequests([...requests, { ...newRequest, srNo: `${requests.length + 1}.`, initiatedOn: new Date().toLocaleDateString() }]);
-    setShowAddModal(false);
-  };
-
-  const handleDeleteRequest = (requestNo) => {
-    setRequests(requests.filter((itm) => itm.requestNo !== requestNo));
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewRequest({ ...newRequest, [name]: value });
-  };
+  console.log("Filtered Data:", filteredData); // Check if the data is filtered properly
 
   return (
     <div>
@@ -87,7 +91,21 @@ const UserManagementRequest = () => {
               <MdAddBox />
             </div>
           </div>
+          <ImportExportButtons
+            data={data}
+            setData={(importedData) => {
+              const updatedData = importedData.map((item, index) => ({
+                ...item,
+                initiatedOn: new Date(item.initiatedOn).toLocaleDateString(), // Convert timestamp to a date string
+                srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+              }));
+              setData((prev) => [...prev, ...updatedData]); // Append data
+            }}
+            fileName="User Management Request"
+            sheetNumbers={8}
+          />
         </div>
+
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -110,45 +128,51 @@ const UserManagementRequest = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredData.map((itm, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.srNo}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.action}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestNo}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestType}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.department}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.equipmentId}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.assetId}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.applicationNameVersion}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestedRole}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestFor}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.selfExternal}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.remark}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">{itm.initiatedOn}</td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">
-                    <div className="text-center flex justify-center items-center">
-                      <div
-                        className={`rounded-full px-2 ${itm.status === "Active" ? "bg-green-300 text-green-700" : "bg-red-300 text-red-700"}`}
-                      >
-                        {itm.status}
+              {filteredData.length > 0 ? (
+                filteredData.map((itm, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.srNo}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.action}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestNo}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestType}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.department}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.equipmentId}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.assetId}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.applicationNameVersion}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestedRole}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.requestFor}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.selfExternal}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.remark}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">{itm.initiatedOn}</td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">
+                      <div className="text-center flex justify-center items-center">
+                        <div
+                          className={`rounded-full px-2 ${itm.status === "Active" ? "bg-green-300 text-green-700" : "bg-red-300 text-red-700"}`}
+                        >
+                          {itm.status}
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap">
-                    <div className="text-center flex justify-center gap-3 items-center">
-                      <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
-                        <FaRegEdit />
+                    </td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap">
+                      <div className="text-center flex justify-center gap-3 items-center">
+                        <div className="bg-cyan-200 w-[30px] h-[30px] flex justify-center items-center text-cyan-600 cursor-pointer">
+                          <FaRegEdit />
+                        </div>
+                        <div
+                          className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"
+                          onClick={() => handleDeleteRequest(itm.requestNo)}
+                        >
+                          <IoBan />
+                        </div>
                       </div>
-                      <div
-                        className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer"
-                        onClick={() => handleDeleteRequest(itm.requestNo)}
-                      >
-                        <IoBan />
-                      </div>
-                    </div>
-                  </td>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="14" className="text-center py-4">No data available</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

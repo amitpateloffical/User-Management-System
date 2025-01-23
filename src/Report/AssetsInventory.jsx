@@ -2,11 +2,30 @@ import React, { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const AssetsInventory = () => {
   const [data, setData] = useState([
     {
       srNo: "1.",
+      assetType: "Instrument",
+      assetId: "AID-101",
+      make: "Make X",
+      model: "Model A1",
+      serialNo: "SN-001",
+      status: "Active",
+    },
+    {
+      srNo: "2.",
+      assetType: "Instrument",
+      assetId: "AID-101",
+      make: "Make X",
+      model: "Model A1",
+      serialNo: "SN-001",
+      status: "Active",
+    },
+    {
+      srNo: "3.",
       assetType: "Instrument",
       assetId: "AID-101",
       make: "Make X",
@@ -102,6 +121,18 @@ const AssetsInventory = () => {
             </div>
           </div>
         </div>
+        <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Asset Inventory"
+        sheetNumbers={11}
+      />
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">

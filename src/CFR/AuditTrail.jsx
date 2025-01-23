@@ -4,13 +4,15 @@ import React, { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const AuditTrail = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchText, setSearchText] = useState("");
 
-  const data = [
+  const [data, setData] =useState( [
     {
         srNo: "1.",
         dateTime: "2024-05-21 08:30:00",
@@ -111,7 +113,7 @@ const AuditTrail = () => {
         employeeName: "Jack Brown",
         remark: "Activated account"
     }
-];
+])
 
 data.map(entry => console.log(entry.employeeName));
 
@@ -198,6 +200,18 @@ return (
             <IoSearchSharp size={25} />
           </div>
         </div>
+      <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Audit Trail"
+        sheetNumbers={15}
+      />
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full">

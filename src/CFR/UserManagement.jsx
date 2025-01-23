@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md"; // Add icon for the Add button
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const UserManagement = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -11,6 +13,42 @@ const UserManagement = () => {
     // Initial Data
     {
       srNo: "1.",
+      empCode: "E001",
+      worklineID: "WL-001",
+      userRole: "Admin",
+      name: "John Doe",
+      emailAddress: "john.doe@example.com",
+      contact: "9876543210",
+      department: "IT",
+      designation: "Software Engineer",
+      status: "Active",
+    },
+    {
+      srNo: "2.",
+      empCode: "E001",
+      worklineID: "WL-001",
+      userRole: "Admin",
+      name: "John Doe",
+      emailAddress: "john.doe@example.com",
+      contact: "9876543210",
+      department: "IT",
+      designation: "Software Engineer",
+      status: "Active",
+    },
+    {
+      srNo: "3.",
+      empCode: "E001",
+      worklineID: "WL-001",
+      userRole: "Admin",
+      name: "John Doe",
+      emailAddress: "john.doe@example.com",
+      contact: "9876543210",
+      department: "IT",
+      designation: "Software Engineer",
+      status: "Active",
+    },
+    {
+      srNo: "4.",
       empCode: "E001",
       worklineID: "WL-001",
       userRole: "Admin",
@@ -140,6 +178,18 @@ const UserManagement = () => {
                 <MdAddBox size={24} />
               </div>
             </div>
+            <ImportExportButtons
+        data={users}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${users.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setUsers((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="User Management"
+        sheetNumbers={14}
+      />
           </div>
         </div>
 

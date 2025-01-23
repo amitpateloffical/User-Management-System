@@ -90,6 +90,19 @@ const DepartmentMaster = () => {
           Department Master
         </div>
         <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-5">
+            {/* Import/Export Button */}
+            <ImportExportButtons
+            data={departments}
+            setData={(importedData) => {
+              const updatedData = importedData.map((item, index) => ({
+                ...item,
+                srNo: `${departments.length + index + 1}.`, // Continue SR.NO.
+              }));
+              setDepartments((prev) => [...prev, ...updatedData]); // Append data
+            }}
+            fileName="Department_Master"
+            sheetNumbers={0}
+          />
           <div className="flex flex-col w-full md:w-auto">
             <label htmlFor="status" className="font-bold">
               Status
@@ -125,7 +138,7 @@ const DepartmentMaster = () => {
           </div>
         </div>
       </div>
-      <ImportExportButtons
+      {/* <ImportExportButtons
         data={departments}
         setData={(importedData) => {
           const updatedData = importedData.map((item, index) => ({
@@ -136,7 +149,7 @@ const DepartmentMaster = () => {
         }}
         fileName="Department_Master"
         sheetNumbers={0}
-      />
+      /> */}
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -166,6 +179,7 @@ const DepartmentMaster = () => {
                         <FaRegEdit />
                       </div>
                       <div className="bg-red-200 w-[30px] h-[30px] flex justify-center items-center text-red-600 cursor-pointer">
+                        
                         <IoBan />
                       </div>
                     </div>
@@ -221,7 +235,7 @@ const DepartmentMaster = () => {
                 Cancel
               </button>
               <button
-                className="bg-blue-500 text-white py-2 px-4 rounded-md"
+                className="bg-blue-600 text-white py-2 px-6 rounded-md shadow-md hover:bg-blue-700 transition duration-200"
                 onClick={handleAddOrEditDepartment}
               >
                 {editIndex !== null ? "Update" : "Add"}

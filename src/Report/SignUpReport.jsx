@@ -3,6 +3,7 @@ import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdAddBox } from "react-icons/md";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const SignUpReport = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -10,6 +11,45 @@ const SignUpReport = () => {
   const [data, setData] = useState([
     {
       srNo: "1.",
+      report: "Quality Control",
+      attachment: "Attachment 001",
+      name: "John Doe",
+      empCode: "E001",
+      worklineID: "WL-001",
+      accessRole1: "Admin",
+      designation: "Software Engineer",
+      emailAddress: "john.doe@example.com",
+      reportingManager: "Jane Smith",
+      requestedOn: "2024-05-01",
+    },
+    {
+      srNo: "1.",
+      report: "Quality Control",
+      attachment: "Attachment 001",
+      name: "John Doe",
+      empCode: "E001",
+      worklineID: "WL-001",
+      accessRole1: "Admin",
+      designation: "Software Engineer",
+      emailAddress: "john.doe@example.com",
+      reportingManager: "Jane Smith",
+      requestedOn: "2024-05-01",
+    },
+    {
+      srNo: "2.",
+      report: "Quality Control",
+      attachment: "Attachment 001",
+      name: "John Doe",
+      empCode: "E001",
+      worklineID: "WL-001",
+      accessRole1: "Admin",
+      designation: "Software Engineer",
+      emailAddress: "john.doe@example.com",
+      reportingManager: "Jane Smith",
+      requestedOn: "2024-05-01",
+    },
+    {
+      srNo: "3.",
       report: "Quality Control",
       attachment: "Attachment 001",
       name: "John Doe",
@@ -86,6 +126,18 @@ const SignUpReport = () => {
           <div className="bg-[#d3eafd] rounded-md hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150 hover:bg-[#2196f3] hover:text-white cursor-pointer text-[#2196f3] w-1/6 md:w-[10%] h-[40px] flex justify-center items-center">
             <FaFilePdf />
           </div>
+            <ImportExportButtons
+              data={data}
+              setData={(importedData) => {
+                const updatedData = importedData.map((item, index) => ({
+                  ...item,
+                  srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+                }));
+                setData((prev) => [...prev, ...updatedData]); // Append data
+              }}
+              fileName="SignUp Report"
+              sheetNumbers={13}
+            />
         </div>
       </div>
       <div className="mt-6 md:mt-16 grid grid-cols-1 md:grid-cols-4 justify-center items-center gap-5">

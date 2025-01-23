@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdAddBox } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoBan } from "react-icons/io5";
 import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
+
 
 const RequestReport = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,6 +16,40 @@ const RequestReport = () => {
   const [data, setData] = useState([
     {
       srNo: "1.",
+      report: "Calibration Report",
+      requestNo: "REQ-001",
+      department: "QC",
+      requestType: "Calibration",
+      equipmentId: "EID-001",
+      assetId: "AID-101",
+      applicationNameVersion: "App A v1.0",
+      requestedRole: "Technician",
+      requestFor: "Self",
+      selfExternal: "Self",
+      remark: "Scheduled for routine calibration",
+      initiatedBy: "Admin",
+      initiatedOn: "2024-05-01",
+      status: "Active",
+    },
+    {
+      srNo: "2.",
+      report: "Calibration Report",
+      requestNo: "REQ-001",
+      department: "QC",
+      requestType: "Calibration",
+      equipmentId: "EID-001",
+      assetId: "AID-101",
+      applicationNameVersion: "App A v1.0",
+      requestedRole: "Technician",
+      requestFor: "Self",
+      selfExternal: "Self",
+      remark: "Scheduled for routine calibration",
+      initiatedBy: "Admin",
+      initiatedOn: "2024-05-01",
+      status: "Active",
+    },
+    {
+      srNo: "3.",
       report: "Calibration Report",
       requestNo: "REQ-001",
       department: "QC",
@@ -115,6 +151,18 @@ const RequestReport = () => {
             >
               <MdAddBox size={25} />
             </div>
+        <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="Requuest_Report"
+        sheetNumbers={10}
+      />
           </div>
         </div>
         <div className="overflow-x-auto">

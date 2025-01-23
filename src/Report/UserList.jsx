@@ -3,6 +3,7 @@ import { FiRefreshCw } from "react-icons/fi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdAddBox } from "react-icons/md";
+import ImportExportButtons from "../ImportExportButtons/ImportExportButtons";
 
 const UserList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -162,6 +163,18 @@ const UserList = () => {
             </div>
           </div>
         </div>
+        <ImportExportButtons
+        data={data}
+        setData={(importedData) => {
+          const updatedData = importedData.map((item, index) => ({
+            ...item,
+            srNo: `${data.length + index + 1}.`, // Continue SR.NO.
+          }));
+          setData((prev) => [...prev, ...updatedData]); // Append data
+        }}
+        fileName="User List"
+        sheetNumbers={12}
+      />
         <div className="overflow-auto mt-6 md:mt-16">
           <table className="min-w-full border-collapse">
             <thead className="sticky top-0 bg-white">
